@@ -9,3 +9,4 @@ results/sgd_etth2_filtered/*.npy
 results/optim_etth2/*.npy
 results/sgd_b1_b4/**/*.npy
 results/outliers/**/weights/
+results/outliers/d2_lr/**/*.npy
