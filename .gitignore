@@ -8,3 +8,4 @@ results/sgd_etth2_20seed/*.npy
 results/sgd_etth2_filtered/*.npy
 results/optim_etth2/*.npy
 results/sgd_b1_b4/**/*.npy
+results/outliers/**/weights/
