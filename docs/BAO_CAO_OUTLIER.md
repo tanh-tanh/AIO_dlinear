@@ -10,7 +10,7 @@ Ngày chạy: 07/10/2026. Nhiệm vụ: [NHIEM_VU_6.md](NHIEM_VU_6.md). Tiếp t
   - bảng và hình: [`results/outliers/tables.md`](../results/outliers/tables.md), `summary.json`, `H2_outlier_robustness.png`, `H2_outlier_robustness_mae.png`.
 - Máy: RTX 5060 Ti (B, C), CPU Intel (D), torch 2.14.0+cu130 (`.venv-gpu`), TF32 tắt. Cấu hình bộ giải giữ đúng grid (chế độ pha, chunk 16, dừng (a′) cho MAE, tol 1e-9 cho Huber, MSE dạng đóng, lưới λ như grid, warm start, fallback float64 theo h).
 - Mọi dòng CSV có `git_commit` sạch: `3d5bfa2` (series 10%) hoặc `a81acb1` (mọi phần còn lại); `src/`, `runner.py`, `bench_5060ti.py` không đổi giữa hai commit.
-- JSON của D ghi `cfb2b92` (157 file) hoặc `238f89b` (3 file). Có 3 file D.2 (lr 0,0002) ghi `238f89b-dirty`, viết lúc `scripts/report_outliers.py` mới tạo chưa commit; `sgd_etth2.py` không đổi giữa `238f89b` và `cfb2b92`.
+- JSON của D ghi `cfb2b92` (159 file) hoặc `238f89b` (3 file). Có 3 file D.2 (lr 0,0002) ghi `238f89b-dirty`, viết lúc `scripts/report_outliers.py` mới tạo chưa commit; `sgd_etth2.py` không đổi giữa `238f89b` và `cfb2b92`.
 - Test: 49 → **60, tất cả đạt** (`.venv-gpu/Scripts/python -m unittest discover -s tests -t .`).
 - Thay đổi code: [NHAT_KY_THAY_DOI.md](NHAT_KY_THAY_DOI.md), mục 11.
 
@@ -36,11 +36,11 @@ Ký hiệu: "series" là chèn vào chuỗi gốc (Phần B), "target" là chèn
   Với MAE test, thứ tự giống hệt ở 1% và 10%. Chọn λ* theo `val_mse` cũng cho cùng kết quả ở 1%, 5%, 10%.
 - **Với outlier trong chuỗi, λ* (chọn trên val sạch) về 0:** ở rate 5% và 10%, λ* = 0 ở cả 48/48 ô (2 mô hình × 4 H × 3 mục tiêu × 2 rate); ở 1% là 15/24 ô, các ô còn lại có λ* ≤ 1. Trên dữ liệu gốc, λ* lên tới 1e4–2e4 ở H = 720.
 - **Chèn chỉ vào đích (H = 96, 720):** ở rate 10%, MSE test của MAE và Huber đổi **không quá 0,0005**; của MSE tăng **+0,009 đến +0,014**. Ở 1%, MAE và Huber đổi không quá 0,0001, MSE tăng +0,0014 đến +0,0025. Đây là hành vi bền vững mà lý thuyết hồi quy bền vững dự đoán cho outlier ở y; nó không còn khi outlier cũng nằm trong x (chèn vào chuỗi, khi đó 97–100% cửa sổ train có outlier trong x, xem mục 2).
-- **Linear và NLinear cho cùng thứ hạng mục tiêu ở mọi rate.** NLinear suy giảm ít hơn Linear ở cả 12/12 cặp (H, mục tiêu) tại rate 10% (ví dụ H = 720, MAE: +0,081 so với +0,108).
+- **Linear và NLinear:** thứ tự suy giảm 0 → 10% là MSE < Huber < MAE ở cả 8/8 ô của cả hai mô hình. Mục tiêu tốt nhất trong ô trùng nhau giữa hai mô hình ở mọi ô trừ hai: rate 0%, H = 336 (Linear: Huber, NLinear: MSE) và rate 5%, H = 720 (Linear: Huber, NLinear: MSE). NLinear suy giảm ít hơn Linear ở cả 12/12 cặp (H, mục tiêu) tại rate 10% (ví dụ H = 720, MAE: +0,081 so với +0,108), với cùng vị trí outlier (seed 2026); độ nhạy theo seed chưa kiểm cho NLinear.
 - **Độ nhạy theo seed chèn (Linear, H = 96, seed 2026–2028):**
   - Rate 1%: độ lệch giữa seed tối đa 0,0029, nhỏ hơn nhiều khác biệt giữa mục tiêu (0,0120). Thứ tự MAE < Huber < MSE giữ ở cả 3 seed.
   - Rate 10%: độ lệch giữa seed lên tới **0,0148**, cùng cỡ khác biệt giữa mục tiêu (0,0214). MSE thấp nhất và MAE cao nhất ở cả 3 seed, nhưng ở seed 2027 MSE chỉ hơn Huber 0,0003. **Thứ tự MSE so với Huber ở 10% nằm trong nhiễu theo vị trí outlier**; MAE kém nhất thì ổn định.
-- **D.1 (code gốc, DLinear ETTm1 H = 96, 5 seed, CPU):** 0,3018 ± 0,0010 (0,3008–0,3031), không seed nào dưới 0,300. Chênh với 20 seed của repo: +0,0002 [−0,0011; 0,0014] (Welch). Số công bố 0,299 không tái lập được bằng code gốc, giống trường hợp ETTh2; pipeline của repo không khác code gốc ở ô này.
+- **D.1 (code gốc, DLinear ETTm1 H = 96, 5 seed, CPU):** 0,3018 ± 0,0010 (0,3008–0,3031), không seed nào dưới 0,300. Chênh với 20 seed của repo: +0,0002 [−0,0011; 0,0014] (Welch). Số công bố 0,299 không tái lập được bằng code gốc, giống trường hợp ETTh2. Không phát hiện khác biệt giữa code gốc và pipeline của repo (n = 5 seed code gốc).
 - **D.2 (Linear ETTm1, lr gấp đôi, chọn trước):** với lr = 0,0002, Linear vẫn kém DLinear (lr gốc) có ý nghĩa trên test ở **4/4 H** (trên val 2/4). **Giả thuyết không đủ** để giải thích khoảng cách DLinear − Linear. Lần thử thêm lr = 0,0004 (không chọn trước, chỉ xem xu hướng): khoảng cách trên test hết ý nghĩa ở 3/4 H, còn ở H = 720 (+0,0060 [0,0024; 0,0097]).
 
 ## 2. Thiết kế chèn outlier (A.1)
@@ -376,6 +376,8 @@ Code gốc: 0,3018 ± 0,0010 (n = 5); số seed dưới 0,300: 0/5; code gốc �
 
 ### D.2. Linear ETTm1 với lr lớn hơn (SGD, seed 2021–2040)
 
+Các lần chạy Linear lr mới dùng `--threads 2` (4 tiến trình song song); các lần chạy so sánh của nhiệm vụ 5 dùng 6 luồng. Lr 0,0002 chọn trước; lr 0,0004 là lần thử thêm.
+
 Δ = TB(Linear, lr mới) − TB(nhóm so sánh), CI 95% Welch. Linear và DLinear lr gốc 0,0001 lấy từ results/sgd_b1_b4/ETTm1/.
 
 | lr | H | n | Linear lr mới: val / test (TB) | − DLinear lr gốc: Δ val | Δ test | − Linear lr gốc: Δ val | Δ test | còn kém DLinear có ý nghĩa? (val / test) |
@@ -389,9 +391,9 @@ Code gốc: 0,3018 ± 0,0010 (n = 5); số seed dưới 0,300: 0/5; code gốc �
 | 0,0004 | 336 | 20 | 0,6139 / 0,3754 | −0,0013 [−0,0037; 0,0011] | +0,0023 [−0,0001; 0,0047] | −0,0064 [−0,0085; −0,0044] | −0,0015 [−0,0038; 0,0009] | không / không |
 | 0,0004 | 720 | 20 | 0,8626 / 0,4349 | −0,0017 [−0,0067; 0,0033] | +0,0060 [0,0024; 0,0097] | −0,0061 [−0,0108; −0,0014] | +0,0014 [−0,0025; 0,0052] | không / có |
 
-## 7. Đoạn nháp cho RQ2 (khoảng 230 từ)
+## 7. Đoạn nháp cho RQ2 (khoảng 250 từ)
 
-> Trên dữ liệu gốc, huấn luyện bằng MAE cho MSE test thấp hơn huấn luyện bằng MSE (cả hai ở λ* chọn theo val) ở Linear trên cả 4 horizon của ETTh2 (chênh 0,023–0,151) và ETTm1 (0,002–0,006), nhưng chỉ 2/4 horizon của ETTh1; với NLinear trên ETTh2, MAE kém hơn ở cả 4 horizon. Trên ETTh2, khoảng một nửa lợi thế của MAE với Linear ở H ≥ 336 đến từ các đoạn cảm biến bị kẹt: bỏ các cửa sổ hằng khỏi train thì lợi thế còn 47% (H = 336) và 60% (H = 720). Để kiểm tính bền vững trực tiếp, chúng tôi cộng ±10 độ lệch chuẩn vào 1%, 5%, 10% số điểm của chuỗi train ETTh1, giữ nguyên val và test. Khi outlier chỉ nằm ở đích, MAE và Huber gần như không đổi (MSE test đổi không quá 0,0005 ở 10%) trong khi MSE suy giảm 0,009–0,014. Khi outlier nằm trong chuỗi, nên xuất hiện ở cả đầu vào lẫn đích, không mục tiêu nào bền vững: ở 1%, MAE vẫn cho MSE test thấp nhất ở cả 8 ô (Linear, NLinear × 4 horizon), nhưng ở 5% và 10%, MSE suy giảm ít nhất (0,059–0,077 ở 10%, so với 0,073–0,114 của MAE), và λ* chọn trên val sạch về 0. Ở 10%, thứ tự giữa MSE và Huber nằm trong độ lệch theo vị trí outlier (3 seed), còn MAE kém nhất ở cả 3 seed. Như vậy lợi thế của MAE trên dữ liệu thật phù hợp với outlier kiểu đoạn kẹt hoặc nhiễu ở đích, không phải với outlier rải rác trong chuỗi đầu vào.
+> Trên dữ liệu gốc, huấn luyện bằng MAE cho MSE test thấp hơn huấn luyện bằng MSE (cả hai ở λ* chọn theo val) ở Linear trên cả 4 horizon của ETTh2 (chênh 0,023–0,151) và ETTm1 (0,002–0,006), nhưng chỉ 2/4 horizon của ETTh1; với NLinear trên ETTh2, MAE kém hơn ở cả 4 horizon. Trên ETTh2, khoảng một nửa lợi thế của MAE với Linear ở H ≥ 336 đến từ các đoạn cảm biến bị kẹt: bỏ các cửa sổ hằng khỏi train thì lợi thế còn 47% (H = 336) và 60% (H = 720). Để kiểm tính bền vững trực tiếp, chúng tôi cộng ±10 độ lệch chuẩn vào 1%, 5%, 10% số điểm của chuỗi train ETTh1, giữ nguyên val và test. Khi outlier chỉ nằm ở đích, MAE và Huber gần như không đổi (MSE test đổi không quá 0,0005 ở 10%) trong khi MSE suy giảm 0,009–0,014. Khi outlier nằm trong chuỗi, nên xuất hiện ở cả đầu vào lẫn đích, không mục tiêu nào bền vững: ở 1%, MAE vẫn cho MSE test thấp nhất ở cả 8 ô (Linear, NLinear × 4 horizon), nhưng ở 5% và 10%, MSE suy giảm ít nhất (0,059–0,077 ở 10%, so với 0,073–0,114 của MAE), và λ* chọn trên val sạch về 0. Ở 10%, thứ tự giữa MSE và Huber nằm trong độ lệch theo vị trí outlier (3 seed), còn MAE kém nhất ở cả 3 seed. Ở 1% chèn chỉ vào đích, MAE và Huber đổi không quá 0,0001, MSE tăng 0,0014–0,0025.
 
 ## 8. Tái lập
 
