@@ -7,7 +7,12 @@ Mỗi cách chọn cho một bảng đủ 216 ô (3 mô hình × 3 mục tiêu �
 results.csv có 432 dòng khi grid chạy xong. λ* có thể bằng 0. Test không dùng để chọn gì.
 
     python scripts/select_lambda.py
+    python scripts/select_lambda.py --in results/outliers/lambda_path.csv --out results/outliers/results.csv
+
+File có các cột outlier (docs/NHIEM_VU_6.md) thì mỗi (outlier_mode, outlier_rate, outlier_seed) là một nhóm
+riêng, và các cột đó được giữ trong file ra. Không có thì chạy y như trước.
 """
+import argparse
 import csv
 import sys
 from pathlib import Path
@@ -19,16 +24,26 @@ OWN = {"MSE": "val_mse", "MAE": "val_mae", "Huber": "val_huber"}
 KEEP = ["dataset", "H", "model", "objective", "lam", "lam_convention", "delta", "k", "train_obj",
         "val_mse", "val_mae", "val_huber", "test_mse", "test_mae", "n_iter", "converged", "init",
         "derived_from", "tol", "patience", "gpu", "git_commit"]
+OUTLIER_KEYS = ["outlier_mode", "outlier_rate", "outlier_seed"]
+OUTLIER_EXTRA = ["n_contaminated", "frac_windows_x", "frac_windows_y"]
 
 
 def main():
-    with PATH_CSV.open(encoding="utf-8", newline="") as f:
-        rows = list(csv.DictReader(f))
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--in", dest="inp", type=Path, default=PATH_CSV)
+    ap.add_argument("--out", type=Path, default=OUT_CSV)
+    args = ap.parse_args()
+    with args.inp.open(encoding="utf-8", newline="") as f:
+        rd = csv.DictReader(f)
+        has_outlier = "outlier_mode" in rd.fieldnames
+        rows = list(rd)
+    keep = KEEP + (OUTLIER_KEYS + OUTLIER_EXTRA if has_outlier else [])
     groups = {}
     for r in rows:
-        groups.setdefault((r["dataset"], int(r["H"]), r["model"], r["objective"]), []).append(r)
+        okey = (r["outlier_mode"], float(r["outlier_rate"]), int(r["outlier_seed"])) if has_outlier else ()
+        groups.setdefault((r["dataset"], int(r["H"]), r["model"], r["objective"]) + okey, []).append(r)
     out = []
-    for key in sorted(groups, key=lambda k: (k[0], k[1], k[2], k[3])):
+    for key in sorted(groups):
         path = sorted(groups[key], key=lambda r: float(r["lam"]))
         lams = [float(r["lam"]) for r in path]
         zero = next((r for r in path if float(r["lam"]) == 0), None)
@@ -39,15 +54,15 @@ def main():
             for level, r in (("lam0", zero), ("lam_star", best)):
                 if r is None:
                     continue
-                out.append({**{c: r[c] for c in KEEP}, "selection": sel, "selection_metric": metric,
+                out.append({**{c: r[c] for c in keep}, "selection": sel, "selection_metric": metric,
                             "level": level, "lam_at_edge": edge if level == "lam_star" else "",
                             "n_lams": len(path), "lam_min": lams[0], "lam_max": lams[-1]})
-    cols = ["selection", "selection_metric", "level", "lam_at_edge", "n_lams", "lam_min", "lam_max"] + KEEP
-    with OUT_CSV.open("w", encoding="utf-8", newline="") as f:
+    cols = ["selection", "selection_metric", "level", "lam_at_edge", "n_lams", "lam_min", "lam_max"] + keep
+    with args.out.open("w", encoding="utf-8", newline="") as f:
         w = csv.DictWriter(f, fieldnames=cols)
         w.writeheader()
         w.writerows(out)
-    print(f"{len(groups)} đường λ → {len(out)} dòng ({len(out) // 2} ô mỗi cách chọn) → {OUT_CSV.relative_to(ROOT)}")
+    print(f"{len(groups)} đường λ → {len(out)} dòng ({len(out) // 2} ô mỗi cách chọn) → {args.out}")
     for r in out:
         if r["level"] == "lam_star":
             print(f"  {r['dataset']} H={r['H']:>3} {r['model']:<7} {r['objective']:<5} {r['selection']:<13} "

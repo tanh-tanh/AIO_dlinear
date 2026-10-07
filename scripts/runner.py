@@ -6,6 +6,7 @@ Chọn λ* bằng scripts/select_lambda.py.
     python scripts/runner.py                                   # toàn bộ grid; chạy lại = chạy tiếp
     python scripts/runner.py --data ETTh1 --H 96               # lọc
     python scripts/runner.py --dry-run                         # danh sách việc và ước lượng thời gian
+    python scripts/runner.py --data ETTh1 --model Linear NLinear --out outliers         --outlier-mode series --outlier-rate 0.1 --outlier-seed 2026   # NHIEM_VU_6: train có outlier
 
 Cách giải
     MSE: dạng đóng trên λ ∈ {0} ∪ logspace(−2, 5, 141) (20 giá trị mỗi bậc; lưới cũ 36 giá trị là tập con). Linear: ridge; DLinear: ridge với phạt λ·N⁻¹;
@@ -22,6 +23,12 @@ trọng số của x_L − x_L = 0 không ảnh hưởng dự báo nên về 0),
 Không phạt bias. Quy ước λ ghi trong cột lam_convention.
 
 Chạy tiếp: khóa (dataset, H, model, objective, lam); W mỗi dòng ở results/weights/*.npy (float64).
+
+Outlier (docs/NHIEM_VU_6.md): --out <thư mục con của results/> ghi vào results/<out>/lambda_path.csv và
+results/<out>/weights/, thêm các cột OUTLIER_COLUMNS; khóa chạy tiếp gồm cả (mode, rate, seed).
+--outlier-mode series: src.outliers.contaminate_series trên chuỗi train đã chuẩn hóa (scaler của train sạch),
+protect_last = L, rồi cắt cửa sổ; target: contaminate_targets trên Y của các cửa sổ train. Val, test giữ
+nguyên. Không có --outlier-mode thì code chạy y như trước.
 """
 import argparse
 import csv
@@ -44,6 +51,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import bench_5060ti as B                    # noqa: E402  (tắt TF32 khi import)
 from bench_5060ti import HUBER_DELTA, MAE_DELTA, ROOT, git_commit, load_cell  # noqa: E402
 from src.operators import build_N, build_P, nlinear_effective, nlinear_transform  # noqa: E402
+from src.data import load_ett, make_dataset  # noqa: E402
+from src.outliers import contaminate_series, contaminate_targets  # noqa: E402
 from src.solvers import fit_with_bias, irls, nlinear_constrained, ols  # noqa: E402
 
 L, K = 336, 25
@@ -73,6 +82,9 @@ COLUMNS = ["dataset", "H", "model", "objective", "lam", "lam_convention", "delta
            "n_iter", "converged", "seconds", "init", "derived_from",
            "tol", "patience", "chunk", "gram_dtype", "gpu", "torch_version", "git_commit", "timestamp",
            "n_fallback"]
+OUTLIER_COLUMNS = ["outlier_mode", "outlier_rate", "outlier_seed", "n_contaminated", "frac_windows_x",
+                   "frac_windows_y"]
+OUTLIER = None          # dict mode, rate, seed khi chạy với --outlier-mode
 
 
 def lam_key(lam):
@@ -80,7 +92,16 @@ def lam_key(lam):
 
 
 def weight_path(ds, H, model, obj, lam):
-    return WEIGHTS / f"{ds}_H{H}_{model}_{obj}_lam{lam_key(lam)}.npy"
+    tag = f"{OUTLIER['mode']}_r{OUTLIER['rate']:g}_s{OUTLIER['seed']}_" if OUTLIER else ""
+    return WEIGHTS / f"{tag}{ds}_H{H}_{model}_{obj}_lam{lam_key(lam)}.npy"
+
+
+def outlier_match(r):
+    """Dòng CSV thuộc đúng cấu hình outlier đang chạy (hoặc không có outlier)."""
+    if OUTLIER is None:
+        return not r.get("outlier_mode")
+    return (r.get("outlier_mode") == OUTLIER["mode"] and float(r["outlier_rate"]) == OUTLIER["rate"]
+            and int(r["outlier_seed"]) == OUTLIER["seed"])
 
 
 # ---------------------------------------------------------------------------
@@ -92,7 +113,7 @@ def read_done():
         return {}
     with PATH_CSV.open(encoding="utf-8", newline="") as f:
         return {(r["dataset"], int(r["H"]), r["model"], r["objective"], lam_key(r["lam"])): r
-                for r in csv.DictReader(f)}
+                for r in csv.DictReader(f) if outlier_match(r)}
 
 
 class Writer:
@@ -101,7 +122,7 @@ class Writer:
         WEIGHTS.mkdir(parents=True, exist_ok=True)
         new = not PATH_CSV.exists()
         # file đã có: giữ đúng header của nó (lambda_path.csv chưa có cột n_fallback), bỏ cột thừa
-        fields = COLUMNS
+        fields = COLUMNS + (OUTLIER_COLUMNS if OUTLIER else [])
         if not new:
             with PATH_CSV.open(encoding="utf-8", newline="") as f:
                 fields = next(csv.reader(f))
@@ -111,10 +132,14 @@ class Writer:
             self.w.writeheader()
         self.env = {"gpu": torch.cuda.get_device_name(0), "torch_version": torch.__version__,
                     "git_commit": git_commit(), "chunk": CHUNK}
+        if OUTLIER:
+            self.env.update(outlier_mode=OUTLIER["mode"], outlier_rate=OUTLIER["rate"],
+                            outlier_seed=OUTLIER["seed"])
+        self.cell_extra = {}
 
     def write(self, row, W):
         np.save(weight_path(row["dataset"], row["H"], row["model"], row["objective"], row["lam"]), W)
-        row = {**{c: "" for c in COLUMNS}, **self.env, **row,
+        row = {**{c: "" for c in COLUMNS}, **self.env, **self.cell_extra, **row,
                "timestamp": datetime.datetime.now().isoformat(timespec="seconds")}
         self.w.writerow(row)
         self.f.flush()
@@ -136,6 +161,23 @@ class Cell:
         self.pens = {"Linear": np.eye(L), "DLinear": self.Ninv, "NLinear": np.diag(np.r_[np.ones(L - 1), 0.0])}
         self._gpu = None
         self.set_train(self.d["X"], self.d["Y"])
+        self.outlier_info = {}
+        if OUTLIER:
+            self.contaminate(**OUTLIER)
+
+    def contaminate(self, mode, rate, seed):
+        """Thay train bằng bản có outlier (docs/NHIEM_VU_6.md). Val, test không đổi."""
+        if mode == "series":
+            train, _, _ = load_ett(ROOT / "data" / f"{self.ds}.csv", L, self.ds)
+            train_c, info = contaminate_series(train, rate, seed=seed, protect_last=L, L=L, H=self.H)
+            X, Y = make_dataset(train_c, L, self.H)
+        else:
+            Y, info = contaminate_targets(self.d["Y"], rate, seed=seed)
+            X = self.d["X"]
+        self.set_train(X, Y)
+        self.outlier_info = {k: info[k] for k in ("n_contaminated", "frac_windows_x", "frac_windows_y")}
+        print(f"  outlier {mode} rate {rate:g} seed {seed}: {info['n_contaminated']} điểm, cửa sổ có outlier "
+              f"x {info['frac_windows_x']:.3f}, y {info['frac_windows_y']:.3f}", flush=True)
 
     def set_train(self, X, Y):
         """Đặt tập train (X, Y) và các thống kê của MSE dạng đóng. Dùng lại khi bỏ bớt cửa sổ train
@@ -367,7 +409,19 @@ def main():
     ap.add_argument("--model", nargs="+", default=MODELS, choices=MODELS)
     ap.add_argument("--objective", nargs="+", default=OBJECTIVES, choices=OBJECTIVES)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--out", default=None, help="thư mục con của results/ (mặc định ghi vào results/)")
+    ap.add_argument("--outlier-mode", choices=["series", "target"], default=None)
+    ap.add_argument("--outlier-rate", type=float, default=0.0)
+    ap.add_argument("--outlier-seed", type=int, default=2026)
     args = ap.parse_args()
+    global PATH_CSV, WEIGHTS, OUTLIER
+    if args.out:
+        PATH_CSV = ROOT / "results" / args.out / "lambda_path.csv"
+        WEIGHTS = ROOT / "results" / args.out / "weights"
+    if args.outlier_mode:
+        if not args.out:
+            sys.exit("--outlier-mode cần --out (không ghi vào results/lambda_path.csv)")
+        OUTLIER = {"mode": args.outlier_mode, "rate": args.outlier_rate, "seed": args.outlier_seed}
     if any(v is None for s in STOP.values() for v in s.values()):
         sys.exit("STOP chưa điền: cần kết quả Phần A (docs/BAO_CAO_TIEU_CHI_DUNG.md)")
     # DLinear λ = 0 chép từ Linear, MAE/Huber λ = 0 khởi tạo từ MSE λ = 0 của cùng mô hình
@@ -404,6 +458,7 @@ def main():
                 continue
             print(f"[{ds} H={H}]", flush=True)
             cell = Cell(ds, H)
+            writer.cell_extra = cell.outlier_info
             for obj in OBJECTIVES:
                 for model in MODELS:
                     if (model, obj) not in cell_jobs:
