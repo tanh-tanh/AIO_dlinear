@@ -9,6 +9,7 @@
 
 --dataset (mặc định ETTh2): chọn dữ liệu và siêu tham số của script chính thức tương ứng (HPS). Với ETTh2 code
 chạy y như trước. --threads: torch.set_num_threads (mặc định không đặt); số luồng thực tế ghi vào JSON.
+--lr: thay lr của script chính thức (NHIEM_VU_6 D.2); mặc định không đặt, giữ lr trong HPS. JSON ghi lr thật.
 
 --filtered: "train đã lọc" của NHIEM_VU_3 C.3 (constant_windows.constant_mask). Cặp (cửa sổ, kênh) hằng bị bỏ
 khỏi hàm mất mát (MaskedETTDataset); batch, thứ tự xáo, val, test giữ nguyên. Không có --filtered thì
@@ -162,10 +163,13 @@ def main():
     ap.add_argument("--filtered", action="store_true", help="train đã lọc cửa sổ hằng (NHIEM_VU_4 B)")
     ap.add_argument("--dataset", default="ETTh2", choices=list(HPS))
     ap.add_argument("--threads", type=int, default=None, help="torch.set_num_threads (mặc định không đặt)")
+    ap.add_argument("--lr", type=float, default=None, help="thay lr của script chính thức (NHIEM_VU_6 D.2)")
     args = ap.parse_args()
     global OUT, DATASET, HP
     OUT = ROOT / "results" / args.out
     DATASET, HP = args.dataset, HPS[args.dataset]
+    if args.lr is not None:
+        HP = {**HP, "lr": args.lr}
     if args.threads:
         torch.set_num_threads(args.threads)
     OUT.mkdir(parents=True, exist_ok=True)

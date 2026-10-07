@@ -15,8 +15,16 @@ Lệnh chạy đúng scripts/EXP-LongForecasting/Linear/etth2.sh (lr 0,05, batch
 Mỗi lần chạy: log ở results/official_ltsf/logs/, MSE/MAE test do code gốc in ra, epoch tốt nhất theo val (dòng
 "Validation loss decreased"), rồi nạp checkpoint vào lớp mô hình của repo (cùng tên tham số) và chấm lại bằng
 W_eff, bias float64 trên load_cell (D.3). Kết quả: results/official_ltsf/{model}_H{H}_seed{seed}.json.
+
+NHIEM_VU_6 D.1: --dataset ETTm1 (lr 0,0001, batch 8 theo Linear/ettm1.sh dòng 24/38/52/66; chép thêm
+data/ETTm1.csv vào dataset/ nếu chưa có), --out <thư mục con của results/>, --cpu (đặt CUDA_VISIBLE_DEVICES rỗng
+cho tiến trình con: code gốc dùng `--use_gpu type=bool` nên không tắt GPU được bằng tham số). Mặc định
+(ETTh2, official_ltsf, GPU) chạy y như trước.
+
+    python scripts/official_ltsf.py --dataset ETTm1 --model DLinear --H 96 --out outliers/d1_official --cpu
 """
 import argparse
+import os
 import re
 import shutil
 import subprocess
@@ -38,6 +46,11 @@ SRC = ROOT / "third_party" / "LTSF-Linear"
 OFF = ROOT / "scratch" / "ltsf_official"
 OUT = ROOT / "results" / "official_ltsf"
 PATCH = OUT / "patch.diff"
+# scripts/EXP-LongForecasting/Linear/{etth2,ettm1}.sh dòng 24/38/52/66
+HPS = {"ETTh2": {"lr": "0.05", "batch_size": "32"}, "ETTm1": {"lr": "0.0001", "batch_size": "8"}}
+DATASET = "ETTh2"
+RES = OUT                 # nơi ghi kết quả (--out); patch luôn lấy từ OUT
+CPU = False
 CKPT = ROOT / "scratch" / "official_ckpt"
 L = 336
 
@@ -72,39 +85,42 @@ def parse_log(text):
 
 
 def run_one(model, H, seed):
-    f = OUT / f"{model}_H{H}_seed{seed}.json"
+    ds, hp = DATASET, HPS[DATASET]
+    f = RES / f"{model}_H{H}_seed{seed}.json"
     if f.exists():
         print(f"  bỏ qua {model} H={H} seed {seed} (đã có)")
         return
-    args = ["--is_training", "1", "--root_path", "./dataset/", "--data_path", "ETTh2.csv",
-            "--model_id", f"ETTh2_{L}_{H}", "--model", model, "--data", "ETTh2", "--features", "M",
+    args = ["--is_training", "1", "--root_path", "./dataset/", "--data_path", f"{ds}.csv",
+            "--model_id", f"{ds}_{L}_{H}", "--model", model, "--data", ds, "--features", "M",
             "--seq_len", str(L), "--pred_len", str(H), "--enc_in", "7", "--des", "Exp", "--itr", "1",
-            "--batch_size", "32", "--learning_rate", "0.05", "--num_workers", "0", "--seed", str(seed)]
+            "--batch_size", hp["batch_size"], "--learning_rate", hp["lr"], "--num_workers", "0", "--seed", str(seed)]
+    env = {**os.environ, "CUDA_VISIBLE_DEVICES": ""} if CPU else None
     t0 = time.perf_counter()
-    p = subprocess.run([sys.executable, "-u", "run_longExp.py", *args], cwd=OFF, capture_output=True, text=True)
+    p = subprocess.run([sys.executable, "-u", "run_longExp.py", *args], cwd=OFF, capture_output=True, text=True,
+                       env=env)
     sec = time.perf_counter() - t0
     log = p.stdout + p.stderr
-    (OUT / "logs").mkdir(parents=True, exist_ok=True)
-    (OUT / "logs" / f"{model}_H{H}_seed{seed}.log").write_text(log, encoding="utf-8")
+    (RES / "logs").mkdir(parents=True, exist_ok=True)
+    (RES / "logs" / f"{model}_H{H}_seed{seed}.log").write_text(log, encoding="utf-8")
     if p.returncode:
         sys.exit(f"code gốc lỗi ({model} H={H} seed {seed}), xem log")
     res = parse_log(log)
-    setting = (f"ETTh2_{L}_{H}_{model}_ETTh2_ftM_sl{L}_ll48_pl{H}_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0")
+    setting = (f"{ds}_{L}_{H}_{model}_{ds}_ftM_sl{L}_ll48_pl{H}_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0")
     ckpt = OFF / "checkpoints" / setting / "checkpoint.pth"
     CKPT.mkdir(parents=True, exist_ok=True)
-    keep = CKPT / f"{model}_H{H}_seed{seed}.pth"
+    keep = CKPT / (f"{model}_H{H}_seed{seed}.pth" if ds == "ETTh2" else f"{ds}_{model}_H{H}_seed{seed}.pth")
     shutil.copyfile(ckpt, keep)                      # thư mục setting không chứa seed: lần sau ghi đè
     # D.3: chấm chéo bằng pipeline của repo
     net = MODELS[model](L, H)
     net.load_state_dict(torch.load(keep, map_location="cpu"))
     W, b = effective_weights(net)
-    cell = load_cell("ETTh2", H)
+    cell = load_cell(ds, H)
     for tag, split in (("val", "va"), ("test", "te")):
         R = cell[f"Y_{split}"] - (cell[f"Xt_{split}"][:, :-1] @ W.T + b)
         res[f"repo_{tag}_mse"], res[f"repo_{tag}_mae"] = float((R ** 2).mean()), float(np.abs(R).mean())
     res.update(model=model, H=H, seed=seed, seconds=sec, command=["python", "-u", "run_longExp.py", *args],
                ltsf_commit="0c113668a3b88c4c4ee586b8c5ec3e539c4de5a6", patch=PATCH.read_text(encoding="utf-8"),
-               device="cuda" if torch.cuda.is_available() else "cpu")
+               device="cpu" if CPU or not torch.cuda.is_available() else "cuda", dataset=ds)
     save_json(f, res)
     print(f"  {model} H={H} seed {seed}: code gốc test MSE {res['official_test_mse']:.4f} MAE "
           f"{res['official_test_mae']:.4f}, chấm lại {res['repo_test_mse']:.4f} / {res['repo_test_mae']:.4f}, "
@@ -117,10 +133,18 @@ def main():
     ap.add_argument("--model", nargs="+", default=["DLinear", "Linear"], choices=["DLinear", "Linear"])
     ap.add_argument("--H", nargs="+", type=int, default=[720])
     ap.add_argument("--seed", nargs="+", type=int, default=[2021, 2022, 2023, 2024, 2025])
+    ap.add_argument("--dataset", default="ETTh2", choices=list(HPS))
+    ap.add_argument("--out", default=None, help="thư mục con của results/ (mặc định official_ltsf)")
+    ap.add_argument("--cpu", action="store_true")
     args = ap.parse_args()
     if args.prepare:
         prepare()
         return
+    global DATASET, RES, CPU
+    DATASET, CPU = args.dataset, args.cpu
+    RES = ROOT / "results" / args.out if args.out else OUT
+    if not (OFF / "dataset" / f"{DATASET}.csv").exists():
+        shutil.copyfile(ROOT / "data" / f"{DATASET}.csv", OFF / "dataset" / f"{DATASET}.csv")
     for H in args.H:
         for model in args.model:
             for seed in args.seed:
