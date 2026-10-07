@@ -397,3 +397,35 @@ Báo cáo: [BAO_CAO_SGD_B1_B4.md](BAO_CAO_SGD_B1_B4.md). Không đổi `src/`, k
 - Mọi lần chạy và report dùng `.venv-gpu` (torch 2.14.0+cu130, như `BAO_CAO_5060TI.md`). Python hệ thống và `.venv` có torch 2.6.0+cpu (cài từ 29/09, không đổi); chạy script bằng chúng sẽ dừng ở `bench_5060ti.hw_info` vì cần CUDA.
 - Test (`.venv-gpu/Scripts/python -m unittest discover -s tests -t .`): **49, tất cả đạt** (07/10/2026).
 - 107 JSON ETTm1 viết từ 12:33 đến 13:12 ngày 06/10 có `git_commit` rỗng, nguyên nhân chưa xác định; HEAD lúc đó là `a4fde50` (xem mục 2.3 của báo cáo).
+
+---
+
+# Nhật ký thay đổi code: nhiệm vụ 6, thí nghiệm outlier và hai phép kiểm SGD (07/10/2026)
+
+Báo cáo: [BAO_CAO_OUTLIER.md](BAO_CAO_OUTLIER.md). Không đổi toán của `irls`, không đổi cấu hình dừng, δ hay lưới λ.
+
+## 11.1. `src/outliers.py` (mới) và `tests/test_outliers.py` (commit `de98749`)
+
+- **`contaminate_series(train_series, rate, magnitude=10, seed, protect_last, L=None, H=None)`:** chọn đúng ⌊rate × (T − protect_last) × C⌋ điểm (hàng, kênh) không lặp trong vùng được chèn, cộng ±magnitude (dấu ngẫu nhiên). Trả chuỗi mới và `n_contaminated`, `n_eligible`, `mask`; nếu cho L, H thì thêm `frac_windows_x`, `frac_windows_y`. Không sửa mảng đầu vào.
+- **`contaminate_targets(Y, rate, magnitude=10, seed)`:** như trên nhưng trên các phần tử của Y train; x giữ nguyên.
+- **11 test mới:** số điểm, vùng cấm, độ lớn đúng ±10 và chỉ điểm được chọn thay đổi, cùng/khác seed, rate = 0 trả đúng dữ liệu gốc, không sửa đầu vào, tỷ lệ cửa sổ; trên ETTh1: ghép train đã chèn vào chuỗi đầy đủ rồi cắt lại thì cửa sổ val, test trùng từng byte (H = 96, 720), và phản chứng `protect_last = 0` làm val đổi. Test: 49 → **60, tất cả đạt**.
+
+## 11.2. `scripts/runner.py`
+
+- **`--out`:** ghi vào `results/<out>/lambda_path.csv` và `results/<out>/weights/` thay vì `results/`.
+- **`--outlier-mode {series, target}`, `--outlier-rate`, `--outlier-seed`** (cần `--out`): `Cell.contaminate` thay train bằng bản có outlier qua `Cell.set_train`; val, test giữ nguyên. Thêm cột `outlier_mode`, `outlier_rate`, `outlier_seed`, `n_contaminated`, `frac_windows_x`, `frac_windows_y`; khóa chạy tiếp lọc theo (mode, rate, seed); tên file W có tiền tố cấu hình.
+- Không có `--outlier-mode` thì chạy y như trước. Kiểm: rate = 0 (series) cho 154/154 dòng trùng tuyệt đối `results/lambda_path.csv` (Linear ETTh1 H = 96, MSE và MAE).
+
+## 11.3. `scripts/select_lambda.py`
+
+- **`--in`, `--out`** (mặc định như cũ). File có cột outlier thì mỗi (mode, rate, seed) là một nhóm riêng và các cột đó được giữ. Kiểm: chạy với mặc định cho `results.csv` trùng từng byte bản cũ.
+
+## 11.4. Phần D (commit `238f89b`)
+
+- **`scripts/official_ltsf.py`:** `--dataset ETTm1` (lr 0,0001, batch 8 theo `Linear/ettm1.sh`; tự chép `data/ETTm1.csv` vào `scratch/ltsf_official/dataset/`), `--out`, `--cpu` (đặt `CUDA_VISIBLE_DEVICES` rỗng cho tiến trình con, vì `--use_gpu` của code gốc là `type=bool` nên không tắt được bằng tham số). Checkpoint ETTm1 lưu với tiền tố dataset. Mặc định (ETTh2) không đổi.
+- **`scripts/sgd_etth2.py`:** `--lr` thay lr của script chính thức; mặc định không đặt. Kiểm: ETTh2 Linear H = 96 seed 2021 vẫn trùng byte `results/sgd_etth2_20seed/`.
+
+## 11.5. Khác
+
+- **`scripts/report_outliers.py`** (mới): mọi bảng và hình H2 của báo cáo.
+- **`.gitignore`:** thêm `results/outliers/**/weights/`, `results/outliers/d2_lr/**/*.npy`.
