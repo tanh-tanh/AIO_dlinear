@@ -1,0 +1,583 @@
+{
+ "B_check_results_v2_vs_results": [
+  432,
+  432
+ ],
+ "B_check_B4_unchanged": 36,
+ "B_n_lam_changed": {
+  "MSE_mse": 0,
+  "MSE_mae": 30,
+  "MAE_mse": 24,
+  "MAE_mae": 0,
+  "Huber_mse": 13,
+  "Huber_mae": 16
+ },
+ "B_ranking_changes": {
+  "mse": [
+   [
+    "ETTh1",
+    "192",
+    "Linear",
+    "Huber < MSE < MAE",
+    "Huber < MAE < MSE"
+   ],
+   [
+    "ETTh1",
+    "192",
+    "DLinear",
+    "Huber < MSE < MAE",
+    "MAE < Huber < MSE"
+   ],
+   [
+    "ETTh1",
+    "192",
+    "NLinear",
+    "Huber < MSE < MAE",
+    "Huber < MAE < MSE"
+   ],
+   [
+    "ETTh1",
+    "336",
+    "Linear",
+    "Huber < MSE < MAE",
+    "MAE < Huber < MSE"
+   ],
+   [
+    "ETTh1",
+    "336",
+    "DLinear",
+    "Huber < MSE < MAE",
+    "MAE < Huber < MSE"
+   ],
+   [
+    "ETTm1",
+    "192",
+    "DLinear",
+    "MAE < MSE < Huber",
+    "MAE < Huber < MSE"
+   ],
+   [
+    "ETTm1",
+    "720",
+    "NLinear",
+    "MSE < Huber < MAE",
+    "Huber < MSE < MAE"
+   ]
+  ],
+  "mae": []
+ },
+ "B_best_counts": {
+  "ETTh1_Linear_mse_old": {
+   "MSE": 0,
+   "MAE": 2,
+   "Huber": 2
+  },
+  "ETTh1_Linear_mse_new": {
+   "MSE": 0,
+   "MAE": 3,
+   "Huber": 1
+  },
+  "ETTh1_Linear_mae_old": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "ETTh1_Linear_mae_new": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "ETTh1_DLinear_mse_old": {
+   "MSE": 0,
+   "MAE": 2,
+   "Huber": 2
+  },
+  "ETTh1_DLinear_mse_new": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "ETTh1_DLinear_mae_old": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "ETTh1_DLinear_mae_new": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "ETTh1_NLinear_mse_old": {
+   "MSE": 1,
+   "MAE": 2,
+   "Huber": 1
+  },
+  "ETTh1_NLinear_mse_new": {
+   "MSE": 1,
+   "MAE": 2,
+   "Huber": 1
+  },
+  "ETTh1_NLinear_mae_old": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "ETTh1_NLinear_mae_new": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "ETTh2_Linear_mse_old": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "ETTh2_Linear_mse_new": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "ETTh2_Linear_mae_old": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "ETTh2_Linear_mae_new": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "ETTh2_DLinear_mse_old": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "ETTh2_DLinear_mse_new": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "ETTh2_DLinear_mae_old": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "ETTh2_DLinear_mae_new": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "ETTh2_NLinear_mse_old": {
+   "MSE": 3,
+   "MAE": 0,
+   "Huber": 1
+  },
+  "ETTh2_NLinear_mse_new": {
+   "MSE": 3,
+   "MAE": 0,
+   "Huber": 1
+  },
+  "ETTh2_NLinear_mae_old": {
+   "MSE": 0,
+   "MAE": 2,
+   "Huber": 2
+  },
+  "ETTh2_NLinear_mae_new": {
+   "MSE": 0,
+   "MAE": 2,
+   "Huber": 2
+  },
+  "ETTm1_Linear_mse_old": {
+   "MSE": 0,
+   "MAE": 3,
+   "Huber": 1
+  },
+  "ETTm1_Linear_mse_new": {
+   "MSE": 0,
+   "MAE": 3,
+   "Huber": 1
+  },
+  "ETTm1_Linear_mae_old": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "ETTm1_Linear_mae_new": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "ETTm1_DLinear_mse_old": {
+   "MSE": 0,
+   "MAE": 3,
+   "Huber": 1
+  },
+  "ETTm1_DLinear_mse_new": {
+   "MSE": 0,
+   "MAE": 3,
+   "Huber": 1
+  },
+  "ETTm1_DLinear_mae_old": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "ETTm1_DLinear_mae_new": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "ETTm1_NLinear_mse_old": {
+   "MSE": 1,
+   "MAE": 3,
+   "Huber": 0
+  },
+  "ETTm1_NLinear_mse_new": {
+   "MSE": 0,
+   "MAE": 3,
+   "Huber": 1
+  },
+  "ETTm1_NLinear_mae_old": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "ETTm1_NLinear_mae_new": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  }
+ },
+ "B_mae_beats_mse_on_mse_test": {
+  "ETTh1_Linear_old": [
+   0.004898128715223327,
+   -0.00011289519445661922,
+   -0.002596291273772422,
+   0.018107133153662913
+  ],
+  "ETTh1_Linear_new": [
+   0.004898128715223327,
+   0.0008827414339747097,
+   0.0022190305653774223,
+   0.014736824655653624
+  ],
+  "ETTh1_DLinear_old": [
+   0.004704085779171585,
+   -0.0004990999596097834,
+   -0.000761197404906433,
+   0.018093879753988018
+  ],
+  "ETTh1_DLinear_new": [
+   0.00511366070073116,
+   0.0021097660181194633,
+   0.0021755559611488784,
+   0.014793042716438776
+  ],
+  "ETTh1_NLinear_old": [
+   0.003764505874227775,
+   -0.002059603365140439,
+   -0.0056232436485427195,
+   0.00672331350658395
+  ],
+  "ETTh1_NLinear_new": [
+   0.00571759258499982,
+   0.00015090781145316035,
+   -0.0028470695851000594,
+   0.004679493820017089
+  ],
+  "ETTh2_Linear_old": [
+   0.023032999129554033,
+   0.043494095051374915,
+   0.07476928860464427,
+   0.15108418881316688
+  ],
+  "ETTh2_Linear_new": [
+   0.023032999129554033,
+   0.043494095051374915,
+   0.07476928860464427,
+   0.15108418881316688
+  ],
+  "ETTh2_DLinear_old": [
+   0.023011425350379533,
+   0.043495914615466535,
+   0.07474866663698693,
+   0.15109286356339457
+  ],
+  "ETTh2_DLinear_new": [
+   0.023011425350379533,
+   0.043495914615466535,
+   0.07474866663698693,
+   0.15109286356339457
+  ],
+  "ETTh2_NLinear_old": [
+   -0.005391597536683279,
+   -0.011695064721043924,
+   -0.018539007299815113,
+   -0.0006619103126194736
+  ],
+  "ETTh2_NLinear_new": [
+   -0.004723700643935569,
+   -0.011049975542380241,
+   -0.017831559122680585,
+   -0.0001506046351818502
+  ],
+  "ETTm1_Linear_old": [
+   0.0062877164157910115,
+   0.0016572062174385338,
+   0.002448319151943268,
+   0.0015872465362991584
+  ],
+  "ETTm1_Linear_new": [
+   0.0062877164157910115,
+   0.0017641864974659027,
+   0.002550530527468675,
+   0.0015872465362991584
+  ],
+  "ETTm1_DLinear_old": [
+   0.006268085208142371,
+   0.0016282351487274527,
+   0.002417073313654705,
+   0.001573206060907717
+  ],
+  "ETTm1_DLinear_new": [
+   0.006268085208142371,
+   0.002036545242595611,
+   0.002772850686409478,
+   0.0018307162044107206
+  ],
+  "ETTm1_NLinear_old": [
+   0.006584467971277763,
+   0.0016353246142317146,
+   0.0012874409922947194,
+   -0.001708082382973708
+  ],
+  "ETTm1_NLinear_new": [
+   0.006733724331355551,
+   0.002027065245352455,
+   0.001803055048880009,
+   -0.0008596267639359723
+  ]
+ },
+ "B_outlier_best_counts": {
+  "series_0_mse_old": {
+   "MSE": 1,
+   "MAE": 4,
+   "Huber": 3
+  },
+  "series_0_mse_new": {
+   "MSE": 1,
+   "MAE": 5,
+   "Huber": 2
+  },
+  "series_0_mae_old": {
+   "MSE": 0,
+   "MAE": 8,
+   "Huber": 0
+  },
+  "series_0_mae_new": {
+   "MSE": 0,
+   "MAE": 8,
+   "Huber": 0
+  },
+  "series_0.01_mse_old": {
+   "MSE": 0,
+   "MAE": 8,
+   "Huber": 0
+  },
+  "series_0.01_mse_new": {
+   "MSE": 0,
+   "MAE": 8,
+   "Huber": 0
+  },
+  "series_0.01_mae_old": {
+   "MSE": 0,
+   "MAE": 8,
+   "Huber": 0
+  },
+  "series_0.01_mae_new": {
+   "MSE": 0,
+   "MAE": 8,
+   "Huber": 0
+  },
+  "series_0.05_mse_old": {
+   "MSE": 7,
+   "MAE": 0,
+   "Huber": 1
+  },
+  "series_0.05_mse_new": {
+   "MSE": 7,
+   "MAE": 0,
+   "Huber": 1
+  },
+  "series_0.05_mae_old": {
+   "MSE": 7,
+   "MAE": 1,
+   "Huber": 0
+  },
+  "series_0.05_mae_new": {
+   "MSE": 7,
+   "MAE": 1,
+   "Huber": 0
+  },
+  "series_0.1_mse_old": {
+   "MSE": 8,
+   "MAE": 0,
+   "Huber": 0
+  },
+  "series_0.1_mse_new": {
+   "MSE": 8,
+   "MAE": 0,
+   "Huber": 0
+  },
+  "series_0.1_mae_old": {
+   "MSE": 8,
+   "MAE": 0,
+   "Huber": 0
+  },
+  "series_0.1_mae_new": {
+   "MSE": 8,
+   "MAE": 0,
+   "Huber": 0
+  },
+  "target_0_mse_old": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "target_0_mse_new": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "target_0_mae_old": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "target_0_mae_new": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "target_0.01_mse_old": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "target_0.01_mse_new": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "target_0.01_mae_old": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "target_0.01_mae_new": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "target_0.1_mse_old": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "target_0.1_mse_new": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "target_0.1_mae_old": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  },
+  "target_0.1_mae_new": {
+   "MSE": 0,
+   "MAE": 4,
+   "Huber": 0
+  }
+ },
+ "B_outlier_degradation_mse": {
+  "MSE_old": [
+   0.07427373524142661,
+   0.06967367820988468,
+   0.06647125650313934,
+   0.07689750626928793,
+   0.07099199018841895,
+   0.06520488145568099,
+   0.059058339597455656,
+   0.06733657007624766
+  ],
+  "MSE_new": [
+   0.07427373524142661,
+   0.06967367820988468,
+   0.06647125650313934,
+   0.07689750626928793,
+   0.07099199018841895,
+   0.06520488145568099,
+   0.059058339597455656,
+   0.06733657007624766
+  ],
+  "MAE_old": [
+   0.1136190542464296,
+   0.10282748776168205,
+   0.08871762716661774,
+   0.10776238135451949,
+   0.10310362641712134,
+   0.09007182384602203,
+   0.07298893328760891,
+   0.08096009830859302
+  ],
+  "MAE_new": [
+   0.1136190542464296,
+   0.10382312439011337,
+   0.09353294900576758,
+   0.1043920728565102,
+   0.10505671312789339,
+   0.09228233502261562,
+   0.07576510735105157,
+   0.07891627862202616
+  ],
+  "Huber_old": [
+   0.10042056868654059,
+   0.09374133952014818,
+   0.08326108225630846,
+   0.0927764790536793,
+   0.09386407348555675,
+   0.08541067255040785,
+   0.0703037336898541,
+   0.07356306145289276
+  ],
+  "Huber_new": [
+   0.10041482347108238,
+   0.09374133952014818,
+   0.0843458670894528,
+   0.0927764790536793,
+   0.0944487401552318,
+   0.08541067255040785,
+   0.07040219648695722,
+   0.07318368234523076
+  ]
+ },
+ "B_dlinear_etth1_h96_lams": {
+  "MSE": [
+   446.684,
+   446.684,
+   446.684
+  ],
+  "MAE": [
+   100.0,
+   300.0,
+   100.0
+  ],
+  "Huber": [
+   100.0,
+   300.0,
+   100.0
+  ]
+ },
+ "git_commit": "7c59c8cb8bca"
+}
