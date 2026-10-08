@@ -887,8 +887,8 @@ def part_d(summ):
 
     # C.3-tinh chỉnh
     md += ["## C.3-tinh chỉnh: DLinear − Linear khi cả hai được tinh chỉnh lr (15 seed mỗi mô hình, CI Welch)", "",
-           "| Dataset | H | lr Linear / DLinear | Δ val [CI] | Δ test [CI] | DLinear tốt hơn có ý nghĩa (val / test) | C.3 cũ: Δ test [CI] |",
-           "|---|---|---|---|---|---|---|"]
+           "| Dataset | H | lr Linear / DLinear | Δ val [CI] | Δ test [CI] | DLinear tốt hơn có ý nghĩa (val / test) | ×1, 2026–2040: Δ val / Δ test [CI] | C.3 cũ (×1, 20 seed): Δ test [CI] |",
+           "|---|---|---|---|---|---|---|---|"]
     c3 = []
     for ds in T.DATASETS:
         for H in T.HORIZONS:
@@ -897,21 +897,27 @@ def part_d(summ):
             dv = welch(np.array([r["val_mse"] for r in a]), np.array([r["val_mse"] for r in b]))
             dt = welch(np.array([r["test_mse"] for r in a]), np.array([r["test_mse"] for r in b]))
             o = old_c3[(ds, H)]
+            a1, b1 = runs(ds, "DLinear", H, 1.0, T.FINAL_SEEDS), runs(ds, "Linear", H, 1.0, T.FINAL_SEEDS)
+            dv1 = welch(np.array([r["val_mse"] for r in a1]), np.array([r["val_mse"] for r in b1]))
+            dt1 = welch(np.array([r["test_mse"] for r in a1]), np.array([r["test_mse"] for r in b1]))
+            bv1, bt1 = dv1[0] + dv1[1] < 0, dt1[0] + dt1[1] < 0
             bv, bt = dv[0] + dv[1] < 0, dt[0] + dt[1] < 0
             lv, lt = dv[0] - dv[1] > 0, dt[0] - dt[1] > 0
             c3.append({"dataset": ds, "H": H, "d_val": dv[0], "d_val_ci": dv[1], "d_test": dt[0], "d_test_ci": dt[1],
                        "dlinear_better_val": bv, "dlinear_better_test": bt, "linear_better_val": lv, "linear_better_test": lt,
-                       "old_dlinear_better_test": o["dlinear_better_test"]})
+                       "old_dlinear_better_test": o["dlinear_better_test"], "x1_d_val": dv1[0], "x1_d_val_ci": dv1[1],
+                       "x1_d_test": dt1[0], "x1_d_test_ci": dt1[1], "x1_dlinear_better_val": bv1, "x1_dlinear_better_test": bt1})
             yn = lambda x: "có" if x else "không"
             md.append(f"| {ds} | {H} | ×{g(chosen[(ds, 'Linear', H)])} / ×{g(chosen[(ds, 'DLinear', H)])} | {fci(*dv)} | {fci(*dt)} | "
                       f"{yn(bv)} / {yn(bt)}{' (Linear tốt hơn: ' + yn(lv) + ' / ' + yn(lt) + ')' if lv or lt else ''} | "
-                      f"{fci(o['d_test'], o['d_test_ci'])} |")
+                      f"{fci(*dv1)} / {fci(*dt1)} | {fci(o['d_test'], o['d_test_ci'])} |")
     n_b = sum(r["dlinear_better_val"] and r["dlinear_better_test"] for r in c3)
+    n_b1 = sum(r["x1_dlinear_better_val"] and r["x1_dlinear_better_test"] for r in c3)
     m4 = [r for r in c3 if r["old_dlinear_better_test"]]
-    md += ["", f"DLinear tốt hơn có ý nghĩa ở cả val lẫn test: {n_b}/12 ô (cũ: 4/12, đều ETTm1). Bốn ô ETTm1 cũ: "
+    md += ["", f"DLinear tốt hơn có ý nghĩa ở cả val lẫn test: {n_b}/12 ô (×1 trên cùng 15 seed 2026–2040: {n_b1}/12; cũ, 20 seed: 4/12, đều ETTm1). Bốn ô ETTm1 cũ: "
            + "; ".join(f"H={r['H']}: test {fci(r['d_test'], r['d_test_ci'])} ({'còn' if r['dlinear_better_test'] else 'không còn'} có ý nghĩa)"
                        for r in m4) + ".", ""]
-    summ["D_C3"] = {"rows": c3, "n_dlinear_better": n_b}
+    summ["D_C3"] = {"rows": c3, "n_dlinear_better": n_b, "n_dlinear_better_x1_15seed": n_b1}
     (OUT / "tables_D.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print(f"→ {OUT / 'tables_D.md'}")
 
