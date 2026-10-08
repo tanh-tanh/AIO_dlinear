@@ -103,6 +103,22 @@ def weight_gram(Xt, w, chunk=8):
     return A
 
 
+MAD_SCALE = 1.4826     # 1/Φ⁻¹(3/4): σ̂ = 1,4826·MAD ước lượng đúng σ khi phần dư ~ N(0, σ²)
+HUBER_K = 1.345        # δ = 1,345·σ̂: hiệu quả 95% so với MSE khi phần dư chuẩn
+
+
+def huber_delta_mad(R, k=HUBER_K):
+    """δ của Huber theo thang phần dư (docs/NHIEM_VU_7.md, A.1): trả (δ, σ̂).
+
+    σ̂ = 1,4826 · median(|R − median(R)|), gộp mọi phần tử của R (numpy, mọi kích thước); δ = k · σ̂.
+    MAD bền vững: tới gần 50% phần tử là outlier vẫn không làm σ̂ đổi nhiều.
+    """
+    r = np.asarray(R, dtype=np.float64).ravel()
+    dev = np.abs(r - np.median(r))
+    sigma = MAD_SCALE * float(np.median(dev))
+    return k * sigma, sigma
+
+
 def huber_objective(R, delta):
     """Trung bình Huber của phần dư R: r²/2 nếu |r| ≤ δ, δ(|r| − δ/2) nếu ngược lại.
 

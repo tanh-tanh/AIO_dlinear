@@ -10,3 +10,6 @@ results/optim_etth2/*.npy
 results/sgd_b1_b4/**/*.npy
 results/outliers/**/weights/
 results/outliers/d2_lr/**/*.npy
+results/huber_mad/**/weights/
+results/outliers_mag/**/weights/
+results/sgd_lr/**/*.npy

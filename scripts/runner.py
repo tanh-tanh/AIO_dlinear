@@ -29,6 +29,17 @@ results/<out>/weights/, thêm các cột OUTLIER_COLUMNS; khóa chạy tiếp g�
 --outlier-mode series: src.outliers.contaminate_series trên chuỗi train đã chuẩn hóa (scaler của train sạch),
 protect_last = L, rồi cắt cửa sổ; target: contaminate_targets trên Y của các cửa sổ train. Val, test giữ
 nguyên. Không có --outlier-mode thì code chạy y như trước.
+--outlier-magnitude (NHIEM_VU_7 C, mặc định 10): độ lớn ±magnitude truyền cho contaminate_*; cột outlier_magnitude
+(file mới luôn có; dòng cũ thiếu cột coi là 10), vào khóa chạy tiếp và tên file W (chỉ khi khác 10).
+
+δ của Huber (docs/NHIEM_VU_7.md, Phần A): --huber-delta mad lấy δ = --delta-scale × 1,345·σ̂ theo từng (ô, mô hình,
+tập train), σ̂ = 1,4826·MAD của phần dư train của nghiệm MSE λ = 0 của chính mô hình đó trên chính tập train đó
+(Cell.huber_delta, src.solvers.huber_delta_mad; tập train đã chèn outlier thì tính trên tập đã chèn). Số thực
+(vd --huber-delta 1) là δ cố định. Không đặt thì δ = 1, chạy y như trước. δ vào irls, train_obj, val_huber (metric
+val của chính mục tiêu, tính bằng δ của dòng), cột delta và lam_convention. Phạt chia cho δ (Σρ_δ/δ + λ‖w‖²), nên
+đổi δ làm đổi thang của λ. --skip-mse: không chạy đường MSE; λ = 0 của MAE/Huber khởi tạo từ
+Cell.closed_form(mô hình, 0) tính lại trên tập train hiện tại (cùng phép tính đã sinh W của dòng MSE λ = 0).
+Dùng cho results/huber_mad/.
 """
 import argparse
 import csv
@@ -53,7 +64,7 @@ from bench_5060ti import HUBER_DELTA, MAE_DELTA, ROOT, git_commit, load_cell  # 
 from src.operators import build_N, build_P, nlinear_effective, nlinear_transform  # noqa: E402
 from src.data import load_ett, make_dataset  # noqa: E402
 from src.outliers import contaminate_series, contaminate_targets  # noqa: E402
-from src.solvers import fit_with_bias, irls, nlinear_constrained, ols  # noqa: E402
+from src.solvers import MAD_SCALE, fit_with_bias, huber_delta_mad, irls, nlinear_constrained, ols  # noqa: E402
 
 L, K = 336, 25
 DATASETS = ["ETTh1", "ETTh2", "ETTm1"]
@@ -70,6 +81,8 @@ MAX_ITER = 1000
 STOP = {"MAE": {"tol": 1e-10, "patience": 1, "tol_lam0": 3e-11},
         "Huber": {"tol": 1e-9, "patience": 1, "tol_lam0": 1e-9}}
 DELTAS = {"MSE": None, "MAE": MAE_DELTA, "Huber": HUBER_DELTA}
+HUBER_RULE = {"delta": HUBER_DELTA, "scale": 1.0}   # --huber-delta, --delta-scale; "delta": "mad" hoặc số thực
+SKIP_MSE = False
 LAM_CONVENTION = {
     "MSE": "Σr² + λ·Σ_h w_hᵀPen w_h (tổng, không phạt bias)",
     "MAE": "Σ|r| + λ·Σ_h w_hᵀPen w_h (irls δ = 1e-6, tổng, không phạt bias)",
@@ -81,10 +94,11 @@ COLUMNS = ["dataset", "H", "model", "objective", "lam", "lam_convention", "delta
            "train_obj", "val_mse", "val_mae", "val_huber", "test_mse", "test_mae",
            "n_iter", "converged", "seconds", "init", "derived_from",
            "tol", "patience", "chunk", "gram_dtype", "gpu", "torch_version", "git_commit", "timestamp",
-           "n_fallback"]
+           "n_fallback", "delta_rule", "sigma_hat"]
 OUTLIER_COLUMNS = ["outlier_mode", "outlier_rate", "outlier_seed", "n_contaminated", "frac_windows_x",
                    "frac_windows_y"]
-OUTLIER = None          # dict mode, rate, seed khi chạy với --outlier-mode
+OUTLIER = None          # dict mode, rate, seed, magnitude khi chạy với --outlier-mode
+DEFAULT_MAGNITUDE = 10.0
 
 
 def lam_key(lam):
@@ -92,7 +106,10 @@ def lam_key(lam):
 
 
 def weight_path(ds, H, model, obj, lam):
-    tag = f"{OUTLIER['mode']}_r{OUTLIER['rate']:g}_s{OUTLIER['seed']}_" if OUTLIER else ""
+    tag = ""
+    if OUTLIER:
+        mag = "" if OUTLIER["magnitude"] == DEFAULT_MAGNITUDE else f"_m{OUTLIER['magnitude']:g}"
+        tag = f"{OUTLIER['mode']}_r{OUTLIER['rate']:g}_s{OUTLIER['seed']}{mag}_"
     return WEIGHTS / f"{tag}{ds}_H{H}_{model}_{obj}_lam{lam_key(lam)}.npy"
 
 
@@ -101,7 +118,8 @@ def outlier_match(r):
     if OUTLIER is None:
         return not r.get("outlier_mode")
     return (r.get("outlier_mode") == OUTLIER["mode"] and float(r["outlier_rate"]) == OUTLIER["rate"]
-            and int(r["outlier_seed"]) == OUTLIER["seed"])
+            and int(r["outlier_seed"]) == OUTLIER["seed"]
+            and float(r.get("outlier_magnitude") or DEFAULT_MAGNITUDE) == OUTLIER["magnitude"])
 
 
 # ---------------------------------------------------------------------------
@@ -122,7 +140,7 @@ class Writer:
         WEIGHTS.mkdir(parents=True, exist_ok=True)
         new = not PATH_CSV.exists()
         # file đã có: giữ đúng header của nó (lambda_path.csv chưa có cột n_fallback), bỏ cột thừa
-        fields = COLUMNS + (OUTLIER_COLUMNS if OUTLIER else [])
+        fields = COLUMNS + (OUTLIER_COLUMNS + ["outlier_magnitude"] if OUTLIER else [])
         if not new:
             with PATH_CSV.open(encoding="utf-8", newline="") as f:
                 fields = next(csv.reader(f))
@@ -134,7 +152,7 @@ class Writer:
                     "git_commit": git_commit(), "chunk": CHUNK}
         if OUTLIER:
             self.env.update(outlier_mode=OUTLIER["mode"], outlier_rate=OUTLIER["rate"],
-                            outlier_seed=OUTLIER["seed"])
+                            outlier_seed=OUTLIER["seed"], outlier_magnitude=OUTLIER["magnitude"])
         self.cell_extra = {}
 
     def write(self, row, W):
@@ -160,29 +178,34 @@ class Cell:
         self.Ninv = np.linalg.inv(build_N(P))
         self.pens = {"Linear": np.eye(L), "DLinear": self.Ninv, "NLinear": np.diag(np.r_[np.ones(L - 1), 0.0])}
         self._gpu = None
+        self._huber = {}
         self.set_train(self.d["X"], self.d["Y"])
         self.outlier_info = {}
         if OUTLIER:
             self.contaminate(**OUTLIER)
 
-    def contaminate(self, mode, rate, seed):
+    def contaminate(self, mode, rate, seed, magnitude=DEFAULT_MAGNITUDE):
         """Thay train bằng bản có outlier (docs/NHIEM_VU_6.md). Val, test không đổi."""
         if mode == "series":
             train, _, _ = load_ett(ROOT / "data" / f"{self.ds}.csv", L, self.ds)
-            train_c, info = contaminate_series(train, rate, seed=seed, protect_last=L, L=L, H=self.H)
+            train_c, info = contaminate_series(train, rate, magnitude=magnitude, seed=seed, protect_last=L,
+                                               L=L, H=self.H)
             X, Y = make_dataset(train_c, L, self.H)
         else:
-            Y, info = contaminate_targets(self.d["Y"], rate, seed=seed)
+            Y, info = contaminate_targets(self.d["Y"], rate, magnitude=magnitude, seed=seed)
             X = self.d["X"]
         self.set_train(X, Y)
+        self.outlier_mask = info["mask"]
         self.outlier_info = {k: info[k] for k in ("n_contaminated", "frac_windows_x", "frac_windows_y")}
-        print(f"  outlier {mode} rate {rate:g} seed {seed}: {info['n_contaminated']} điểm, cửa sổ có outlier "
+        print(f"  outlier {mode} rate {rate:g} seed {seed} ±{magnitude:g}: {info['n_contaminated']} điểm, "
+              f"cửa sổ có outlier "
               f"x {info['frac_windows_x']:.3f}, y {info['frac_windows_y']:.3f}", flush=True)
 
     def set_train(self, X, Y):
         """Đặt tập train (X, Y) và các thống kê của MSE dạng đóng. Dùng lại khi bỏ bớt cửa sổ train
         (scripts/constant_windows.py); chỉ hợp lệ trước khi dùng GPU."""
         assert self._gpu is None
+        self._huber = {}
         self.d["X"], self.d["Y"] = X, Y
         self.d["Xt"] = np.concatenate([X, np.ones((len(X), 1))], axis=1)
         self.n = len(X)
@@ -226,14 +249,36 @@ class Cell:
             b = self.y_bar - W @ self.x_bar
         return np.concatenate([W, b[:, None]], axis=1)
 
-    def evaluate(self, W, model, obj, lam):
-        """Sai số float64 trên CPU. train_obj = hàm mục tiêu dạng tổng (có phạt) chia n·H."""
+    def huber_delta(self, model, residual_stats=False):
+        """δ của Huber cho mô hình này trên tập train hiện tại, theo HUBER_RULE; trả (δ, σ̂, quy tắc).
+
+        "mad": δ = scale × 1,345·σ̂, σ̂ = 1,4826·MAD của mọi phần tử phần dư train của closed_form(model, 0).
+        residual_stats=True trả thêm σ̂ theo từng bước h (mảng [H]) để tham khảo (scripts/huber_deltas.py).
+        """
+        if HUBER_RULE["delta"] != "mad":
+            return float(HUBER_RULE["delta"]), None, f"fixed {float(HUBER_RULE['delta']):g}"
+        if model not in self._huber or (residual_stats and len(self._huber[model]) < 3):
+            R = self.d["Y"] - self.d["Xt"] @ self.closed_form(model, 0).T
+            out = list(huber_delta_mad(R))
+            if residual_stats:
+                out.append(MAD_SCALE * np.median(np.abs(R - np.median(R, axis=0)), axis=0))
+            del R
+            self._huber[model] = out
+        delta1, sigma = self._huber[model][:2]
+        res = (HUBER_RULE["scale"] * delta1, sigma, f"mad x{HUBER_RULE['scale']:g}")
+        return res + (self._huber[model][2],) if residual_stats else res
+
+    def evaluate(self, W, model, obj, lam, delta=None):
+        """Sai số float64 trên CPU. train_obj = hàm mục tiêu dạng tổng (có phạt) chia n·H.
+
+        delta: δ của mục tiêu (mặc định DELTAS[obj]); val_huber tính bằng δ này nếu obj là Huber, ngược lại δ = 1."""
         d = self.d
         R = d["Y"] - d["Xt"] @ W.T
+        if delta is None:
+            delta = DELTAS[obj]
         if obj == "MSE":
             loss = (R ** 2).sum()
         else:
-            delta = DELTAS[obj]
             a = np.abs(R)
             q = np.minimum(a, delta)
             loss = (q * (a - q / 2)).sum() / delta
@@ -244,7 +289,7 @@ class Cell:
             out[f"{name}_mse"] = float((Rs ** 2).mean())
             out[f"{name}_mae"] = float(np.abs(Rs).mean())
             if name == "val":
-                out["val_huber"] = B.huber_np(Rs, HUBER_DELTA)
+                out["val_huber"] = B.huber_np(Rs, delta if obj == "Huber" else HUBER_DELTA)
         return out
 
     def run_irls(self, model, W0, delta, lam_irls, tol, patience, max_iter=MAX_ITER):
@@ -264,9 +309,14 @@ class Cell:
 # ---------------------------------------------------------------------------
 
 def base_row(cell, model, obj, lam):
-    return {"dataset": cell.ds, "H": cell.H, "model": model, "objective": obj, "lam": lam,
-            "lam_convention": LAM_CONVENTION[obj], "delta": DELTAS[obj] if DELTAS[obj] else "",
-            "k": K if model == "DLinear" else ""}
+    row = {"dataset": cell.ds, "H": cell.H, "model": model, "objective": obj, "lam": lam,
+           "lam_convention": LAM_CONVENTION[obj], "delta": DELTAS[obj] if DELTAS[obj] else "",
+           "k": K if model == "DLinear" else ""}
+    if obj == "Huber" and HUBER_RULE["delta"] != HUBER_DELTA:
+        delta, sigma, rule = cell.huber_delta(model)
+        row.update(delta=delta, delta_rule=rule, sigma_hat="" if sigma is None else sigma,
+                   lam_convention=LAM_CONVENTION["Huber"].replace("δ = 1,", f"δ = {delta:.6g} ({rule}),"))
+    return row
 
 
 def derive_dlinear_lam0(cell, obj, done, writer):
@@ -277,6 +327,9 @@ def derive_dlinear_lam0(cell, obj, done, writer):
     src = done[(cell.ds, cell.H, "Linear", obj, lam_key(0))]
     W = np.load(weight_path(cell.ds, cell.H, "Linear", obj, 0))
     row = {c: src[c] for c in COLUMNS if c in src}
+    if obj == "Huber" and HUBER_RULE["delta"] == "mad":
+        # λ = 0 chép từ Linear chỉ đúng khi δ của hai mô hình trùng nhau (cùng nghiệm MSE λ = 0)
+        assert cell.huber_delta("DLinear") == cell.huber_delta("Linear"), "δ của DLinear khác Linear"
     row.update(model="DLinear", k=K, derived_from="Linear", seconds=0)
     writer.write(row, W)
     done[key] = row
@@ -327,7 +380,7 @@ def edge_extension(cell, model, obj, done):
 
 
 def run_irls_path(cell, model, obj, done, writer):
-    delta = DELTAS[obj]
+    delta = DELTAS[obj] if obj == "MAE" else base_row(cell, model, obj, 0)["delta"]
     tol, patience = STOP[obj]["tol"], STOP[obj]["patience"]
 
     def one(lam):
@@ -339,7 +392,9 @@ def run_irls_path(cell, model, obj, done, writer):
             return
         lams = lam_grid(cell, model, obj, done)
         below = [l for l in lams if l < lam and (cell.ds, cell.H, model, obj, lam_key(l)) in done]
-        if lam == 0:
+        if lam == 0 and SKIP_MSE:
+            W0, init = cell.closed_form(model, 0), "ols"
+        elif lam == 0:
             W0, init = np.load(weight_path(cell.ds, cell.H, model, "MSE", 0)), "ols"
         else:
             W0, init = np.load(weight_path(cell.ds, cell.H, model, obj, max(below))), "warm"
@@ -347,7 +402,8 @@ def run_irls_path(cell, model, obj, done, writer):
         W, n, conv, sec = cell.run_irls(model, W0, delta, lam, t, patience)
         row = base_row(cell, model, obj, lam)
         row.update(init=init, n_iter=n, converged=conv, seconds=sec, tol=t, patience=patience, chunk=cell.chunk,
-                   gram_dtype="float32", n_fallback=irls.last_fallbacks, **cell.evaluate(W, model, obj, lam))
+                   gram_dtype="float32", n_fallback=irls.last_fallbacks,
+                   **cell.evaluate(W, model, obj, lam, delta))
         writer.write(row, W)
         done[key] = row
         print(f"  {cell.ds} H={cell.H} {model} {obj} λ = {lam:g}: {n} vòng, {sec:.1f} s, "
@@ -413,21 +469,38 @@ def main():
     ap.add_argument("--outlier-mode", choices=["series", "target"], default=None)
     ap.add_argument("--outlier-rate", type=float, default=0.0)
     ap.add_argument("--outlier-seed", type=int, default=2026)
+    ap.add_argument("--outlier-magnitude", type=float, default=DEFAULT_MAGNITUDE)
+    ap.add_argument("--huber-delta", default=None, help="'mad' hoặc số thực (mặc định δ = 1 như grid)")
+    ap.add_argument("--delta-scale", type=float, default=1.0, help="nhân δ_MAD (NHIEM_VU_7 A.3)")
+    ap.add_argument("--skip-mse", action="store_true", help="không chạy MSE; λ = 0 khởi tạo từ closed_form")
     args = ap.parse_args()
-    global PATH_CSV, WEIGHTS, OUTLIER
+    global PATH_CSV, WEIGHTS, OUTLIER, SKIP_MSE
     if args.out:
         PATH_CSV = ROOT / "results" / args.out / "lambda_path.csv"
         WEIGHTS = ROOT / "results" / args.out / "weights"
     if args.outlier_mode:
         if not args.out:
             sys.exit("--outlier-mode cần --out (không ghi vào results/lambda_path.csv)")
-        OUTLIER = {"mode": args.outlier_mode, "rate": args.outlier_rate, "seed": args.outlier_seed}
+        OUTLIER = {"mode": args.outlier_mode, "rate": args.outlier_rate, "seed": args.outlier_seed,
+                   "magnitude": args.outlier_magnitude}
+    if args.huber_delta is not None:
+        if not args.out:
+            sys.exit("--huber-delta cần --out (không ghi vào results/lambda_path.csv)")
+        HUBER_RULE["delta"] = "mad" if args.huber_delta == "mad" else float(args.huber_delta)
+    if args.delta_scale != 1.0:
+        if HUBER_RULE["delta"] != "mad":
+            sys.exit("--delta-scale chỉ dùng với --huber-delta mad")
+        HUBER_RULE["scale"] = args.delta_scale
+    if args.skip_mse:
+        if not args.out:
+            sys.exit("--skip-mse cần --out")
+        SKIP_MSE = True
     if any(v is None for s in STOP.values() for v in s.values()):
         sys.exit("STOP chưa điền: cần kết quả Phần A (docs/BAO_CAO_TIEU_CHI_DUNG.md)")
     # DLinear λ = 0 chép từ Linear, MAE/Huber λ = 0 khởi tạo từ MSE λ = 0 của cùng mô hình
     if "DLinear" in args.model and "Linear" not in args.model:
         args.model = ["Linear"] + args.model
-    if set(args.objective) & {"MAE", "Huber"} and "MSE" not in args.objective:
+    if set(args.objective) & {"MAE", "Huber"} and "MSE" not in args.objective and not SKIP_MSE:
         args.objective = ["MSE"] + args.objective
     args.objective = [o for o in OBJECTIVES if o in args.objective]
     args.model = [m for m in MODELS if m in args.model]

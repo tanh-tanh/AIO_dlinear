@@ -5,7 +5,7 @@ import numpy as np
 
 from src.metrics import sse
 from src.operators import build_N, build_P, make_Z, nlinear_transform
-from src.solvers import (fit_with_bias, lstsq_solver, nlinear_constrained, ols, ridge,
+from src.solvers import (fit_with_bias, huber_delta_mad, lstsq_solver, nlinear_constrained, ols, ridge,
                          ridge_path, ridge_pen)
 
 
@@ -92,6 +92,28 @@ class TestDLinear(unittest.TestCase):
             self.assertGreater(np.abs(Z @ W_a.T + b_a - (X @ W_b.T + b_b)).max(), 1e-6)
 
 import torch   # thêm lên đầu file, cạnh các import sẵn có
+
+
+class TestHuberDeltaMAD(unittest.TestCase):
+    """δ của Huber theo MAD của phần dư (NHIEM_VU_7, A.1)."""
+
+    def test_normal_scale(self):
+        for s in (0.1, 0.5, 1.0, 3.0):
+            R = np.random.default_rng(1).normal(0.2, s, size=(20000, 50))     # 1e6 phần tử, lệch tâm 0,2
+            delta, sigma = huber_delta_mad(R)
+            self.assertLess(abs(sigma - s) / s, 0.05)
+            self.assertAlmostEqual(delta, 1.345 * sigma, places=12)
+
+    def test_robust_to_outliers(self):
+        rng = np.random.default_rng(2)
+        R = rng.normal(0, 0.5, size=(10000, 20))
+        _, s0 = huber_delta_mad(R)
+        Rc = R.copy()
+        idx = rng.choice(R.size, size=R.size // 20, replace=False)          # 5% phần tử ±50
+        Rc.reshape(-1)[idx] += np.where(rng.random(len(idx)) < 0.5, -50.0, 50.0)
+        _, s1 = huber_delta_mad(Rc)
+        self.assertLess(abs(s1 - s0) / s0, 0.1)
+        self.assertGreater(Rc.std() / R.std(), 10)                          # độ lệch chuẩn thì đổi rất nhiều
 
 
 def weight_gram(Xt, w, chunk=8):
