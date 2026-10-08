@@ -579,7 +579,7 @@
    100.0
   ]
  },
- "git_commit": "cd43cce0d508",
+ "git_commit": "fc7c2bf33bc9",
  "D_B4": {
   "rows": [
    {
@@ -1360,7 +1360,13 @@
     "dlinear_better_test": false,
     "linear_better_val": false,
     "linear_better_test": false,
-    "old_dlinear_better_test": false
+    "old_dlinear_better_test": false,
+    "x1_d_val": -0.001212868486194535,
+    "x1_d_val_ci": 0.004165246175472555,
+    "x1_d_test": -0.006355499208959836,
+    "x1_d_test_ci": 0.011797395443135687,
+    "x1_dlinear_better_val": false,
+    "x1_dlinear_better_test": false
    },
    {
     "dataset": "ETTh2",
@@ -1373,7 +1379,13 @@
     "dlinear_better_test": false,
     "linear_better_val": false,
     "linear_better_test": false,
-    "old_dlinear_better_test": false
+    "old_dlinear_better_test": false,
+    "x1_d_val": -0.0009382630412955728,
+    "x1_d_val_ci": 0.011607510047473842,
+    "x1_d_test": -0.009551639280746926,
+    "x1_d_test_ci": 0.02393396836489926,
+    "x1_dlinear_better_val": false,
+    "x1_dlinear_better_test": false
    },
    {
     "dataset": "ETTh2",
@@ -1386,7 +1398,13 @@
     "dlinear_better_test": false,
     "linear_better_val": false,
     "linear_better_test": false,
-    "old_dlinear_better_test": false
+    "old_dlinear_better_test": false,
+    "x1_d_val": 0.003586032784396287,
+    "x1_d_val_ci": 0.006866758977274348,
+    "x1_d_test": 0.000715226430819782,
+    "x1_d_test_ci": 0.01766686947539273,
+    "x1_dlinear_better_val": false,
+    "x1_dlinear_better_test": false
    },
    {
     "dataset": "ETTh2",
@@ -1399,7 +1417,13 @@
     "dlinear_better_test": false,
     "linear_better_val": false,
     "linear_better_test": false,
-    "old_dlinear_better_test": false
+    "old_dlinear_better_test": false,
+    "x1_d_val": -0.001367033605596868,
+    "x1_d_val_ci": 0.006273966003405281,
+    "x1_d_test": -0.005187761400421098,
+    "x1_d_test_ci": 0.040551145038442,
+    "x1_dlinear_better_val": false,
+    "x1_dlinear_better_test": false
    },
    {
     "dataset": "ETTh1",
@@ -1412,7 +1436,13 @@
     "dlinear_better_test": false,
     "linear_better_val": false,
     "linear_better_test": false,
-    "old_dlinear_better_test": false
+    "old_dlinear_better_test": false,
+    "x1_d_val": -0.0019381662661114296,
+    "x1_d_val_ci": 0.0032555159840870606,
+    "x1_d_test": -0.004147460987803608,
+    "x1_d_test_ci": 0.007032627094957656,
+    "x1_dlinear_better_val": false,
+    "x1_dlinear_better_test": false
    },
    {
     "dataset": "ETTh1",
@@ -1425,7 +1455,13 @@
     "dlinear_better_test": false,
     "linear_better_val": false,
     "linear_better_test": false,
-    "old_dlinear_better_test": false
+    "old_dlinear_better_test": false,
+    "x1_d_val": 0.00032422426480049893,
+    "x1_d_val_ci": 0.003958392463678444,
+    "x1_d_test": -0.009398995209064731,
+    "x1_d_test_ci": 0.012274217130186464,
+    "x1_dlinear_better_val": false,
+    "x1_dlinear_better_test": false
    },
    {
     "dataset": "ETTh1",
@@ -1438,7 +1474,13 @@
     "dlinear_better_test": false,
     "linear_better_val": false,
     "linear_better_test": false,
-    "old_dlinear_better_test": false
+    "old_dlinear_better_test": false,
+    "x1_d_val": -0.00036337758919602337,
+    "x1_d_val_ci": 0.006469411331979429,
+    "x1_d_test": -0.008083216558307238,
+    "x1_d_test_ci": 0.01866263498604833,
+    "x1_dlinear_better_val": false,
+    "x1_dlinear_better_test": false
    },
    {
     "dataset": "ETTh1",
@@ -1451,7 +1493,13 @@
     "dlinear_better_test": false,
     "linear_better_val": false,
     "linear_better_test": false,
-    "old_dlinear_better_test": false
+    "old_dlinear_better_test": false,
+    "x1_d_val": 0.003182831676321385,
+    "x1_d_val_ci": 0.01221193774210394,
+    "x1_d_test": 0.009885558060507726,
+    "x1_d_test_ci": 0.025063774031200726,
+    "x1_dlinear_better_val": false,
+    "x1_dlinear_better_test": false
    },
    {
     "dataset": "ETTm1",
@@ -1464,7 +1512,13 @@
     "dlinear_better_test": false,
     "linear_better_val": false,
     "linear_better_test": false,
-    "old_dlinear_better_test": true
+    "old_dlinear_better_test": true,
+    "x1_d_val": -0.005620384646304044,
+    "x1_d_val_ci": 0.0006837197613598727,
+    "x1_d_test": -0.004104015987450971,
+    "x1_d_test_ci": 0.0013237552285813778,
+    "x1_dlinear_better_val": true,
+    "x1_dlinear_better_test": true
    },
    {
     "dataset": "ETTm1",
@@ -1477,7 +1531,13 @@
     "dlinear_better_test": false,
     "linear_better_val": false,
     "linear_better_test": false,
-    "old_dlinear_better_test": true
+    "old_dlinear_better_test": true,
+    "x1_d_val": -0.0054294443604342435,
+    "x1_d_val_ci": 0.0006267942861933777,
+    "x1_d_test": -0.003153388451606731,
+    "x1_d_test_ci": 0.0008702805188904132,
+    "x1_dlinear_better_val": true,
+    "x1_dlinear_better_test": true
    },
    {
     "dataset": "ETTm1",
@@ -1490,7 +1550,13 @@
     "dlinear_better_test": false,
     "linear_better_val": false,
     "linear_better_test": false,
-    "old_dlinear_better_test": true
+    "old_dlinear_better_test": true,
+    "x1_d_val": -0.005275064429895893,
+    "x1_d_val_ci": 0.0023161019682265134,
+    "x1_d_test": -0.0034335758184046994,
+    "x1_d_test_ci": 0.002014921909703541,
+    "x1_dlinear_better_val": true,
+    "x1_dlinear_better_test": true
    },
    {
     "dataset": "ETTm1",
@@ -1503,10 +1569,17 @@
     "dlinear_better_test": false,
     "linear_better_val": false,
     "linear_better_test": false,
-    "old_dlinear_better_test": true
+    "old_dlinear_better_test": true,
+    "x1_d_val": -0.003589848878398638,
+    "x1_d_val_ci": 0.0038212728404704694,
+    "x1_d_test": -0.003807404468393172,
+    "x1_d_test_ci": 0.0024200058261737785,
+    "x1_dlinear_better_val": false,
+    "x1_dlinear_better_test": true
    }
   ],
-  "n_dlinear_better": 0
+  "n_dlinear_better": 0,
+  "n_dlinear_better_x1_15seed": 3
  },
  "A_delta_grid_range": [
   0.37184719541943456,

@@ -34,10 +34,10 @@ Ký hiệu: **tiêu chí mới** (B.1) là MSE test báo ở λ*_MSE = argmin MS
 - Thí nghiệm outlier: mục tiêu tốt nhất không đổi ở ô nào có rate > 0.
 - λ* của DLinear ETTh1 H = 96: MSE test của MAE và Huber giờ báo ở λ*_MSE = 300 (trước là 100); MAE test vẫn ở 100.
 
-**C. Với outlier nhỏ hơn (3σ, 5σ) trong chuỗi, MAE và Huber bền vững hơn MSE; thứ hạng chỉ đảo khi outlier vừa nhiều (10%) vừa lớn (từ khoảng 5σ).**
+**C. Với outlier nhỏ hơn (3σ, 5σ) trong chuỗi, MAE và Huber bền vững hơn MSE; thứ hạng chỉ đảo khi outlier vừa nhiều (10%) vừa lớn, giữa 5σ và 10σ.** C chạy một seed (2026).
 
 - Linear, ETTh1, H = 96, 720, seed 2026, cùng vị trí outlier ở mọi độ lớn.
-- Chèn vào chuỗi: ở rate 1%, MAE tốt nhất ở cả 3σ, 5σ, 10σ. Ở rate 10%, MAE tốt nhất ở 3σ (cả hai H) và ở 5σ với H = 720. Ở 5σ với H = 96, ba mục tiêu gần bằng nhau (chênh không quá 0,0015). Ở 10σ, MSE tốt nhất.
+- Chèn vào chuỗi: ở rate 1%, MAE tốt nhất ở cả 3σ, 5σ, 10σ. Ở rate 10%, MAE tốt nhất ở 3σ (cả hai H) và ở 5σ với H = 720. Ở 5σ với H = 96, ba mục tiêu chênh không quá 0,0015, nhỏ hơn độ lệch theo seed ở B.5 (0,012–0,015 ở rate 10%). Ở 10σ, MSE tốt nhất.
 - Chèn chỉ vào đích: MAE tốt nhất ở mọi độ lớn; MSE suy giảm gần tỷ lệ với độ lớn (H = 96, 10%: +0,002 / +0,005 / +0,014), MAE và Huber gần như không đổi.
 
 **D. Tinh chỉnh lr không đóng được khoảng cách giữa SGD và nghiệm dạng đóng trên test, nhưng xóa lợi thế của DLinear so với Linear trên ETTm1.**
@@ -46,7 +46,7 @@ Ký hiệu: **tiêu chí mới** (B.1) là MSE test báo ở λ*_MSE = argmin MS
 - SGD đã tinh chỉnh (15 seed mới) vẫn kém dạng đóng trên test ở 28/36 ô theo trung bình, 27/36 có ý nghĩa. Trên ETTh1, ETTm1, SGD vẫn thua ở 24/24 ô (Δ test +0,002 đến +0,029).
 - **Nhãn B4 đổi ở 15/36 ô, 13 do lr.** "Dạng đóng tốt hơn thật" giảm từ 10 xuống 2, chủ yếu thành "SGD có dấu hiệu khớp val quá mức": tinh chỉnh lr giúp SGD trên val nhưng không trên test.
 - "SGD tốt hơn thật": 5 ô, vẫn chỉ ở ETTh2 với Linear/DLinear (cũ 6; ETTh2 Linear H = 720 thành "không phân biệt được").
-- **C.3: khi cả hai được tinh chỉnh lr, DLinear tốt hơn Linear có ý nghĩa ở 0/12 ô** (cũ 4/12, đều ETTm1). Ở ETTm1, Linear chọn lr ×8 ở 3/4 H còn DLinear chọn ×2 ở 3/4 H. Điều này phù hợp với giả thuyết "DLinear có lr hiệu dụng lớn hơn" (nhiệm vụ 6 D.2) nhưng chưa phải phép kiểm giả thuyết đó.
+- **C.3: khi cả hai được tinh chỉnh lr, DLinear tốt hơn Linear có ý nghĩa ở 0/12 ô** (cũ 4/12, đều ETTm1). Với lr gốc trên cùng 15 seed, 4/4 ô ETTm1 vẫn có ý nghĩa trên test, nên thay đổi là do lr. Ở ETTm1, Linear chọn lr ×8 ở 3/4 H còn DLinear chọn ×2 ở 3/4 H. Điều này phù hợp với giả thuyết "DLinear có lr hiệu dụng lớn hơn" (nhiệm vụ 6 D.2) nhưng chưa phải phép kiểm giả thuyết đó.
 
 ## 2. Những kết luận đổi so với các báo cáo trước
 
@@ -68,7 +68,7 @@ Lý do đổi: **[λ]** tiêu chí chọn λ* mới (B.1); **[δ]** Huber dùng 
 | 12 | "SGD tốt hơn thật" chỉ ở ETTh2 với Linear/DLinear | 6 ô | 5 ô, vẫn chỉ ETTh2 Linear/DLinear; ETTh2 Linear H = 720 (chọn ×0,5) thành "không phân biệt được" | [lr] |
 | 13 | SGD kém dạng đóng trên test ở 24/24 ô ETTh1, ETTm1 | Δ test ETTh1 +0,003 đến +0,040, ETTm1 +0,0025 đến +0,0104 | vẫn 24/24 theo trung bình (23/24 có ý nghĩa); ETTh1 +0,0025 đến +0,029, ETTm1 +0,0022 đến +0,0100 | [lr]: tinh chỉnh lr không đóng được khoảng cách |
 | 14 | ETTm1: "dạng đóng tốt hơn thật" ở 7 ô | 7 ô | 0 ô; 7 ô cũ thành "SGD có dấu hiệu khớp val quá mức" (5) hoặc "khác biệt do val khác test" (2): SGD tinh chỉnh thắng hoặc hòa trên val nhưng vẫn thua trên test | [lr] |
-| 15 | C.3: DLinear tốt hơn Linear có ý nghĩa ở 4/12 ô, đều ETTm1 | Δ test −0,0032 đến −0,0047 | **0/12 ô**; ETTm1: −0,0020 đến +0,0002, mọi CI chứa 0 | [lr] |
+| 15 | C.3: DLinear tốt hơn Linear có ý nghĩa ở 4/12 ô, đều ETTm1 | Δ test −0,0032 đến −0,0047 | **0/12 ô**; ETTm1: −0,0020 đến +0,0002, mọi CI chứa 0 | [lr]: với lr gốc trên cùng 15 seed, 4/4 ô ETTm1 vẫn có ý nghĩa trên test |
 | 16 | B1 (số công bố so với 20 seed SGD) | — | không đổi (B1 dùng lr gốc để tái lập, đúng góp ý 5 của TA) | — |
 
 Các kết luận khác của BAO_CAO_OUTLIER (λ* về 0 khi có outlier trong chuỗi, NLinear suy giảm ít hơn Linear, chèn chỉ vào đích làm MSE suy giảm) dùng MSE, MAE nên không đổi theo [δ]; [λ] không đổi mục tiêu tốt nhất ở rate > 0 (mục 3.5).
@@ -520,7 +520,7 @@ Hàng trên: MSE test ở λ*_MSE; hàng dưới: MAE test ở λ*_MAE. Trục h
 
 - **Chèn chỉ vào đích:** MAE tốt nhất ở cả 12 (H, rate, độ lớn) theo cả hai metric. MSE suy giảm gần tỷ lệ với độ lớn (H = 96, 10%: +0,0019 / +0,0047 / +0,0139 ở 3σ / 5σ / 10σ); MAE và Huber gần như không đổi (|Δ| ≤ 0,0041).
 - **Chèn vào chuỗi, outlier nhỏ hơn thì MAE và Huber bền vững hơn MSE:** ở rate 1%, MAE tốt nhất ở cả 3σ, 5σ, 10σ, cả hai H, cả hai metric; ở 3σ và 5σ, MSE test của MAE còn thấp hơn ở dữ liệu gốc (H = 96: −0,0031, −0,0033). Ở rate 10%, 3σ: MAE vẫn tốt nhất ở cả hai H, nhưng ba mục tiêu suy giảm gần bằng nhau (H = 96: MSE +0,0096, MAE +0,0091, Huber +0,0099).
-- **Thứ hạng đảo ở rate 10%, giữa 5σ và 10σ:** ở H = 96, 5σ, ba mục tiêu gần như bằng nhau (MSE test 0,3954 / 0,3969 / 0,3958 cho MSE / MAE / Huber; MSE tốt nhất theo MSE test, Huber theo MAE test, chênh không quá 0,0015). Ở H = 720, 5σ, MAE vẫn tốt nhất (0,4814 so với 0,4904 của MSE). Ở 10σ, MSE tốt nhất ở cả hai H (nhiệm vụ 6). Như vậy MAE và Huber chỉ mất lợi thế khi outlier vừa nhiều (10%) vừa lớn (khoảng 5σ trở lên).
+- **Thứ hạng đảo ở rate 10%, giữa 5σ và 10σ** (một seed; độ lệch theo seed ở B.5 là 0,012–0,015 ở rate 10%): ở H = 96, 5σ, ba mục tiêu gần như bằng nhau (MSE test 0,3954 / 0,3969 / 0,3958 cho MSE / MAE / Huber; MSE tốt nhất theo MSE test, Huber theo MAE test, chênh không quá 0,0015). Ở H = 720, 5σ, MAE vẫn tốt nhất (0,4814 so với 0,4904 của MSE). Ở 10σ, MSE tốt nhất ở cả hai H (nhiệm vụ 6). Như vậy MAE và Huber chỉ mất lợi thế khi outlier vừa nhiều (10%) vừa lớn (khoảng 5σ trở lên).
 - **Huber δ_MAD nằm giữa MSE và MAE** ở 47/48 (ô, metric) của bảng trên; ngoại lệ duy nhất là MAE test ở H = 96, chuỗi, 10%, 5σ (Huber 0,4138, MSE và MAE 0,4144). Ở vài ô H = 720, MSE test của Huber ở tập có outlier thấp hơn ở tập gốc (chuỗi 1%, 3σ / 5σ: −0,0051 / −0,0036; đích 10%: −0,0029 đến −0,0041). Chưa tìm hiểu nguyên nhân.
 
 ## 6. Phần D: SGD đã tinh chỉnh learning rate
@@ -660,32 +660,36 @@ Nhãn đổi so với B4 cũ: 15/36 ô; trong đó 13 ô nhãn tinh chỉnh khá
 
 ### 6.4. C.3-tinh chỉnh
 
-| Dataset | H | lr Linear / DLinear | Δ val [CI] | Δ test [CI] | DLinear tốt hơn có ý nghĩa (val / test) | C.3 cũ: Δ test [CI] |
-|---|---|---|---|---|---|---|
-| ETTh2 | 96 | ×1 / ×1 | −0,0012 [−0,0054; 0,0030] | −0,0064 [−0,0182; 0,0054] | không / không | −0,0055 [−0,0148; 0,0037] |
-| ETTh2 | 192 | ×4 / ×0,5 | −0,0063 [−0,0196; 0,0069] | −0,0195 [−0,0459; 0,0069] | không / không | −0,0154 [−0,0383; 0,0075] |
-| ETTh2 | 336 | ×1 / ×1 | 0,0036 [−0,0033; 0,0105] | 0,0007 [−0,0170; 0,0184] | không / không | 0,0033 [−0,0122; 0,0187] |
-| ETTh2 | 720 | ×0,5 / ×1 | −0,0044 [−0,0155; 0,0067] | −0,0193 [−0,0700; 0,0314] | không / không | −0,0098 [−0,0444; 0,0249] |
-| ETTh1 | 96 | ×4 / ×1 | 0,0006 [−0,0029; 0,0042] | 0,0003 [−0,0040; 0,0046] | không / không | −0,0020 [−0,0075; 0,0036] |
-| ETTh1 | 192 | ×8 / ×2 | −0,0077 [−0,0191; 0,0037] | −0,0145 [−0,0307; 0,0016] | không / không | −0,0105 [−0,0227; 0,0017] |
-| ETTh1 | 336 | ×1 / ×0,5 | −0,0041 [−0,0137; 0,0055] | −0,0043 [−0,0224; 0,0138] | không / không | 0,0020 [−0,0150; 0,0190] |
-| ETTh1 | 720 | ×0,5 / ×8 | 0,0051 [−0,0032; 0,0135] | −0,0096 [−0,0238; 0,0046] | không / không | 0,0033 [−0,0210; 0,0276] |
-| ETTm1 | 96 | ×8 / ×2 | −0,0003 [−0,0012; 0,0005] | 0,0002 [−0,0017; 0,0022] | không / không | −0,0040 [−0,0052; −0,0028] |
-| ETTm1 | 192 | ×8 / ×2 | −0,0002 [−0,0014; 0,0010] | −0,0010 [−0,0028; 0,0008] | không / không | −0,0032 [−0,0041; −0,0024] |
-| ETTm1 | 336 | ×8 / ×4 | −0,0009 [−0,0037; 0,0019] | −0,0020 [−0,0073; 0,0033] | không / không | −0,0038 [−0,0054; −0,0021] |
-| ETTm1 | 720 | ×2 / ×2 | −0,0015 [−0,0069; 0,0040] | −0,0020 [−0,0058; 0,0017] | không / không | −0,0047 [−0,0069; −0,0025] |
+DLinear − Linear, cả hai ở lr đã tinh chỉnh, 15 seed mỗi mô hình, CI 95% Welch. Cột "×1, 2026–2040": lr gốc trên đúng 15 seed đó (không chạy mới), để tách phần do lr với phần do bớt seed.
 
-DLinear tốt hơn có ý nghĩa ở cả val lẫn test: 0/12 ô (cũ: 4/12, đều ETTm1). Bốn ô ETTm1 cũ: H=96: test 0,0002 [−0,0017; 0,0022] (không còn có ý nghĩa); H=192: test −0,0010 [−0,0028; 0,0008] (không còn có ý nghĩa); H=336: test −0,0020 [−0,0073; 0,0033] (không còn có ý nghĩa); H=720: test −0,0020 [−0,0058; 0,0017] (không còn có ý nghĩa).
+| Dataset | H | lr Linear / DLinear | Δ val [CI] | Δ test [CI] | DLinear tốt hơn có ý nghĩa (val / test) | ×1, 2026–2040: Δ val / Δ test [CI] | C.3 cũ (×1, 20 seed): Δ test [CI] |
+|---|---|---|---|---|---|---|---|
+| ETTh2 | 96 | ×1 / ×1 | −0,0012 [−0,0054; 0,0030] | −0,0064 [−0,0182; 0,0054] | không / không | −0,0012 [−0,0054; 0,0030] / −0,0064 [−0,0182; 0,0054] | −0,0055 [−0,0148; 0,0037] |
+| ETTh2 | 192 | ×4 / ×0,5 | −0,0063 [−0,0196; 0,0069] | −0,0195 [−0,0459; 0,0069] | không / không | −0,0009 [−0,0125; 0,0107] / −0,0096 [−0,0335; 0,0144] | −0,0154 [−0,0383; 0,0075] |
+| ETTh2 | 336 | ×1 / ×1 | 0,0036 [−0,0033; 0,0105] | 0,0007 [−0,0170; 0,0184] | không / không | 0,0036 [−0,0033; 0,0105] / 0,0007 [−0,0170; 0,0184] | 0,0033 [−0,0122; 0,0187] |
+| ETTh2 | 720 | ×0,5 / ×1 | −0,0044 [−0,0155; 0,0067] | −0,0193 [−0,0700; 0,0314] | không / không | −0,0014 [−0,0076; 0,0049] / −0,0052 [−0,0457; 0,0354] | −0,0098 [−0,0444; 0,0249] |
+| ETTh1 | 96 | ×4 / ×1 | 0,0006 [−0,0029; 0,0042] | 0,0003 [−0,0040; 0,0046] | không / không | −0,0019 [−0,0052; 0,0013] / −0,0041 [−0,0112; 0,0029] | −0,0020 [−0,0075; 0,0036] |
+| ETTh1 | 192 | ×8 / ×2 | −0,0077 [−0,0191; 0,0037] | −0,0145 [−0,0307; 0,0016] | không / không | 0,0003 [−0,0036; 0,0043] / −0,0094 [−0,0217; 0,0029] | −0,0105 [−0,0227; 0,0017] |
+| ETTh1 | 336 | ×1 / ×0,5 | −0,0041 [−0,0137; 0,0055] | −0,0043 [−0,0224; 0,0138] | không / không | −0,0004 [−0,0068; 0,0061] / −0,0081 [−0,0267; 0,0106] | 0,0020 [−0,0150; 0,0190] |
+| ETTh1 | 720 | ×0,5 / ×8 | 0,0051 [−0,0032; 0,0135] | −0,0096 [−0,0238; 0,0046] | không / không | 0,0032 [−0,0090; 0,0154] / 0,0099 [−0,0152; 0,0349] | 0,0033 [−0,0210; 0,0276] |
+| ETTm1 | 96 | ×8 / ×2 | −0,0003 [−0,0012; 0,0005] | 0,0002 [−0,0017; 0,0022] | không / không | −0,0056 [−0,0063; −0,0049] / −0,0041 [−0,0054; −0,0028] | −0,0040 [−0,0052; −0,0028] |
+| ETTm1 | 192 | ×8 / ×2 | −0,0002 [−0,0014; 0,0010] | −0,0010 [−0,0028; 0,0008] | không / không | −0,0054 [−0,0061; −0,0048] / −0,0032 [−0,0040; −0,0023] | −0,0032 [−0,0041; −0,0024] |
+| ETTm1 | 336 | ×8 / ×4 | −0,0009 [−0,0037; 0,0019] | −0,0020 [−0,0073; 0,0033] | không / không | −0,0053 [−0,0076; −0,0030] / −0,0034 [−0,0054; −0,0014] | −0,0038 [−0,0054; −0,0021] |
+| ETTm1 | 720 | ×2 / ×2 | −0,0015 [−0,0069; 0,0040] | −0,0020 [−0,0058; 0,0017] | không / không | −0,0036 [−0,0074; 0,0002] / −0,0038 [−0,0062; −0,0014] | −0,0047 [−0,0069; −0,0025] |
+
+DLinear tốt hơn có ý nghĩa ở cả val lẫn test: 0/12 ô (×1 trên cùng 15 seed 2026–2040: 3/12; cũ, 20 seed: 4/12, đều ETTm1). Bốn ô ETTm1 cũ: H=96: test 0,0002 [−0,0017; 0,0022] (không còn có ý nghĩa); H=192: test −0,0010 [−0,0028; 0,0008] (không còn có ý nghĩa); H=336: test −0,0020 [−0,0073; 0,0033] (không còn có ý nghĩa); H=720: test −0,0020 [−0,0058; 0,0017] (không còn có ý nghĩa).
+
+Với lr gốc trên cùng 15 seed, cả 4 ô ETTm1 vẫn có DLinear tốt hơn có ý nghĩa trên test (H = 720 mất ý nghĩa trên val: CI [−0,0074; 0,0002]). Như vậy việc mất ý nghĩa trên test sau khi tinh chỉnh là do lr, không do bớt seed. Linear ETTm1 chọn ×8, đầu mút của khoảng thử, ở 3/4 H, nên Linear có thể còn chưa tinh chỉnh hết; điều đó chỉ làm kết quả "không còn khác biệt" chắc hơn.
 
 ## 7. Đoạn nháp cho RQ2 và RQ3
 
 ### RQ2 (cập nhật từ BAO_CAO_OUTLIER mục 7, khoảng 240 từ)
 
-> Chúng tôi so sánh ba mục tiêu huấn luyện, mỗi mục tiêu ở λ* chọn trên val theo đúng metric được báo cáo (MSE val cho MSE test, MAE val cho MAE test). Huber dùng δ = 1,345·σ̂, σ̂ = 1,4826·MAD của phần dư train của nghiệm OLS. Trên dữ liệu gốc, huấn luyện bằng MAE cho MSE test thấp hơn huấn luyện bằng MSE ở Linear và DLinear trên cả 4 horizon của ETTh1, ETTh2 và ETTm1. Chênh lớn nhất ở ETTh2 (0,023–0,151), nhỏ ở ETTh1 (0,001–0,015) và ETTm1 (0,002–0,006). Với NLinear trên ETTh2, MAE kém hơn ở cả 4 horizon. Huber đứng giữa MSE và MAE ở 28/36 ô theo MSE test. Trên ETTh2, khoảng một nửa lợi thế của MAE với Linear ở H ≥ 336 đến từ các đoạn cảm biến bị kẹt. Khi cộng ±10 độ lệch chuẩn vào 1% hoặc 10% số phần tử đích của train ETTh1 (đầu vào giữ nguyên), MSE test của MAE và Huber đổi không quá 0,004, còn của MSE tăng tới 0,014. Khi outlier nằm trong chuỗi, tức xuất hiện cả ở đầu vào: ở 1%, MAE vẫn tốt nhất ở 8/8 ô (Linear, NLinear × 4 horizon); ở 10%, MSE suy giảm ít nhất (0,059–0,077 so với 0,067–0,103 của Huber và 0,076–0,114 của MAE). Thứ hạng này phụ thuộc độ lớn: với outlier 3σ, MAE vẫn tốt nhất ở cả 1% và 10%; với 5σ ở 10%, ba mục tiêu gần như bằng nhau ở H = 96 và MAE vẫn tốt nhất ở H = 720 (Linear). Ở 10%, 10σ, thứ tự giữa MSE và Huber nằm trong độ lệch theo vị trí outlier.
+> Chúng tôi so sánh ba mục tiêu huấn luyện, mỗi mục tiêu ở λ* chọn trên val theo đúng metric được báo cáo (MSE val cho MSE test, MAE val cho MAE test). Huber dùng δ = 1,345·σ̂, σ̂ = 1,4826·MAD của phần dư train của nghiệm OLS. Trên dữ liệu gốc, huấn luyện bằng MAE cho MSE test thấp hơn huấn luyện bằng MSE ở Linear và DLinear trên cả 4 horizon của ETTh1, ETTh2 và ETTm1. Chênh lớn nhất ở ETTh2 (0,023–0,151), nhỏ ở ETTh1 (0,001–0,015) và ETTm1 (0,002–0,006). Với NLinear trên ETTh2, MAE kém hơn ở cả 4 horizon. Huber đứng giữa MSE và MAE ở 28/36 ô theo MSE test. Trên ETTh2, khoảng một nửa lợi thế của MAE với Linear ở H ≥ 336 đến từ các đoạn cảm biến bị kẹt. Khi cộng ±10 độ lệch chuẩn vào 1% hoặc 10% số phần tử đích của train ETTh1 (đầu vào giữ nguyên), MSE test của MAE và Huber đổi không quá 0,004, còn của MSE tăng tới 0,014. Khi outlier nằm trong chuỗi, tức xuất hiện cả ở đầu vào: ở 1%, MAE vẫn tốt nhất ở 8/8 ô (Linear, NLinear × 4 horizon); ở 10%, MSE suy giảm ít nhất (0,059–0,077 so với 0,067–0,103 của Huber và 0,076–0,114 của MAE). Thứ hạng này phụ thuộc độ lớn: với outlier 3σ, MAE vẫn tốt nhất ở cả 1% và 10%; với 5σ ở 10%, ba mục tiêu gần như bằng nhau ở H = 96 và MAE vẫn tốt nhất ở H = 720 (Linear, một seed). Ở 10%, 10σ, thứ tự giữa MSE và Huber nằm trong độ lệch theo vị trí outlier.
 
 ### RQ3 (cập nhật từ BAO_CAO_SGD_B1_B4 mục 8, khoảng 240 từ)
 
-> Chúng tôi huấn luyện Linear, DLinear và NLinear bằng SGD (Adam mini-batch, dừng sớm theo val) trên ETTh1, ETTh2, ETTm1 và so với nghiệm dạng đóng tại λ* chọn theo MSE val. Với siêu tham số của script chính thức (20 seed), số công bố nằm trong khoảng giữa seed tốt nhất và kém nhất ở 28/36 ô; ở 8 ô còn lại (5 là DLinear), số công bố thấp hơn mọi seed. Chúng tôi tinh chỉnh learning rate cho từng ô trên val với cùng ngân sách (×0,5 đến ×8 lr gốc, 5 seed), rồi đánh giá trên 15 seed mới. Sau khi tinh chỉnh, SGD vẫn kém nghiệm dạng đóng trên test ở 27/36 ô (có ý nghĩa thống kê), gồm 23/24 ô của ETTh1 và ETTm1 (chênh 0,002–0,029). Tinh chỉnh chủ yếu cải thiện val: số ô "dạng đóng tốt hơn trên cả val và test" giảm từ 10 xuống 2, nhưng thay bằng "SGD tốt hơn trên val, kém trên test". SGD tốt hơn nghiệm dạng đóng trên cả val và test chỉ ở 5 ô, đều trên ETTh2 với Linear hoặc DLinear; chúng tôi không xác định được cơ chế. Với lr gốc, DLinear tốt hơn Linear có ý nghĩa ở 4/12 cặp (dataset, horizon), đều trên ETTm1; khi cả hai được tinh chỉnh lr, không còn cặp nào. Với nghiệm dạng đóng, chênh lệch tương ứng dưới 0,0001. Vì vậy khoảng chênh DLinear − Linear quan sát được khi huấn luyện bằng SGD gắn với learning rate, không phải với khả năng biểu diễn của mô hình.
+> Chúng tôi huấn luyện Linear, DLinear và NLinear bằng SGD (Adam mini-batch, dừng sớm theo val) trên ETTh1, ETTh2, ETTm1 và so với nghiệm dạng đóng tại λ* chọn theo MSE val. Với siêu tham số của script chính thức (20 seed), số công bố nằm trong khoảng giữa seed tốt nhất và kém nhất ở 28/36 ô; ở 8 ô còn lại (5 là DLinear), số công bố thấp hơn mọi seed. Chúng tôi tinh chỉnh learning rate cho từng ô trên val với cùng ngân sách (×0,5 đến ×8 lr gốc, 5 seed), rồi đánh giá trên 15 seed mới. Sau khi tinh chỉnh, SGD vẫn kém nghiệm dạng đóng trên test ở 27/36 ô (có ý nghĩa thống kê), gồm 23/24 ô của ETTh1 và ETTm1 (chênh 0,002–0,029). Tinh chỉnh chủ yếu cải thiện val: số ô "dạng đóng tốt hơn trên cả val và test" giảm từ 10 xuống 2, nhưng thay bằng "SGD tốt hơn trên val, kém trên test". SGD tốt hơn nghiệm dạng đóng trên cả val và test chỉ ở 5 ô, đều trên ETTh2 với Linear hoặc DLinear; chúng tôi không xác định được cơ chế. Với lr gốc, DLinear tốt hơn Linear có ý nghĩa ở 4/12 cặp (dataset, horizon), đều trên ETTm1; khi tinh chỉnh lr cho cả hai, không còn khác biệt có ý nghĩa (CI ở ETTm1 nằm trong ±0,0073), phù hợp với việc hai mô hình có cùng nghiệm dạng đóng (chênh dưới 0,0001).
 
 ## 8. Thời gian, nguồn gốc số liệu, điểm dừng
 

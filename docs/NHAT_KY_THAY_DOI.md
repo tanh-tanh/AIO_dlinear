@@ -440,7 +440,7 @@ Báo cáo: [BAO_CAO_NV7.md](BAO_CAO_NV7.md). Không đổi toán của `irls`, k
 
 - **`huber_delta_mad(R, k=1,345)`:** trả (δ, σ̂), σ̂ = 1,4826 · median(|R − median(R)|) gộp mọi phần tử, δ = k·σ̂. Hằng `MAD_SCALE`, `HUBER_K`.
 - **`tests/test_solvers.py`:** 2 test mới: dữ liệu N(0,2; s²) với s ∈ {0,1; 0,5; 1; 3} cho σ̂ lệch s dưới 5%; thêm 5% phần tử ±50 làm σ̂ đổi dưới 10% (độ lệch chuẩn đổi hơn 10 lần).
-- **`tests/test_val_metrics.py` (mới, B.2):** tính lại `val_mse`, `val_mae`, `val_huber` từ W đã lưu (ETTh1 H = 96, ETTh2 H = 336; mọi λ > 0 của MAE, Huber, mỗi λ thứ 10 của MSE; 201 đường-λ × 3 cột) và so với `lambda_path.csv` tới 1e-12 tương đối. Phản chứng: số hạng phạt (chuẩn hóa như `train_obj`) nhỏ nhất vẫn bằng 2,3e-8 tương đối, lớn hơn ngưỡng 2·10⁴ lần. Bỏ qua khi thiếu `results/weights/` (bị .gitignore).
+- **`tests/test_val_metrics.py` (mới, B.2):** tính lại `val_mse`, `val_mae`, `val_huber` từ W đã lưu (ETTh1 H = 96, ETTh2 H = 336; mọi λ > 0 của MAE, Huber, mỗi λ thứ 10 của MSE; 201 dòng W × 3 cột) và so với `lambda_path.csv` tới 1e-12 tương đối. Phản chứng: số hạng phạt (chuẩn hóa như `train_obj`) nhỏ nhất vẫn bằng 2,3e-8 tương đối, lớn hơn ngưỡng 2·10⁴ lần. Bỏ qua khi thiếu `results/weights/` (bị .gitignore).
 - Test: 60 → **63, tất cả đạt**.
 
 ## 12.2. `scripts/select_lambda.py`
