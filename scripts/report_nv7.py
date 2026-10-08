@@ -548,6 +548,7 @@ def part_a_outliers(md, summ):
         md.append(f"| {rate:.0%} | thứ tự theo seed | {' ; '.join(' < '.join(x) for x in order_seed)} | khác biệt TB giữa mục tiêu "
                   f"{num(max(means.values()) - min(means.values()))} | |")
     summ["A_outlier"] = {"best_counts": counts, "n_changed": n_changed, "degradation": deg, "target_dmse": tgt, "B5": b5}
+    figure_h2_v2()
 
 
 def part_a_sensitivity(md, summ):
