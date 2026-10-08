@@ -429,3 +429,37 @@ Báo cáo: [BAO_CAO_OUTLIER.md](BAO_CAO_OUTLIER.md). Không đổi toán của `
 
 - **`scripts/report_outliers.py`** (mới): mọi bảng và hình H2 của báo cáo.
 - **`.gitignore`:** thêm `results/outliers/**/weights/`, `results/outliers/d2_lr/**/*.npy`.
+
+---
+
+# Nhật ký thay đổi code: nhiệm vụ 7, áp dụng góp ý của TA (08/10/2026)
+
+Báo cáo: [BAO_CAO_NV7.md](BAO_CAO_NV7.md). Không đổi toán của `irls`, không đổi cấu hình dừng, `MAE_DELTA` hay lưới λ.
+
+## 12.1. `src/solvers.py`, test (commit `7c59c8c`)
+
+- **`huber_delta_mad(R, k=1,345)`:** trả (δ, σ̂), σ̂ = 1,4826 · median(|R − median(R)|) gộp mọi phần tử, δ = k·σ̂. Hằng `MAD_SCALE`, `HUBER_K`.
+- **`tests/test_solvers.py`:** 2 test mới: dữ liệu N(0,2; s²) với s ∈ {0,1; 0,5; 1; 3} cho σ̂ lệch s dưới 5%; thêm 5% phần tử ±50 làm σ̂ đổi dưới 10% (độ lệch chuẩn đổi hơn 10 lần).
+- **`tests/test_val_metrics.py` (mới, B.2):** tính lại `val_mse`, `val_mae`, `val_huber` từ W đã lưu (ETTh1 H = 96, ETTh2 H = 336; mọi λ > 0 của MAE, Huber, mỗi λ thứ 10 của MSE; 201 đường-λ × 3 cột) và so với `lambda_path.csv` tới 1e-12 tương đối. Phản chứng: số hạng phạt (chuẩn hóa như `train_obj`) nhỏ nhất vẫn bằng 2,3e-8 tương đối, lớn hơn ngưỡng 2·10⁴ lần. Bỏ qua khi thiếu `results/weights/` (bị .gitignore).
+- Test: 60 → **63, tất cả đạt**.
+
+## 12.2. `scripts/select_lambda.py`
+
+- **`--selections`** (mặc định `val_objective val_mse` như cũ): thêm `val_mae`.
+- **`--in` nhận nhiều file:** một đường λ (cùng khóa nhóm) có ở nhiều file thì lấy trọn đường của file sau cùng; dùng để thay đường Huber δ = 1 bằng δ_MAD. Dừng nếu một đường có λ lặp hoặc trộn nhiều δ.
+- Cột `outlier_magnitude` (nếu có) vào khóa nhóm; dòng thiếu cột coi là 10.
+- Kiểm: chạy với mặc định cho `results/results.csv` và `results/outliers/results.csv` trùng từng byte bản cũ.
+
+## 12.3. `scripts/runner.py`
+
+- **`--huber-delta mad|<số>`, `--delta-scale`:** δ của Huber theo từng (ô, mô hình, tập train) qua `Cell.huber_delta` (phần dư train của `closed_form(mô hình, 0)` trên tập train hiện tại, kể cả tập đã chèn outlier). δ vào `irls`, `train_obj`, `val_huber` (với dòng Huber), cột `delta`, `lam_convention`; cột mới `delta_rule`, `sigma_hat`. DLinear λ = 0 vẫn chép từ Linear, kèm assert δ hai mô hình trùng nhau.
+- **`--skip-mse`:** không chạy đường MSE; λ = 0 của MAE/Huber khởi tạo từ `closed_form(mô hình, 0)` tính lại.
+- **`--outlier-magnitude`** (mặc định 10): truyền cho `contaminate_*`; cột `outlier_magnitude` (file mới), vào khóa chạy tiếp và tên file W khi khác 10.
+- Không đặt cờ mới thì chạy y như trước. **Kiểm (A.2):** `--huber-delta 1 --skip-mse` cho Linear ETTh1 H = 96: 10/10 dòng trùng `lambda_path.csv` tuyệt đối (chênh 0 ở mọi cột metric), cùng số vòng.
+
+## 12.4. Script mới
+
+- **`scripts/huber_deltas.py`:** δ_MAD, σ̂ và σ̂ theo từng h (min, trung vị, max) cho 88 tập train → `results/huber_mad/deltas.csv`; cột `mask_sha1` để kiểm vị trí outlier trùng nhau giữa các độ lớn; dừng nếu δ ngoài [0,05; 5].
+- **`scripts/sgd_lr_tune.py`:** Phần D. Điều phối `sgd_etth2.py --lr` cho 36 ô (chọn lr trên 5 seed, ×8 khi ×4 thắng, chạy cuối 15 seed mới), dùng lại kết quả ×1 có sẵn và Linear ETTm1 ×2, ×4 của nhiệm vụ 6; ghi `results/sgd_lr/selection.json`.
+- **`scripts/report_nv7.py`:** mọi bảng và hình của báo cáo.
+- **`.gitignore`:** thêm `results/huber_mad/**/weights/`, `results/outliers_mag/**/weights/`, `results/sgd_lr/**/*.npy`.

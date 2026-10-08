@@ -578,10 +578,14 @@ def part_a_sensitivity(md, summ):
                                               **{f"rank_{k}": x for k, x in rank.items()},
                                               "lam_mse": S.lam(GRID, ds, H, m, "Huber", "val_mse"),
                                               "lam_mae": S.lam(GRID, ds, H, m, "Huber", "val_mae")}
-                md.append(f"| {ds} | {H} | {m} | {tag} = {num(float(r['delta']))} | {lam_s(out[f'{ds}_{H}_{m}_{tag}']['lam_mse'])} | "
+                md.append(f"| {ds} | {H} | {m} | {tag.replace('.', ',')} = {num(float(r['delta']))} | {lam_s(out[f'{ds}_{H}_{m}_{tag}']['lam_mse'])} | "
                           f"{num(v['mse'])} | {rank['mse']} | {lam_s(out[f'{ds}_{H}_{m}_{tag}']['lam_mae'])} | {num(v['mae'])} | {rank['mae']} |")
             md.append(f"| {ds} | {H} | {m} | tham chiếu: MSE / MAE | | {num(ref['mse']['MSE'])} / {num(ref['mse']['MAE'])} | | | "
                       f"{num(ref['mae']['MSE'])} / {num(ref['mae']['MAE'])} | |")
+    for sc in (0.5, 2.0, 4.0):
+        ext, top, zero, nonconv, fb = edge_report(huber_paths(HM / f"sens_x{sc:g}" / "lambda_path.csv"))
+        md.append(f"\n×{sc:g}: {len(ext)} đường mở rộng, {len(top)} (đường, metric) ở đầu mút trên sau khi mở rộng, "
+                  f"converged = False {nonconv}, fallback {fb}.")
     summ["A_sensitivity"] = out
     figure_sensitivity(out)
 
@@ -605,21 +609,24 @@ def figure_sensitivity(out):
     for j, (ds, H, m) in enumerate((ds, H, m) for ds, H in SENS_CELLS for m in ("Linear", "NLinear")):
         for i, met in enumerate(("mse", "mae")):
             ax = axes[i, j]
-            xs = [out[f"{ds}_{H}_{m}_{s:g} × δ_MAD"]["delta"] for s in SENS]
+            dm = out[f"{ds}_{H}_{m}_1 × δ_MAD"]["delta"]
+            xs = SENS
             ys = [out[f"{ds}_{H}_{m}_{s:g} × δ_MAD"][f"test_{met}"] for s in SENS]
             ax.plot(xs, ys, "-^", color=COLORS["Huber"], ms=5, lw=1.6, label="Huber, δ = {0,5; 1; 2; 4} × δ_MAD")
             d1 = out[f"{ds}_{H}_{m}_1 (cố định)"]
-            ax.plot([1.0], [d1[f"test_{met}"]], "D", color=COLORS["Huber δ=1"], ms=5, label="Huber, δ = 1 (cũ)")
-            ax.axvline(xs[1], color=COLORS["Huber"], lw=0.8, ls=":")
+            ax.plot([1.0 / dm], [d1[f"test_{met}"]], "D", color=COLORS["Huber δ=1"], ms=5, label="Huber, δ = 1 (cũ)")
             for ob in ("MSE", "MAE"):
                 ax.axhline(S0.test(GRID, ds, H, m, ob, met, "new"), color=COLORS[ob], lw=1.2, ls="--",
                            label=f"mục tiêu {ob}")
             ax.set_xscale("log")
+            ax.set_xticks(SENS)
+            ax.set_xticklabels(["0,5", "1", "2", "4"])
+            ax.minorticks_off()
             ax.set_title(f"{ds} H = {H}, {m}", fontsize=9)
             if j == 0:
                 ax.set_ylabel(f"{met.upper()} test ở λ*_{met.upper()}")
             if i == 1:
-                ax.set_xlabel("δ (log; chấm: δ_MAD)")
+                ax.set_xlabel("δ / δ_MAD (log)")
             _style(ax)
     h, l = axes[0, 0].get_legend_handles_labels()
     fig.legend(h, l, loc="lower center", ncol=4, frameon=False, fontsize=9)
