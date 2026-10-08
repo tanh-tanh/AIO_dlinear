@@ -17,7 +17,36 @@ Ký hiệu: **tiêu chí mới** (B.1) là MSE test báo ở λ*_MSE = argmin MS
 
 ## 1. Kết luận
 
-__KET_LUAN__
+**A. δ_MAD nằm trong 0,37–0,73 trên 36 ô của grid (trung vị 0,54), tức nhỏ hơn δ = 1 cũ 1,4–2,7 lần. Đổi sang δ_MAD làm Huber tốt hơn ở phần lớn ô nhưng không đổi kết luận chính: Huber vẫn nằm giữa MSE và MAE.**
+
+- δ tăng theo H; DLinear trùng Linear từng bit. Trên các tập train có outlier, δ_MAD lên 0,55–1,11. Không ô nào ngoài [0,05; 5]. σ̂ theo từng h trong một ô chênh nhau 2,5–5 lần, nên một δ chung cho cả ô là một thỏa hiệp.
+- Kiểm trước (δ = 1 với code mới) trùng dòng cũ tuyệt đối. Không `J tăng`, không `converged = False`, không fallback; 9/36 đường của grid phải mở rộng đầu mút trên (tới 9·10⁴ ở ETTh1 H = 720), không đường nào còn ở đầu mút sau khi mở rộng.
+- So với δ = 1, Huber δ_MAD có MSE test thấp hơn ở 27/36 ô và MAE test thấp hơn ở 34/36 ô. Lợi lớn nhất ở ETTh2 Linear/DLinear H = 720 (MSE test 0,666 → 0,628).
+- Trong B3, Huber đứng hạng 2 (giữa MSE và MAE) ở 28/36 ô theo MSE test và 34/36 theo MAE test. **Hạng của Huber đổi ở 6/36 ô theo MSE test và 2/36 theo MAE test** so với δ = 1 (cùng tiêu chí mới). Ở các ô đổi, chênh giữa ba mục tiêu đều nhỏ (dưới 0,005).
+- **Thí nghiệm outlier: kết luận về Huber không đổi.** Thứ tự suy giảm 0 → 10% (chèn vào chuỗi) vẫn là MSE < Huber < MAE ở 8/8 ô; mục tiêu tốt nhất ở rate > 0 không đổi ô nào.
+- **Độ nhạy theo δ (A.3):** MAE test tăng đơn điệu theo δ ở 6/6 ô (δ nhỏ đưa Huber về MAE). Huber hạng 2 ở 50/60 trường hợp (ô, metric, δ). Giá trị tuyệt đối nhạy với δ ở ETTh2 Linear H = 720 (MSE test 0,602–0,736 khi δ đi từ 0,5 đến 4 × δ_MAD, gần hết khoảng giữa MAE và MSE), ít nhạy ở ETTh1 (0,003–0,012).
+
+**B. Tiêu chí chọn λ* mới chỉ đổi những so sánh có độ chênh nhỏ.**
+
+- Metric val trong `lambda_path.csv` không chứa phạt (test mới, 201 dòng W, chênh ≤ 1e-12). B4 không đổi (36/36 ô cùng λ*).
+- Thứ hạng mục tiêu theo MAE test không đổi ở ô nào. Theo MSE test, thứ hạng đổi ở 7/36 ô (mục tiêu tốt nhất đổi ở 4), đều ở các ô mà chênh giữa mục tiêu dưới 0,003.
+- **"Huấn luyện bằng MAE cho MSE test tốt hơn MSE" mạnh hơn ở ETTh1:** từ 2/4 H lên 4/4 (Linear, DLinear) và 3/4 (NLinear). ETTh2, ETTm1 giữ nguyên.
+- Thí nghiệm outlier: mục tiêu tốt nhất không đổi ở ô nào có rate > 0.
+- λ* của DLinear ETTh1 H = 96: MSE test của MAE và Huber giờ báo ở λ*_MSE = 300 (trước là 100); MAE test vẫn ở 100.
+
+**C. Với outlier nhỏ hơn (3σ, 5σ) trong chuỗi, MAE và Huber bền vững hơn MSE; thứ hạng chỉ đảo khi outlier vừa nhiều (10%) vừa lớn (từ khoảng 5σ).**
+
+- Linear, ETTh1, H = 96, 720, seed 2026, cùng vị trí outlier ở mọi độ lớn.
+- Chèn vào chuỗi: ở rate 1%, MAE tốt nhất ở cả 3σ, 5σ, 10σ. Ở rate 10%, MAE tốt nhất ở 3σ (cả hai H) và ở 5σ với H = 720. Ở 5σ với H = 96, ba mục tiêu gần bằng nhau (chênh không quá 0,0015). Ở 10σ, MSE tốt nhất.
+- Chèn chỉ vào đích: MAE tốt nhất ở mọi độ lớn; MSE suy giảm gần tỷ lệ với độ lớn (H = 96, 10%: +0,002 / +0,005 / +0,014), MAE và Huber gần như không đổi.
+
+**D. Tinh chỉnh lr không đóng được khoảng cách giữa SGD và nghiệm dạng đóng trên test, nhưng xóa lợi thế của DLinear so với Linear trên ETTm1.**
+
+- lr chọn trải đều từ ×0,5 đến ×8 (8 / 7 / 7 / 7 / 7 ô). 15/36 ô chọn mức ở đầu mút của khoảng đã thử: ETTh2 thường muốn lr nhỏ hơn, ETTm1 muốn lr lớn hơn. Ở 26/36 ô, mức chọn hơn mức thứ hai chưa tới một sai số chuẩn, nên lựa chọn nhiễu.
+- SGD đã tinh chỉnh (15 seed mới) vẫn kém dạng đóng trên test ở 28/36 ô theo trung bình, 27/36 có ý nghĩa. Trên ETTh1, ETTm1, SGD vẫn thua ở 24/24 ô (Δ test +0,002 đến +0,029).
+- **Nhãn B4 đổi ở 15/36 ô, 13 do lr.** "Dạng đóng tốt hơn thật" giảm từ 10 xuống 2, chủ yếu thành "SGD có dấu hiệu khớp val quá mức": tinh chỉnh lr giúp SGD trên val nhưng không trên test.
+- "SGD tốt hơn thật": 5 ô, vẫn chỉ ở ETTh2 với Linear/DLinear (cũ 6; ETTh2 Linear H = 720 thành "không phân biệt được").
+- **C.3: khi cả hai được tinh chỉnh lr, DLinear tốt hơn Linear có ý nghĩa ở 0/12 ô** (cũ 4/12, đều ETTm1). Ở ETTm1, Linear chọn lr ×8 ở 3/4 H còn DLinear chọn ×2 ở 3/4 H. Điều này phù hợp với giả thuyết "DLinear có lr hiệu dụng lớn hơn" (nhiệm vụ 6 D.2) nhưng chưa phải phép kiểm giả thuyết đó.
 
 ## 2. Những kết luận đổi so với các báo cáo trước
 
@@ -417,7 +446,82 @@ Trục hoành δ/δ_MAD (log); hình thoi xám là δ = 1 cố định. Đườn
 
 ## 5. Phần C: độ lớn outlier 3σ và 5σ
 
-__PHAN_C__
+Bảng: [`results/nv7/tables_C.md`](../results/nv7/tables_C.md); dữ liệu: [`results/outliers_mag/lambda_path.csv`](../results/outliers_mag/lambda_path.csv) (48 đường λ, 2640 dòng).
+
+- **Phạm vi:** Linear, ETTh1, H ∈ {96, 720}, rate ∈ {1%, 10%}, chèn vào chuỗi và chèn chỉ vào đích, seed 2026, độ lớn 3 và 5 (10 lấy từ nhiệm vụ 6: MSE, MAE ở `results/outliers/`, Huber δ_MAD ở `results/huber_mad/outliers/`). Ba mục tiêu; Huber dùng δ_MAD tính trên chính tập đã chèn (0,546–0,931 ở độ lớn 3, 5). Cột `outlier_magnitude` ghi trong CSV; dòng cũ coi là 10.
+- **Cùng vị trí outlier ở mọi độ lớn:** cùng seed thì `contaminate_*` rút cùng dãy số ngẫu nhiên, nên chỉ độ lớn thay đổi. Kiểm bằng băm mặt nạ (`mask_sha1` trong `deltas.csv`): trùng nhau ở 3, 5, 10 cho mọi (chế độ, rate, H).
+- 2640/2640 dòng `converged = True`, không fallback; 26 đường MAE/Huber mở rộng đầu mút, không đường nào còn ở đầu mút trên.
+
+MSE test ở λ*_MSE, MAE test ở λ*_MAE; rate 0 là grid gốc.
+
+| H | chế độ | rate | độ lớn | MSE: MSE / MAE test | MAE: MSE / MAE test | Huber: MSE / MAE test | tốt nhất (MSE test / MAE test) |
+|---|---|---|---|---|---|---|---|
+| 96 | — | 0% | — | 0,3702 / 0,3915 | 0,3653 / 0,3833 | 0,3658 / 0,3852 | MAE / MAE |
+| 96 | series | 1% | 3 | 0,3700 / 0,3924 | 0,3622 / 0,3831 | 0,3643 / 0,3857 | MAE / MAE |
+| 96 | series | 1% | 5 | 0,3720 / 0,3952 | 0,3620 / 0,3851 | 0,3650 / 0,3880 | MAE / MAE |
+| 96 | series | 1% | 10 | 0,3818 / 0,4045 | 0,3688 / 0,3935 | 0,3731 / 0,3968 | MAE / MAE |
+| 96 | series | 10% | 3 | 0,3799 / 0,4026 | 0,3745 / 0,3979 | 0,3757 / 0,3990 | MAE / MAE |
+| 96 | series | 10% | 5 | 0,3954 / 0,4144 | 0,3969 / 0,4144 | 0,3958 / 0,4138 | MSE / Huber |
+| 96 | series | 10% | 10 | 0,4445 / 0,4457 | 0,4790 / 0,4645 | 0,4691 / 0,4587 | MSE / MSE |
+| 96 | target | 1% | 3 | 0,3705 / 0,3918 | 0,3654 / 0,3834 | 0,3659 / 0,3853 | MAE / MAE |
+| 96 | target | 1% | 5 | 0,3709 / 0,3924 | 0,3654 / 0,3834 | 0,3659 / 0,3853 | MAE / MAE |
+| 96 | target | 1% | 10 | 0,3727 / 0,3943 | 0,3654 / 0,3834 | 0,3659 / 0,3854 | MAE / MAE |
+| 96 | target | 10% | 3 | 0,3721 / 0,3939 | 0,3651 / 0,3836 | 0,3667 / 0,3862 | MAE / MAE |
+| 96 | target | 10% | 5 | 0,3750 / 0,3967 | 0,3651 / 0,3837 | 0,3668 / 0,3863 | MAE / MAE |
+| 96 | target | 10% | 10 | 0,3841 / 0,4050 | 0,3651 / 0,3837 | 0,3667 / 0,3868 | MAE / MAE |
+| 720 | — | 0% | — | 0,4701 / 0,4878 | 0,4553 / 0,4747 | 0,4624 / 0,4767 | MAE / MAE |
+| 720 | series | 1% | 3 | 0,4704 / 0,4887 | 0,4566 / 0,4757 | 0,4573 / 0,4772 | MAE / MAE |
+| 720 | series | 1% | 5 | 0,4712 / 0,4902 | 0,4584 / 0,4746 | 0,4589 / 0,4786 | MAE / MAE |
+| 720 | series | 1% | 10 | 0,4765 / 0,4972 | 0,4578 / 0,4824 | 0,4629 / 0,4864 | MAE / MAE |
+| 720 | series | 10% | 3 | 0,4757 / 0,4957 | 0,4627 / 0,4844 | 0,4644 / 0,4876 | MAE / MAE |
+| 720 | series | 10% | 5 | 0,4904 / 0,5065 | 0,4814 / 0,5004 | 0,4830 / 0,5014 | MAE / MAE |
+| 720 | series | 10% | 10 | 0,5470 / 0,5396 | 0,5597 / 0,5465 | 0,5527 / 0,5433 | MSE / MSE |
+| 720 | target | 1% | 3 | 0,4702 / 0,4881 | 0,4554 / 0,4748 | 0,4628 / 0,4769 | MAE / MAE |
+| 720 | target | 1% | 5 | 0,4706 / 0,4885 | 0,4554 / 0,4748 | 0,4628 / 0,4769 | MAE / MAE |
+| 720 | target | 1% | 10 | 0,4716 / 0,4900 | 0,4554 / 0,4748 | 0,4629 / 0,4769 | MAE / MAE |
+| 720 | target | 10% | 3 | 0,4714 / 0,4898 | 0,4562 / 0,4751 | 0,4584 / 0,4784 | MAE / MAE |
+| 720 | target | 10% | 5 | 0,4734 / 0,4919 | 0,4562 / 0,4751 | 0,4586 / 0,4785 | MAE / MAE |
+| 720 | target | 10% | 10 | 0,4798 / 0,4980 | 0,4562 / 0,4751 | 0,4596 / 0,4793 | MAE / MAE |
+
+Δ MSE test so với rate 0:
+
+| H | chế độ | rate | độ lớn | MSE | MAE | Huber |
+|---|---|---|---|---|---|---|
+| 96 | series | 1% | 3 | −0,0003 | −0,0031 | −0,0015 |
+| 96 | series | 1% | 5 | 0,0018 | −0,0033 | −0,0008 |
+| 96 | series | 1% | 10 | 0,0116 | 0,0034 | 0,0073 |
+| 96 | series | 10% | 3 | 0,0096 | 0,0091 | 0,0099 |
+| 96 | series | 10% | 5 | 0,0252 | 0,0316 | 0,0301 |
+| 96 | series | 10% | 10 | 0,0743 | 0,1136 | 0,1033 |
+| 96 | target | 1% | 3 | 0,0003 | 0,0001 | 0,0001 |
+| 96 | target | 1% | 5 | 0,0007 | 0,0001 | 0,0001 |
+| 96 | target | 1% | 10 | 0,0025 | 0,0001 | 0,0002 |
+| 96 | target | 10% | 3 | 0,0019 | −0,0003 | 0,0009 |
+| 96 | target | 10% | 5 | 0,0047 | −0,0003 | 0,0010 |
+| 96 | target | 10% | 10 | 0,0139 | −0,0003 | 0,0009 |
+| 720 | series | 1% | 3 | 0,0003 | 0,0012 | −0,0051 |
+| 720 | series | 1% | 5 | 0,0012 | 0,0031 | −0,0036 |
+| 720 | series | 1% | 10 | 0,0064 | 0,0024 | 0,0005 |
+| 720 | series | 10% | 3 | 0,0056 | 0,0073 | 0,0020 |
+| 720 | series | 10% | 5 | 0,0204 | 0,0261 | 0,0205 |
+| 720 | series | 10% | 10 | 0,0769 | 0,1044 | 0,0903 |
+| 720 | target | 1% | 3 | 0,0001 | 0,0001 | 0,0003 |
+| 720 | target | 1% | 5 | 0,0005 | 0,0001 | 0,0004 |
+| 720 | target | 1% | 10 | 0,0015 | 0,0001 | 0,0005 |
+| 720 | target | 10% | 3 | 0,0013 | 0,0009 | −0,0041 |
+| 720 | target | 10% | 5 | 0,0033 | 0,0009 | −0,0038 |
+| 720 | target | 10% | 10 | 0,0097 | 0,0009 | −0,0029 |
+
+![Sai số test theo độ lớn outlier](../results/outliers_mag/C_outlier_magnitude.png)
+
+Hàng trên: MSE test ở λ*_MSE; hàng dưới: MAE test ở λ*_MAE. Trục hoành: độ lớn outlier (0 = dữ liệu gốc). Nét đứt rate 1%, nét liền rate 10%.
+
+**Trả lời câu hỏi của C:**
+
+- **Chèn chỉ vào đích:** MAE tốt nhất ở cả 12 (H, rate, độ lớn) theo cả hai metric. MSE suy giảm gần tỷ lệ với độ lớn (H = 96, 10%: +0,0019 / +0,0047 / +0,0139 ở 3σ / 5σ / 10σ); MAE và Huber gần như không đổi (|Δ| ≤ 0,0041).
+- **Chèn vào chuỗi, outlier nhỏ hơn thì MAE và Huber bền vững hơn MSE:** ở rate 1%, MAE tốt nhất ở cả 3σ, 5σ, 10σ, cả hai H, cả hai metric; ở 3σ và 5σ, MSE test của MAE còn thấp hơn ở dữ liệu gốc (H = 96: −0,0031, −0,0033). Ở rate 10%, 3σ: MAE vẫn tốt nhất ở cả hai H, nhưng ba mục tiêu suy giảm gần bằng nhau (H = 96: MSE +0,0096, MAE +0,0091, Huber +0,0099).
+- **Thứ hạng đảo ở rate 10%, giữa 5σ và 10σ:** ở H = 96, 5σ, ba mục tiêu gần như bằng nhau (MSE test 0,3954 / 0,3969 / 0,3958 cho MSE / MAE / Huber; MSE tốt nhất theo MSE test, Huber theo MAE test, chênh không quá 0,0015). Ở H = 720, 5σ, MAE vẫn tốt nhất (0,4814 so với 0,4904 của MSE). Ở 10σ, MSE tốt nhất ở cả hai H (nhiệm vụ 6). Như vậy MAE và Huber chỉ mất lợi thế khi outlier vừa nhiều (10%) vừa lớn (khoảng 5σ trở lên).
+- **Huber δ_MAD nằm giữa MSE và MAE** ở 47/48 (ô, metric) của bảng trên; ngoại lệ duy nhất là MAE test ở H = 96, chuỗi, 10%, 5σ (Huber 0,4138, MSE và MAE 0,4144). Ở vài ô H = 720, MSE test của Huber ở tập có outlier thấp hơn ở tập gốc (chuỗi 1%, 3σ / 5σ: −0,0051 / −0,0036; đích 10%: −0,0029 đến −0,0041). Chưa tìm hiểu nguyên nhân.
 
 ## 6. Phần D: SGD đã tinh chỉnh learning rate
 
@@ -575,11 +679,21 @@ DLinear tốt hơn có ý nghĩa ở cả val lẫn test: 0/12 ô (cũ: 4/12, đ
 
 ## 7. Đoạn nháp cho RQ2 và RQ3
 
-__NHAP__
+### RQ2 (cập nhật từ BAO_CAO_OUTLIER mục 7, khoảng 240 từ)
+
+> Chúng tôi so sánh ba mục tiêu huấn luyện, mỗi mục tiêu ở λ* chọn trên val theo đúng metric được báo cáo (MSE val cho MSE test, MAE val cho MAE test). Huber dùng δ = 1,345·σ̂, σ̂ = 1,4826·MAD của phần dư train của nghiệm OLS. Trên dữ liệu gốc, huấn luyện bằng MAE cho MSE test thấp hơn huấn luyện bằng MSE ở Linear và DLinear trên cả 4 horizon của ETTh1, ETTh2 và ETTm1. Chênh lớn nhất ở ETTh2 (0,023–0,151), nhỏ ở ETTh1 (0,001–0,015) và ETTm1 (0,002–0,006). Với NLinear trên ETTh2, MAE kém hơn ở cả 4 horizon. Huber đứng giữa MSE và MAE ở 28/36 ô theo MSE test. Trên ETTh2, khoảng một nửa lợi thế của MAE với Linear ở H ≥ 336 đến từ các đoạn cảm biến bị kẹt. Khi cộng ±10 độ lệch chuẩn vào 1% hoặc 10% số phần tử đích của train ETTh1 (đầu vào giữ nguyên), MSE test của MAE và Huber đổi không quá 0,004, còn của MSE tăng tới 0,014. Khi outlier nằm trong chuỗi, tức xuất hiện cả ở đầu vào: ở 1%, MAE vẫn tốt nhất ở 8/8 ô (Linear, NLinear × 4 horizon); ở 10%, MSE suy giảm ít nhất (0,059–0,077 so với 0,067–0,103 của Huber và 0,076–0,114 của MAE). Thứ hạng này phụ thuộc độ lớn: với outlier 3σ, MAE vẫn tốt nhất ở cả 1% và 10%; với 5σ ở 10%, ba mục tiêu gần như bằng nhau ở H = 96 và MAE vẫn tốt nhất ở H = 720 (Linear). Ở 10%, 10σ, thứ tự giữa MSE và Huber nằm trong độ lệch theo vị trí outlier.
+
+### RQ3 (cập nhật từ BAO_CAO_SGD_B1_B4 mục 8, khoảng 240 từ)
+
+> Chúng tôi huấn luyện Linear, DLinear và NLinear bằng SGD (Adam mini-batch, dừng sớm theo val) trên ETTh1, ETTh2, ETTm1 và so với nghiệm dạng đóng tại λ* chọn theo MSE val. Với siêu tham số của script chính thức (20 seed), số công bố nằm trong khoảng giữa seed tốt nhất và kém nhất ở 28/36 ô; ở 8 ô còn lại (5 là DLinear), số công bố thấp hơn mọi seed. Chúng tôi tinh chỉnh learning rate cho từng ô trên val với cùng ngân sách (×0,5 đến ×8 lr gốc, 5 seed), rồi đánh giá trên 15 seed mới. Sau khi tinh chỉnh, SGD vẫn kém nghiệm dạng đóng trên test ở 27/36 ô (có ý nghĩa thống kê), gồm 23/24 ô của ETTh1 và ETTm1 (chênh 0,002–0,029). Tinh chỉnh chủ yếu cải thiện val: số ô "dạng đóng tốt hơn trên cả val và test" giảm từ 10 xuống 2, nhưng thay bằng "SGD tốt hơn trên val, kém trên test". SGD tốt hơn nghiệm dạng đóng trên cả val và test chỉ ở 5 ô, đều trên ETTh2 với Linear hoặc DLinear; chúng tôi không xác định được cơ chế. Với lr gốc, DLinear tốt hơn Linear có ý nghĩa ở 4/12 cặp (dataset, horizon), đều trên ETTm1; khi cả hai được tinh chỉnh lr, không còn cặp nào. Với nghiệm dạng đóng, chênh lệch tương ứng dưới 0,0001. Vì vậy khoảng chênh DLinear − Linear quan sát được khi huấn luyện bằng SGD gắn với learning rate, không phải với khả năng biểu diễn của mô hình.
 
 ## 8. Thời gian, nguồn gốc số liệu, điểm dừng
 
-__THOI_GIAN__
+- **GPU (RTX 5060 Ti), tuần tự:** grid Huber δ_MAD 10:26–11:13 (48 phút); outlier 11:14–11:36 (22 phút); A.3 11:36–11:55 (19 phút); C 11:55–17:38 (5 giờ 43 phút, chủ yếu 16 đường MAE). **Tổng A + C khoảng 7,2 giờ**, trong ngân sách 8 giờ; không cắt gì. `--dry-run` không dùng để ước lượng Huber δ_MAD (nó hiệu chỉnh theo δ = 1); thay vào đó đo trực tiếp số vòng IRLS (mục 4.2). Kiểm trước A.2 và `huber_deltas.py` (88 tập train, CPU, khoảng 10 phút) chạy trước.
+- **CPU (D):** 10:16–12:34 (2 giờ 18 phút), 5 tiến trình × 2 luồng, song song với A và C. Ngân sách 10 giờ.
+- **`git_commit`:** mọi dòng CSV của A, C ghi commit sạch (`277380e`, `832c7fc`, `a116a1a`); `src/`, `runner.py` không đổi giữa các commit này (chỉ báo cáo, `report_nv7.py`, kết quả). JSON của D: 909 sạch (`ec838a9`, `277380e`, `885515d`), 81 ghi `-dirty` (79 `ec838a9-dirty`, 2 `277380e-dirty`): viết lúc `scripts/report_nv7.py` đang sửa chưa commit; `sgd_etth2.py`, `src/` không đổi. Không sửa JSON.
+- **Điểm dừng của mục 7: không chạm điểm nào.** Test 63/63 đạt; kiểm trước A.2 trùng tuyệt đối; không `J tăng`, không `converged = False` (trong 373 + 408 + 187 + 2640 dòng mới); δ_MAD trong [0,37; 1,11]; không đường λ nào ở đầu mút trên sau khi mở rộng; thời gian trong ngân sách.
+- **Ghi chú về D:** 15/36 ô chọn lr ở đầu mút của khoảng thử (×0,5 hoặc ×8); theo đề không thử thêm. Các lần chạy ×1 dùng lại chạy 6 luồng (nhiệm vụ 5), lần chạy mới 2 luồng.
 
 ## 9. Tái lập
 

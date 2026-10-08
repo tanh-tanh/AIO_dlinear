@@ -137,7 +137,7 @@ Thứ hạng từ tốt đến kém theo MSE test và theo MAE test. Chỉ liệ
 | ETTm1 | 192 | DLinear | MSE test | MAE < MSE < Huber | MAE < Huber < MSE | 0,3339 / 0,3319 / 0,3339 |
 | ETTm1 | 720 | NLinear | MSE test | MSE < Huber < MAE | Huber < MSE < MAE | 0,4262 / 0,4270 / 0,4261 |
 
-Thứ hạng đổi ở 7/36 ô theo MSE test (mục tiêu tốt nhất đổi ở 4) và 0/36 ô theo MAE test (mục tiêu tốt nhất đổi ở 0). Mọi thay đổi đều liên quan Huber hoặc cột không phải metric của chính mục tiêu; phần Huber **chờ Phần A**.
+Thứ hạng đổi ở 7/36 ô theo MSE test (mục tiêu tốt nhất đổi ở 4) và 0/36 ô theo MAE test (mục tiêu tốt nhất đổi ở 0). Vị trí của Huber trong các thứ hạng này **chờ Phần A** (δ_MAD).
 
 ## Mục tiêu tốt nhất trong ô (số ô trên 12 mỗi dataset × mô hình)
 
