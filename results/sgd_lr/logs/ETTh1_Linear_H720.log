@@ -1,0 +1,64 @@
+C:\Users\Admin\Documents\dlinear\.venv-gpu\Scripts\python.exe C:\Users\Admin\Documents\dlinear\scripts\sgd_etth2.py --step run --dataset ETTh1 --model Linear --H 720 --seed 2021 2022 2023 2024 2025 --lr 0.0025 --threads 2 --out sgd_lr/ETTh1/x0.5
+→ results\sgd_lr\ETTh1\x0.5\Linear_H720_seed2021.json
+  Linear H=720 seed 2021: epoch tốt nhất 5/8, val MSE 1.206165, test MSE 0.488330 MAE 0.501105, 13 s
+→ results\sgd_lr\ETTh1\x0.5\Linear_H720_seed2022.json
+  Linear H=720 seed 2022: epoch tốt nhất 1/4, val MSE 1.208052, test MSE 0.511331 MAE 0.521292, 5 s
+→ results\sgd_lr\ETTh1\x0.5\Linear_H720_seed2023.json
+  Linear H=720 seed 2023: epoch tốt nhất 3/6, val MSE 1.179163, test MSE 0.522125 MAE 0.525017, 9 s
+→ results\sgd_lr\ETTh1\x0.5\Linear_H720_seed2024.json
+  Linear H=720 seed 2024: epoch tốt nhất 2/5, val MSE 1.197548, test MSE 0.524681 MAE 0.527229, 7 s
+→ results\sgd_lr\ETTh1\x0.5\Linear_H720_seed2025.json
+  Linear H=720 seed 2025: epoch tốt nhất 4/7, val MSE 1.189199, test MSE 0.500291 MAE 0.510270, 9 s
+C:\Users\Admin\Documents\dlinear\.venv-gpu\Scripts\python.exe C:\Users\Admin\Documents\dlinear\scripts\sgd_etth2.py --step run --dataset ETTh1 --model Linear --H 720 --seed 2021 2022 2023 2024 2025 --lr 0.01 --threads 2 --out sgd_lr/ETTh1/x2
+→ results\sgd_lr\ETTh1\x2\Linear_H720_seed2021.json
+  Linear H=720 seed 2021: epoch tốt nhất 1/4, val MSE 1.254398, test MSE 0.539549 MAE 0.536880, 8 s
+→ results\sgd_lr\ETTh1\x2\Linear_H720_seed2022.json
+  Linear H=720 seed 2022: epoch tốt nhất 1/4, val MSE 1.203742, test MSE 0.579062 MAE 0.564136, 6 s
+→ results\sgd_lr\ETTh1\x2\Linear_H720_seed2023.json
+  Linear H=720 seed 2023: epoch tốt nhất 3/6, val MSE 1.222764, test MSE 0.515096 MAE 0.519759, 9 s
+→ results\sgd_lr\ETTh1\x2\Linear_H720_seed2024.json
+  Linear H=720 seed 2024: epoch tốt nhất 5/8, val MSE 1.175889, test MSE 0.511085 MAE 0.519657, 12 s
+→ results\sgd_lr\ETTh1\x2\Linear_H720_seed2025.json
+  Linear H=720 seed 2025: epoch tốt nhất 4/7, val MSE 1.208890, test MSE 0.497273 MAE 0.508152, 10 s
+C:\Users\Admin\Documents\dlinear\.venv-gpu\Scripts\python.exe C:\Users\Admin\Documents\dlinear\scripts\sgd_etth2.py --step run --dataset ETTh1 --model Linear --H 720 --seed 2021 2022 2023 2024 2025 --lr 0.02 --threads 2 --out sgd_lr/ETTh1/x4
+→ results\sgd_lr\ETTh1\x4\Linear_H720_seed2021.json
+  Linear H=720 seed 2021: epoch tốt nhất 6/9, val MSE 1.182034, test MSE 0.503869 MAE 0.513116, 15 s
+→ results\sgd_lr\ETTh1\x4\Linear_H720_seed2022.json
+  Linear H=720 seed 2022: epoch tốt nhất 1/4, val MSE 1.206340, test MSE 0.586451 MAE 0.567934, 6 s
+→ results\sgd_lr\ETTh1\x4\Linear_H720_seed2023.json
+  Linear H=720 seed 2023: epoch tốt nhất 5/8, val MSE 1.214330, test MSE 0.487596 MAE 0.500652, 12 s
+→ results\sgd_lr\ETTh1\x4\Linear_H720_seed2024.json
+  Linear H=720 seed 2024: epoch tốt nhất 4/7, val MSE 1.177521, test MSE 0.552104 MAE 0.548107, 10 s
+→ results\sgd_lr\ETTh1\x4\Linear_H720_seed2025.json
+  Linear H=720 seed 2025: epoch tốt nhất 4/7, val MSE 1.220289, test MSE 0.500887 MAE 0.510348, 11 s
+C:\Users\Admin\Documents\dlinear\.venv-gpu\Scripts\python.exe C:\Users\Admin\Documents\dlinear\scripts\sgd_etth2.py --step run --dataset ETTh1 --model Linear --H 720 --seed 2026 2027 2028 2029 2030 2031 2032 2033 2034 2035 2036 2037 2038 2039 2040 --lr 0.0025 --threads 2 --out sgd_lr/ETTh1/x0.5
+→ results\sgd_lr\ETTh1\x0.5\Linear_H720_seed2026.json
+  Linear H=720 seed 2026: epoch tốt nhất 1/4, val MSE 1.221389, test MSE 0.514535 MAE 0.518780, 8 s
+→ results\sgd_lr\ETTh1\x0.5\Linear_H720_seed2027.json
+  Linear H=720 seed 2027: epoch tốt nhất 4/7, val MSE 1.211393, test MSE 0.484960 MAE 0.499013, 10 s
+→ results\sgd_lr\ETTh1\x0.5\Linear_H720_seed2028.json
+  Linear H=720 seed 2028: epoch tốt nhất 3/6, val MSE 1.196522, test MSE 0.498812 MAE 0.509930, 8 s
+→ results\sgd_lr\ETTh1\x0.5\Linear_H720_seed2029.json
+  Linear H=720 seed 2029: epoch tốt nhất 7/10, val MSE 1.212045, test MSE 0.479741 MAE 0.494989, 13 s
+→ results\sgd_lr\ETTh1\x0.5\Linear_H720_seed2030.json
+  Linear H=720 seed 2030: epoch tốt nhất 6/9, val MSE 1.218613, test MSE 0.477212 MAE 0.492568, 13 s
+→ results\sgd_lr\ETTh1\x0.5\Linear_H720_seed2031.json
+  Linear H=720 seed 2031: epoch tốt nhất 3/6, val MSE 1.185925, test MSE 0.520979 MAE 0.526596, 8 s
+→ results\sgd_lr\ETTh1\x0.5\Linear_H720_seed2032.json
+  Linear H=720 seed 2032: epoch tốt nhất 8/10, val MSE 1.214265, test MSE 0.477862 MAE 0.493317, 15 s
+→ results\sgd_lr\ETTh1\x0.5\Linear_H720_seed2033.json
+  Linear H=720 seed 2033: epoch tốt nhất 1/4, val MSE 1.213859, test MSE 0.522094 MAE 0.526675, 6 s
+→ results\sgd_lr\ETTh1\x0.5\Linear_H720_seed2034.json
+  Linear H=720 seed 2034: epoch tốt nhất 6/9, val MSE 1.203501, test MSE 0.484958 MAE 0.498897, 13 s
+→ results\sgd_lr\ETTh1\x0.5\Linear_H720_seed2035.json
+  Linear H=720 seed 2035: epoch tốt nhất 3/6, val MSE 1.180169, test MSE 0.527244 MAE 0.530641, 9 s
+→ results\sgd_lr\ETTh1\x0.5\Linear_H720_seed2036.json
+  Linear H=720 seed 2036: epoch tốt nhất 6/9, val MSE 1.210271, test MSE 0.481246 MAE 0.496236, 13 s
+→ results\sgd_lr\ETTh1\x0.5\Linear_H720_seed2037.json
+  Linear H=720 seed 2037: epoch tốt nhất 2/5, val MSE 1.221374, test MSE 0.508954 MAE 0.516048, 7 s
+→ results\sgd_lr\ETTh1\x0.5\Linear_H720_seed2038.json
+  Linear H=720 seed 2038: epoch tốt nhất 2/5, val MSE 1.195770, test MSE 0.529320 MAE 0.534185, 8 s
+→ results\sgd_lr\ETTh1\x0.5\Linear_H720_seed2039.json
+  Linear H=720 seed 2039: epoch tốt nhất 10/10, val MSE 1.221228, test MSE 0.474369 MAE 0.490281, 14 s
+→ results\sgd_lr\ETTh1\x0.5\Linear_H720_seed2040.json
+  Linear H=720 seed 2040: epoch tốt nhất 3/6, val MSE 1.194649, test MSE 0.504093 MAE 0.512948, 9 s

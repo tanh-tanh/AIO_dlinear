@@ -1,0 +1,75 @@
+C:\Users\Admin\Documents\dlinear\.venv-gpu\Scripts\python.exe C:\Users\Admin\Documents\dlinear\scripts\sgd_etth2.py --step run --dataset ETTm1 --model NLinear --H 96 --seed 2021 2022 2023 2024 2025 --lr 5e-05 --threads 2 --out sgd_lr/ETTm1/x0.5
+→ results\sgd_lr\ETTm1\x0.5\NLinear_H96_seed2021.json
+  NLinear H=96 seed 2021: epoch tốt nhất 3/6, val MSE 0.396217, test MSE 0.309101 MAE 0.351290, 35 s
+→ results\sgd_lr\ETTm1\x0.5\NLinear_H96_seed2022.json
+  NLinear H=96 seed 2022: epoch tốt nhất 7/10, val MSE 0.396176, test MSE 0.308328 MAE 0.350700, 59 s
+→ results\sgd_lr\ETTm1\x0.5\NLinear_H96_seed2023.json
+  NLinear H=96 seed 2023: epoch tốt nhất 2/5, val MSE 0.395064, test MSE 0.317084 MAE 0.357718, 35 s
+→ results\sgd_lr\ETTm1\x0.5\NLinear_H96_seed2024.json
+  NLinear H=96 seed 2024: epoch tốt nhất 8/10, val MSE 0.396321, test MSE 0.307939 MAE 0.350435, 62 s
+→ results\sgd_lr\ETTm1\x0.5\NLinear_H96_seed2025.json
+  NLinear H=96 seed 2025: epoch tốt nhất 2/5, val MSE 0.395358, test MSE 0.310731 MAE 0.352565, 29 s
+C:\Users\Admin\Documents\dlinear\.venv-gpu\Scripts\python.exe C:\Users\Admin\Documents\dlinear\scripts\sgd_etth2.py --step run --dataset ETTm1 --model NLinear --H 96 --seed 2021 2022 2023 2024 2025 --lr 0.0002 --threads 2 --out sgd_lr/ETTm1/x2
+→ results\sgd_lr\ETTm1\x2\NLinear_H96_seed2021.json
+  NLinear H=96 seed 2021: epoch tốt nhất 3/6, val MSE 0.390813, test MSE 0.305065 MAE 0.346942, 38 s
+→ results\sgd_lr\ETTm1\x2\NLinear_H96_seed2022.json
+  NLinear H=96 seed 2022: epoch tốt nhất 5/8, val MSE 0.390930, test MSE 0.304121 MAE 0.346167, 46 s
+→ results\sgd_lr\ETTm1\x2\NLinear_H96_seed2023.json
+  NLinear H=96 seed 2023: epoch tốt nhất 8/10, val MSE 0.391589, test MSE 0.303563 MAE 0.345851, 56 s
+→ results\sgd_lr\ETTm1\x2\NLinear_H96_seed2024.json
+  NLinear H=96 seed 2024: epoch tốt nhất 4/7, val MSE 0.387800, test MSE 0.308304 MAE 0.349064, 39 s
+→ results\sgd_lr\ETTm1\x2\NLinear_H96_seed2025.json
+  NLinear H=96 seed 2025: epoch tốt nhất 2/5, val MSE 0.390496, test MSE 0.307517 MAE 0.348321, 28 s
+C:\Users\Admin\Documents\dlinear\.venv-gpu\Scripts\python.exe C:\Users\Admin\Documents\dlinear\scripts\sgd_etth2.py --step run --dataset ETTm1 --model NLinear --H 96 --seed 2021 2022 2023 2024 2025 --lr 0.0004 --threads 2 --out sgd_lr/ETTm1/x4
+→ results\sgd_lr\ETTm1\x4\NLinear_H96_seed2021.json
+  NLinear H=96 seed 2021: epoch tốt nhất 3/6, val MSE 0.387393, test MSE 0.305170 MAE 0.347070, 36 s
+→ results\sgd_lr\ETTm1\x4\NLinear_H96_seed2022.json
+  NLinear H=96 seed 2022: epoch tốt nhất 5/8, val MSE 0.388079, test MSE 0.302921 MAE 0.344773, 44 s
+→ results\sgd_lr\ETTm1\x4\NLinear_H96_seed2023.json
+  NLinear H=96 seed 2023: epoch tốt nhất 7/10, val MSE 0.388835, test MSE 0.302478 MAE 0.344302, 55 s
+→ results\sgd_lr\ETTm1\x4\NLinear_H96_seed2024.json
+  NLinear H=96 seed 2024: epoch tốt nhất 4/7, val MSE 0.383561, test MSE 0.314103 MAE 0.352768, 37 s
+→ results\sgd_lr\ETTm1\x4\NLinear_H96_seed2025.json
+  NLinear H=96 seed 2025: epoch tốt nhất 2/5, val MSE 0.390682, test MSE 0.312591 MAE 0.350821, 27 s
+C:\Users\Admin\Documents\dlinear\.venv-gpu\Scripts\python.exe C:\Users\Admin\Documents\dlinear\scripts\sgd_etth2.py --step run --dataset ETTm1 --model NLinear --H 96 --seed 2021 2022 2023 2024 2025 --lr 0.0008 --threads 2 --out sgd_lr/ETTm1/x8
+→ results\sgd_lr\ETTm1\x8\NLinear_H96_seed2021.json
+  NLinear H=96 seed 2021: epoch tốt nhất 3/6, val MSE 0.382341, test MSE 0.313619 MAE 0.353236, 34 s
+→ results\sgd_lr\ETTm1\x8\NLinear_H96_seed2022.json
+  NLinear H=96 seed 2022: epoch tốt nhất 5/8, val MSE 0.385022, test MSE 0.304838 MAE 0.346036, 48 s
+→ results\sgd_lr\ETTm1\x8\NLinear_H96_seed2023.json
+  NLinear H=96 seed 2023: epoch tốt nhất 2/5, val MSE 0.384135, test MSE 0.327232 MAE 0.362473, 30 s
+→ results\sgd_lr\ETTm1\x8\NLinear_H96_seed2024.json
+  NLinear H=96 seed 2024: epoch tốt nhất 4/7, val MSE 0.384955, test MSE 0.307023 MAE 0.347942, 41 s
+→ results\sgd_lr\ETTm1\x8\NLinear_H96_seed2025.json
+  NLinear H=96 seed 2025: epoch tốt nhất 7/10, val MSE 0.385891, test MSE 0.303743 MAE 0.344924, 57 s
+C:\Users\Admin\Documents\dlinear\.venv-gpu\Scripts\python.exe C:\Users\Admin\Documents\dlinear\scripts\sgd_etth2.py --step run --dataset ETTm1 --model NLinear --H 96 --seed 2026 2027 2028 2029 2030 2031 2032 2033 2034 2035 2036 2037 2038 2039 2040 --lr 0.0008 --threads 2 --out sgd_lr/ETTm1/x8
+→ results\sgd_lr\ETTm1\x8\NLinear_H96_seed2026.json
+  NLinear H=96 seed 2026: epoch tốt nhất 7/10, val MSE 0.387665, test MSE 0.302743 MAE 0.344956, 61 s
+→ results\sgd_lr\ETTm1\x8\NLinear_H96_seed2027.json
+  NLinear H=96 seed 2027: epoch tốt nhất 5/8, val MSE 0.388574, test MSE 0.306748 MAE 0.347831, 46 s
+→ results\sgd_lr\ETTm1\x8\NLinear_H96_seed2028.json
+  NLinear H=96 seed 2028: epoch tốt nhất 7/10, val MSE 0.387484, test MSE 0.302488 MAE 0.343977, 55 s
+→ results\sgd_lr\ETTm1\x8\NLinear_H96_seed2029.json
+  NLinear H=96 seed 2029: epoch tốt nhất 9/10, val MSE 0.388129, test MSE 0.301317 MAE 0.343298, 54 s
+→ results\sgd_lr\ETTm1\x8\NLinear_H96_seed2030.json
+  NLinear H=96 seed 2030: epoch tốt nhất 6/9, val MSE 0.385250, test MSE 0.308971 MAE 0.349308, 50 s
+→ results\sgd_lr\ETTm1\x8\NLinear_H96_seed2031.json
+  NLinear H=96 seed 2031: epoch tốt nhất 6/9, val MSE 0.387623, test MSE 0.301371 MAE 0.342835, 51 s
+→ results\sgd_lr\ETTm1\x8\NLinear_H96_seed2032.json
+  NLinear H=96 seed 2032: epoch tốt nhất 9/10, val MSE 0.389204, test MSE 0.300582 MAE 0.342792, 54 s
+→ results\sgd_lr\ETTm1\x8\NLinear_H96_seed2033.json
+  NLinear H=96 seed 2033: epoch tốt nhất 3/6, val MSE 0.387371, test MSE 0.313496 MAE 0.353491, 33 s
+→ results\sgd_lr\ETTm1\x8\NLinear_H96_seed2034.json
+  NLinear H=96 seed 2034: epoch tốt nhất 5/8, val MSE 0.388405, test MSE 0.305089 MAE 0.346198, 46 s
+→ results\sgd_lr\ETTm1\x8\NLinear_H96_seed2035.json
+  NLinear H=96 seed 2035: epoch tốt nhất 4/7, val MSE 0.390604, test MSE 0.310828 MAE 0.349979, 39 s
+→ results\sgd_lr\ETTm1\x8\NLinear_H96_seed2036.json
+  NLinear H=96 seed 2036: epoch tốt nhất 9/10, val MSE 0.388410, test MSE 0.302330 MAE 0.344037, 58 s
+→ results\sgd_lr\ETTm1\x8\NLinear_H96_seed2037.json
+  NLinear H=96 seed 2037: epoch tốt nhất 6/9, val MSE 0.386317, test MSE 0.305655 MAE 0.347024, 51 s
+→ results\sgd_lr\ETTm1\x8\NLinear_H96_seed2038.json
+  NLinear H=96 seed 2038: epoch tốt nhất 4/7, val MSE 0.386739, test MSE 0.308259 MAE 0.348408, 39 s
+→ results\sgd_lr\ETTm1\x8\NLinear_H96_seed2039.json
+  NLinear H=96 seed 2039: epoch tốt nhất 7/10, val MSE 0.388130, test MSE 0.302921 MAE 0.344755, 54 s
+→ results\sgd_lr\ETTm1\x8\NLinear_H96_seed2040.json
+  NLinear H=96 seed 2040: epoch tốt nhất 6/9, val MSE 0.388586, test MSE 0.304412 MAE 0.345913, 48 s

@@ -1,0 +1,3042 @@
+{
+ "hardware": {
+  "cpu": "Intel64 Family 6 Model 151 Stepping 5, GenuineIntel",
+  "torch": "2.14.0+cu130",
+  "os": "Windows-11-10.0.26100-SP0"
+ },
+ "git_commit": "885515df7547",
+ "date": "2026-10-08 12:34:31",
+ "workers": 5,
+ "threads": 2,
+ "wall_seconds_last_call": 8296.781985759735,
+ "cells": {
+  "ETTh2 Linear H=96": {
+   "dataset": "ETTh2",
+   "model": "Linear",
+   "H": 96,
+   "base_lr": 0.05,
+   "mean_val_by_mult": {
+    "0.5": 0.21543770444524196,
+    "1": 0.21509771750409262,
+    "2": 0.2165090684420196,
+    "4": 0.2158185225820759
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H96_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_etth2_20seed\\Linear_H96_seed2021.json",
+     "results\\sgd_etth2_20seed\\Linear_H96_seed2022.json",
+     "results\\sgd_etth2_20seed\\Linear_H96_seed2023.json",
+     "results\\sgd_etth2_20seed\\Linear_H96_seed2024.json",
+     "results\\sgd_etth2_20seed\\Linear_H96_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTh2\\x2\\Linear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x2\\Linear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x2\\Linear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x2\\Linear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x2\\Linear_H96_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTh2\\x4\\Linear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x4\\Linear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x4\\Linear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x4\\Linear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x4\\Linear_H96_seed2025.json"
+    ]
+   },
+   "chosen_mult": 1.0,
+   "chosen_lr": 0.05,
+   "extended_x8": false,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_etth2_20seed\\Linear_H96_seed2026.json",
+    "results\\sgd_etth2_20seed\\Linear_H96_seed2027.json",
+    "results\\sgd_etth2_20seed\\Linear_H96_seed2028.json",
+    "results\\sgd_etth2_20seed\\Linear_H96_seed2029.json",
+    "results\\sgd_etth2_20seed\\Linear_H96_seed2030.json",
+    "results\\sgd_etth2_20seed\\Linear_H96_seed2031.json",
+    "results\\sgd_etth2_20seed\\Linear_H96_seed2032.json",
+    "results\\sgd_etth2_20seed\\Linear_H96_seed2033.json",
+    "results\\sgd_etth2_20seed\\Linear_H96_seed2034.json",
+    "results\\sgd_etth2_20seed\\Linear_H96_seed2035.json",
+    "results\\sgd_etth2_20seed\\Linear_H96_seed2036.json",
+    "results\\sgd_etth2_20seed\\Linear_H96_seed2037.json",
+    "results\\sgd_etth2_20seed\\Linear_H96_seed2038.json",
+    "results\\sgd_etth2_20seed\\Linear_H96_seed2039.json",
+    "results\\sgd_etth2_20seed\\Linear_H96_seed2040.json"
+   ],
+   "final_mean_val": 0.21828619731742832
+  },
+  "ETTh2 Linear H=192": {
+   "dataset": "ETTh2",
+   "model": "Linear",
+   "H": 192,
+   "base_lr": 0.05,
+   "mean_val_by_mult": {
+    "0.5": 0.3063365019639198,
+    "1": 0.3037649966843591,
+    "2": 0.3095160615513869,
+    "4": 0.29600001860610936,
+    "8": 0.29777795279409036
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H192_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_etth2_20seed\\Linear_H192_seed2021.json",
+     "results\\sgd_etth2_20seed\\Linear_H192_seed2022.json",
+     "results\\sgd_etth2_20seed\\Linear_H192_seed2023.json",
+     "results\\sgd_etth2_20seed\\Linear_H192_seed2024.json",
+     "results\\sgd_etth2_20seed\\Linear_H192_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTh2\\x2\\Linear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x2\\Linear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x2\\Linear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x2\\Linear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x2\\Linear_H192_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTh2\\x4\\Linear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x4\\Linear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x4\\Linear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x4\\Linear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x4\\Linear_H192_seed2025.json"
+    ],
+    "8": [
+     "results\\sgd_lr\\ETTh2\\x8\\Linear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x8\\Linear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x8\\Linear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x8\\Linear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x8\\Linear_H192_seed2025.json"
+    ]
+   },
+   "chosen_mult": 4.0,
+   "chosen_lr": 0.2,
+   "extended_x8": true,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh2\\x4\\Linear_H192_seed2026.json",
+    "results\\sgd_lr\\ETTh2\\x4\\Linear_H192_seed2027.json",
+    "results\\sgd_lr\\ETTh2\\x4\\Linear_H192_seed2028.json",
+    "results\\sgd_lr\\ETTh2\\x4\\Linear_H192_seed2029.json",
+    "results\\sgd_lr\\ETTh2\\x4\\Linear_H192_seed2030.json",
+    "results\\sgd_lr\\ETTh2\\x4\\Linear_H192_seed2031.json",
+    "results\\sgd_lr\\ETTh2\\x4\\Linear_H192_seed2032.json",
+    "results\\sgd_lr\\ETTh2\\x4\\Linear_H192_seed2033.json",
+    "results\\sgd_lr\\ETTh2\\x4\\Linear_H192_seed2034.json",
+    "results\\sgd_lr\\ETTh2\\x4\\Linear_H192_seed2035.json",
+    "results\\sgd_lr\\ETTh2\\x4\\Linear_H192_seed2036.json",
+    "results\\sgd_lr\\ETTh2\\x4\\Linear_H192_seed2037.json",
+    "results\\sgd_lr\\ETTh2\\x4\\Linear_H192_seed2038.json",
+    "results\\sgd_lr\\ETTh2\\x4\\Linear_H192_seed2039.json",
+    "results\\sgd_lr\\ETTh2\\x4\\Linear_H192_seed2040.json"
+   ],
+   "final_mean_val": 0.30248948074090865
+  },
+  "ETTh2 Linear H=336": {
+   "dataset": "ETTh2",
+   "model": "Linear",
+   "H": 336,
+   "base_lr": 0.05,
+   "mean_val_by_mult": {
+    "0.5": 0.4005844053032087,
+    "1": 0.39459493377092714,
+    "2": 0.3956133579382734,
+    "4": 0.39673637597138206
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H336_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_etth2_20seed\\Linear_H336_seed2021.json",
+     "results\\sgd_etth2_20seed\\Linear_H336_seed2022.json",
+     "results\\sgd_etth2_20seed\\Linear_H336_seed2023.json",
+     "results\\sgd_etth2_20seed\\Linear_H336_seed2024.json",
+     "results\\sgd_etth2_20seed\\Linear_H336_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTh2\\x2\\Linear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x2\\Linear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x2\\Linear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x2\\Linear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x2\\Linear_H336_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTh2\\x4\\Linear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x4\\Linear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x4\\Linear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x4\\Linear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x4\\Linear_H336_seed2025.json"
+    ]
+   },
+   "chosen_mult": 1.0,
+   "chosen_lr": 0.05,
+   "extended_x8": false,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_etth2_20seed\\Linear_H336_seed2026.json",
+    "results\\sgd_etth2_20seed\\Linear_H336_seed2027.json",
+    "results\\sgd_etth2_20seed\\Linear_H336_seed2028.json",
+    "results\\sgd_etth2_20seed\\Linear_H336_seed2029.json",
+    "results\\sgd_etth2_20seed\\Linear_H336_seed2030.json",
+    "results\\sgd_etth2_20seed\\Linear_H336_seed2031.json",
+    "results\\sgd_etth2_20seed\\Linear_H336_seed2032.json",
+    "results\\sgd_etth2_20seed\\Linear_H336_seed2033.json",
+    "results\\sgd_etth2_20seed\\Linear_H336_seed2034.json",
+    "results\\sgd_etth2_20seed\\Linear_H336_seed2035.json",
+    "results\\sgd_etth2_20seed\\Linear_H336_seed2036.json",
+    "results\\sgd_etth2_20seed\\Linear_H336_seed2037.json",
+    "results\\sgd_etth2_20seed\\Linear_H336_seed2038.json",
+    "results\\sgd_etth2_20seed\\Linear_H336_seed2039.json",
+    "results\\sgd_etth2_20seed\\Linear_H336_seed2040.json"
+   ],
+   "final_mean_val": 0.395746955148717
+  },
+  "ETTh2 Linear H=720": {
+   "dataset": "ETTh2",
+   "model": "Linear",
+   "H": 720,
+   "base_lr": 0.05,
+   "mean_val_by_mult": {
+    "0.5": 0.6530538024549786,
+    "1": 0.6556983805710577,
+    "2": 0.6549254115735238,
+    "4": 0.6558308124477773
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_etth2_20seed\\Linear_H720_seed2021.json",
+     "results\\sgd_etth2_20seed\\Linear_H720_seed2022.json",
+     "results\\sgd_etth2_20seed\\Linear_H720_seed2023.json",
+     "results\\sgd_etth2_20seed\\Linear_H720_seed2024.json",
+     "results\\sgd_etth2_20seed\\Linear_H720_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTh2\\x2\\Linear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x2\\Linear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x2\\Linear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x2\\Linear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x2\\Linear_H720_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTh2\\x4\\Linear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x4\\Linear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x4\\Linear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x4\\Linear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x4\\Linear_H720_seed2025.json"
+    ]
+   },
+   "chosen_mult": 0.5,
+   "chosen_lr": 0.025,
+   "extended_x8": false,
+   "at_lower_edge": true,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2026.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2027.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2028.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2029.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2030.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2031.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2032.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2033.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2034.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2035.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2036.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2037.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2038.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2039.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2040.json"
+   ],
+   "final_mean_val": 0.6632355476214442
+  },
+  "ETTh2 DLinear H=96": {
+   "dataset": "ETTh2",
+   "model": "DLinear",
+   "H": 96,
+   "base_lr": 0.05,
+   "mean_val_by_mult": {
+    "0.5": 0.2174409256117174,
+    "1": 0.21559789326468634,
+    "2": 0.21607862357719304,
+    "4": 0.21704118351450807
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H96_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_etth2_20seed\\DLinear_H96_seed2021.json",
+     "results\\sgd_etth2_20seed\\DLinear_H96_seed2022.json",
+     "results\\sgd_etth2_20seed\\DLinear_H96_seed2023.json",
+     "results\\sgd_etth2_20seed\\DLinear_H96_seed2024.json",
+     "results\\sgd_etth2_20seed\\DLinear_H96_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTh2\\x2\\DLinear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x2\\DLinear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x2\\DLinear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x2\\DLinear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x2\\DLinear_H96_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTh2\\x4\\DLinear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x4\\DLinear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x4\\DLinear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x4\\DLinear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x4\\DLinear_H96_seed2025.json"
+    ]
+   },
+   "chosen_mult": 1.0,
+   "chosen_lr": 0.05,
+   "extended_x8": false,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_etth2_20seed\\DLinear_H96_seed2026.json",
+    "results\\sgd_etth2_20seed\\DLinear_H96_seed2027.json",
+    "results\\sgd_etth2_20seed\\DLinear_H96_seed2028.json",
+    "results\\sgd_etth2_20seed\\DLinear_H96_seed2029.json",
+    "results\\sgd_etth2_20seed\\DLinear_H96_seed2030.json",
+    "results\\sgd_etth2_20seed\\DLinear_H96_seed2031.json",
+    "results\\sgd_etth2_20seed\\DLinear_H96_seed2032.json",
+    "results\\sgd_etth2_20seed\\DLinear_H96_seed2033.json",
+    "results\\sgd_etth2_20seed\\DLinear_H96_seed2034.json",
+    "results\\sgd_etth2_20seed\\DLinear_H96_seed2035.json",
+    "results\\sgd_etth2_20seed\\DLinear_H96_seed2036.json",
+    "results\\sgd_etth2_20seed\\DLinear_H96_seed2037.json",
+    "results\\sgd_etth2_20seed\\DLinear_H96_seed2038.json",
+    "results\\sgd_etth2_20seed\\DLinear_H96_seed2039.json",
+    "results\\sgd_etth2_20seed\\DLinear_H96_seed2040.json"
+   ],
+   "final_mean_val": 0.21707332883123379
+  },
+  "ETTh2 DLinear H=192": {
+   "dataset": "ETTh2",
+   "model": "DLinear",
+   "H": 192,
+   "base_lr": 0.05,
+   "mean_val_by_mult": {
+    "0.5": 0.29583733002164164,
+    "1": 0.2979829002876916,
+    "2": 0.30045530438353374,
+    "4": 0.3016633601733959
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_etth2_20seed\\DLinear_H192_seed2021.json",
+     "results\\sgd_etth2_20seed\\DLinear_H192_seed2022.json",
+     "results\\sgd_etth2_20seed\\DLinear_H192_seed2023.json",
+     "results\\sgd_etth2_20seed\\DLinear_H192_seed2024.json",
+     "results\\sgd_etth2_20seed\\DLinear_H192_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTh2\\x2\\DLinear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x2\\DLinear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x2\\DLinear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x2\\DLinear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x2\\DLinear_H192_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTh2\\x4\\DLinear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x4\\DLinear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x4\\DLinear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x4\\DLinear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x4\\DLinear_H192_seed2025.json"
+    ]
+   },
+   "chosen_mult": 0.5,
+   "chosen_lr": 0.025,
+   "extended_x8": false,
+   "at_lower_edge": true,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2026.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2027.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2028.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2029.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2030.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2031.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2032.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2033.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2034.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2035.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2036.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2037.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2038.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2039.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2040.json"
+   ],
+   "final_mean_val": 0.2961633101553515
+  },
+  "ETTh2 DLinear H=336": {
+   "dataset": "ETTh2",
+   "model": "DLinear",
+   "H": 336,
+   "base_lr": 0.05,
+   "mean_val_by_mult": {
+    "0.5": 0.39632655675967393,
+    "1": 0.3962481524290541,
+    "2": 0.39853202303102575,
+    "4": 0.40028513972974755
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H336_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_etth2_20seed\\DLinear_H336_seed2021.json",
+     "results\\sgd_etth2_20seed\\DLinear_H336_seed2022.json",
+     "results\\sgd_etth2_20seed\\DLinear_H336_seed2023.json",
+     "results\\sgd_etth2_20seed\\DLinear_H336_seed2024.json",
+     "results\\sgd_etth2_20seed\\DLinear_H336_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTh2\\x2\\DLinear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x2\\DLinear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x2\\DLinear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x2\\DLinear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x2\\DLinear_H336_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTh2\\x4\\DLinear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x4\\DLinear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x4\\DLinear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x4\\DLinear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x4\\DLinear_H336_seed2025.json"
+    ]
+   },
+   "chosen_mult": 1.0,
+   "chosen_lr": 0.05,
+   "extended_x8": false,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_etth2_20seed\\DLinear_H336_seed2026.json",
+    "results\\sgd_etth2_20seed\\DLinear_H336_seed2027.json",
+    "results\\sgd_etth2_20seed\\DLinear_H336_seed2028.json",
+    "results\\sgd_etth2_20seed\\DLinear_H336_seed2029.json",
+    "results\\sgd_etth2_20seed\\DLinear_H336_seed2030.json",
+    "results\\sgd_etth2_20seed\\DLinear_H336_seed2031.json",
+    "results\\sgd_etth2_20seed\\DLinear_H336_seed2032.json",
+    "results\\sgd_etth2_20seed\\DLinear_H336_seed2033.json",
+    "results\\sgd_etth2_20seed\\DLinear_H336_seed2034.json",
+    "results\\sgd_etth2_20seed\\DLinear_H336_seed2035.json",
+    "results\\sgd_etth2_20seed\\DLinear_H336_seed2036.json",
+    "results\\sgd_etth2_20seed\\DLinear_H336_seed2037.json",
+    "results\\sgd_etth2_20seed\\DLinear_H336_seed2038.json",
+    "results\\sgd_etth2_20seed\\DLinear_H336_seed2039.json",
+    "results\\sgd_etth2_20seed\\DLinear_H336_seed2040.json"
+   ],
+   "final_mean_val": 0.3993329879331133
+  },
+  "ETTh2 DLinear H=720": {
+   "dataset": "ETTh2",
+   "model": "DLinear",
+   "H": 720,
+   "base_lr": 0.05,
+   "mean_val_by_mult": {
+    "0.5": 0.6612803474432825,
+    "1": 0.6611602900379558,
+    "2": 0.6613384527559403,
+    "4": 0.6622947412697745
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H720_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_etth2_20seed\\DLinear_H720_seed2021.json",
+     "results\\sgd_etth2_20seed\\DLinear_H720_seed2022.json",
+     "results\\sgd_etth2_20seed\\DLinear_H720_seed2023.json",
+     "results\\sgd_etth2_20seed\\DLinear_H720_seed2024.json",
+     "results\\sgd_etth2_20seed\\DLinear_H720_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTh2\\x2\\DLinear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x2\\DLinear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x2\\DLinear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x2\\DLinear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x2\\DLinear_H720_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTh2\\x4\\DLinear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x4\\DLinear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x4\\DLinear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x4\\DLinear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x4\\DLinear_H720_seed2025.json"
+    ]
+   },
+   "chosen_mult": 1.0,
+   "chosen_lr": 0.05,
+   "extended_x8": false,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_etth2_20seed\\DLinear_H720_seed2026.json",
+    "results\\sgd_etth2_20seed\\DLinear_H720_seed2027.json",
+    "results\\sgd_etth2_20seed\\DLinear_H720_seed2028.json",
+    "results\\sgd_etth2_20seed\\DLinear_H720_seed2029.json",
+    "results\\sgd_etth2_20seed\\DLinear_H720_seed2030.json",
+    "results\\sgd_etth2_20seed\\DLinear_H720_seed2031.json",
+    "results\\sgd_etth2_20seed\\DLinear_H720_seed2032.json",
+    "results\\sgd_etth2_20seed\\DLinear_H720_seed2033.json",
+    "results\\sgd_etth2_20seed\\DLinear_H720_seed2034.json",
+    "results\\sgd_etth2_20seed\\DLinear_H720_seed2035.json",
+    "results\\sgd_etth2_20seed\\DLinear_H720_seed2036.json",
+    "results\\sgd_etth2_20seed\\DLinear_H720_seed2037.json",
+    "results\\sgd_etth2_20seed\\DLinear_H720_seed2038.json",
+    "results\\sgd_etth2_20seed\\DLinear_H720_seed2039.json",
+    "results\\sgd_etth2_20seed\\DLinear_H720_seed2040.json"
+   ],
+   "final_mean_val": 0.6588216715146967
+  },
+  "ETTh2 NLinear H=96": {
+   "dataset": "ETTh2",
+   "model": "NLinear",
+   "H": 96,
+   "base_lr": 0.05,
+   "mean_val_by_mult": {
+    "0.5": 0.20546168056554617,
+    "1": 0.20596053303847942,
+    "2": 0.20804912689672378,
+    "4": 0.21471661578896367
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_etth2_20seed\\NLinear_H96_seed2021.json",
+     "results\\sgd_etth2_20seed\\NLinear_H96_seed2022.json",
+     "results\\sgd_etth2_20seed\\NLinear_H96_seed2023.json",
+     "results\\sgd_etth2_20seed\\NLinear_H96_seed2024.json",
+     "results\\sgd_etth2_20seed\\NLinear_H96_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTh2\\x2\\NLinear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x2\\NLinear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x2\\NLinear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x2\\NLinear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x2\\NLinear_H96_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTh2\\x4\\NLinear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x4\\NLinear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x4\\NLinear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x4\\NLinear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x4\\NLinear_H96_seed2025.json"
+    ]
+   },
+   "chosen_mult": 0.5,
+   "chosen_lr": 0.025,
+   "extended_x8": false,
+   "at_lower_edge": true,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2026.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2027.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2028.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2029.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2030.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2031.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2032.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2033.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2034.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2035.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2036.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2037.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2038.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2039.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2040.json"
+   ],
+   "final_mean_val": 0.20630056988888593
+  },
+  "ETTh2 NLinear H=192": {
+   "dataset": "ETTh2",
+   "model": "NLinear",
+   "H": 192,
+   "base_lr": 0.05,
+   "mean_val_by_mult": {
+    "0.5": 0.27078223727786055,
+    "1": 0.2720466304687552,
+    "2": 0.27723057744152646,
+    "4": 0.29756102247178967
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H192_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_etth2_20seed\\NLinear_H192_seed2021.json",
+     "results\\sgd_etth2_20seed\\NLinear_H192_seed2022.json",
+     "results\\sgd_etth2_20seed\\NLinear_H192_seed2023.json",
+     "results\\sgd_etth2_20seed\\NLinear_H192_seed2024.json",
+     "results\\sgd_etth2_20seed\\NLinear_H192_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTh2\\x2\\NLinear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x2\\NLinear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x2\\NLinear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x2\\NLinear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x2\\NLinear_H192_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTh2\\x4\\NLinear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x4\\NLinear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x4\\NLinear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x4\\NLinear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x4\\NLinear_H192_seed2025.json"
+    ]
+   },
+   "chosen_mult": 0.5,
+   "chosen_lr": 0.025,
+   "extended_x8": false,
+   "at_lower_edge": true,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H192_seed2026.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H192_seed2027.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H192_seed2028.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H192_seed2029.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H192_seed2030.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H192_seed2031.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H192_seed2032.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H192_seed2033.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H192_seed2034.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H192_seed2035.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H192_seed2036.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H192_seed2037.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H192_seed2038.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H192_seed2039.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H192_seed2040.json"
+   ],
+   "final_mean_val": 0.270970182173155
+  },
+  "ETTh2 NLinear H=336": {
+   "dataset": "ETTh2",
+   "model": "NLinear",
+   "H": 336,
+   "base_lr": 0.05,
+   "mean_val_by_mult": {
+    "0.5": 0.3585596145392044,
+    "1": 0.36058149800151357,
+    "2": 0.36376665845904466,
+    "4": 0.3702773596341823
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_etth2_20seed\\NLinear_H336_seed2021.json",
+     "results\\sgd_etth2_20seed\\NLinear_H336_seed2022.json",
+     "results\\sgd_etth2_20seed\\NLinear_H336_seed2023.json",
+     "results\\sgd_etth2_20seed\\NLinear_H336_seed2024.json",
+     "results\\sgd_etth2_20seed\\NLinear_H336_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTh2\\x2\\NLinear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x2\\NLinear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x2\\NLinear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x2\\NLinear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x2\\NLinear_H336_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTh2\\x4\\NLinear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x4\\NLinear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x4\\NLinear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x4\\NLinear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x4\\NLinear_H336_seed2025.json"
+    ]
+   },
+   "chosen_mult": 0.5,
+   "chosen_lr": 0.025,
+   "extended_x8": false,
+   "at_lower_edge": true,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2026.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2027.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2028.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2029.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2030.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2031.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2032.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2033.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2034.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2035.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2036.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2037.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2038.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2039.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2040.json"
+   ],
+   "final_mean_val": 0.36167202029842455
+  },
+  "ETTh2 NLinear H=720": {
+   "dataset": "ETTh2",
+   "model": "NLinear",
+   "H": 720,
+   "base_lr": 0.05,
+   "mean_val_by_mult": {
+    "0.5": 0.6037177671560501,
+    "1": 0.6098794221594919,
+    "2": 0.6073112666098662,
+    "4": 0.6150000007341223
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H720_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_etth2_20seed\\NLinear_H720_seed2021.json",
+     "results\\sgd_etth2_20seed\\NLinear_H720_seed2022.json",
+     "results\\sgd_etth2_20seed\\NLinear_H720_seed2023.json",
+     "results\\sgd_etth2_20seed\\NLinear_H720_seed2024.json",
+     "results\\sgd_etth2_20seed\\NLinear_H720_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTh2\\x2\\NLinear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x2\\NLinear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x2\\NLinear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x2\\NLinear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x2\\NLinear_H720_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTh2\\x4\\NLinear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTh2\\x4\\NLinear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTh2\\x4\\NLinear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTh2\\x4\\NLinear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTh2\\x4\\NLinear_H720_seed2025.json"
+    ]
+   },
+   "chosen_mult": 0.5,
+   "chosen_lr": 0.025,
+   "extended_x8": false,
+   "at_lower_edge": true,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H720_seed2026.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H720_seed2027.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H720_seed2028.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H720_seed2029.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H720_seed2030.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H720_seed2031.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H720_seed2032.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H720_seed2033.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H720_seed2034.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H720_seed2035.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H720_seed2036.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H720_seed2037.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H720_seed2038.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H720_seed2039.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H720_seed2040.json"
+   ],
+   "final_mean_val": 0.6014327608540546
+  },
+  "ETTh1 Linear H=96": {
+   "dataset": "ETTh1",
+   "model": "Linear",
+   "H": 96,
+   "base_lr": 0.005,
+   "mean_val_by_mult": {
+    "0.5": 0.6502654144237325,
+    "1": 0.6485848162631249,
+    "2": 0.646224876098755,
+    "4": 0.6447640419639653,
+    "8": 0.6596648223159993
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H96_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_b1_b4\\ETTh1\\Linear_H96_seed2021.json",
+     "results\\sgd_b1_b4\\ETTh1\\Linear_H96_seed2022.json",
+     "results\\sgd_b1_b4\\ETTh1\\Linear_H96_seed2023.json",
+     "results\\sgd_b1_b4\\ETTh1\\Linear_H96_seed2024.json",
+     "results\\sgd_b1_b4\\ETTh1\\Linear_H96_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTh1\\x2\\Linear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x2\\Linear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x2\\Linear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x2\\Linear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x2\\Linear_H96_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTh1\\x4\\Linear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x4\\Linear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x4\\Linear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x4\\Linear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x4\\Linear_H96_seed2025.json"
+    ],
+    "8": [
+     "results\\sgd_lr\\ETTh1\\x8\\Linear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x8\\Linear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x8\\Linear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x8\\Linear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x8\\Linear_H96_seed2025.json"
+    ]
+   },
+   "chosen_mult": 4.0,
+   "chosen_lr": 0.02,
+   "extended_x8": true,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh1\\x4\\Linear_H96_seed2026.json",
+    "results\\sgd_lr\\ETTh1\\x4\\Linear_H96_seed2027.json",
+    "results\\sgd_lr\\ETTh1\\x4\\Linear_H96_seed2028.json",
+    "results\\sgd_lr\\ETTh1\\x4\\Linear_H96_seed2029.json",
+    "results\\sgd_lr\\ETTh1\\x4\\Linear_H96_seed2030.json",
+    "results\\sgd_lr\\ETTh1\\x4\\Linear_H96_seed2031.json",
+    "results\\sgd_lr\\ETTh1\\x4\\Linear_H96_seed2032.json",
+    "results\\sgd_lr\\ETTh1\\x4\\Linear_H96_seed2033.json",
+    "results\\sgd_lr\\ETTh1\\x4\\Linear_H96_seed2034.json",
+    "results\\sgd_lr\\ETTh1\\x4\\Linear_H96_seed2035.json",
+    "results\\sgd_lr\\ETTh1\\x4\\Linear_H96_seed2036.json",
+    "results\\sgd_lr\\ETTh1\\x4\\Linear_H96_seed2037.json",
+    "results\\sgd_lr\\ETTh1\\x4\\Linear_H96_seed2038.json",
+    "results\\sgd_lr\\ETTh1\\x4\\Linear_H96_seed2039.json",
+    "results\\sgd_lr\\ETTh1\\x4\\Linear_H96_seed2040.json"
+   ],
+   "final_mean_val": 0.6450488898144616
+  },
+  "ETTh1 Linear H=192": {
+   "dataset": "ETTh1",
+   "model": "Linear",
+   "H": 192,
+   "base_lr": 0.005,
+   "mean_val_by_mult": {
+    "0.5": 0.8654637369430367,
+    "1": 0.8660730175098046,
+    "2": 0.8645228604536106,
+    "4": 0.8593079980381921,
+    "8": 0.8562951292002001
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H192_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_b1_b4\\ETTh1\\Linear_H192_seed2021.json",
+     "results\\sgd_b1_b4\\ETTh1\\Linear_H192_seed2022.json",
+     "results\\sgd_b1_b4\\ETTh1\\Linear_H192_seed2023.json",
+     "results\\sgd_b1_b4\\ETTh1\\Linear_H192_seed2024.json",
+     "results\\sgd_b1_b4\\ETTh1\\Linear_H192_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTh1\\x2\\Linear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x2\\Linear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x2\\Linear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x2\\Linear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x2\\Linear_H192_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTh1\\x4\\Linear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x4\\Linear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x4\\Linear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x4\\Linear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x4\\Linear_H192_seed2025.json"
+    ],
+    "8": [
+     "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2025.json"
+    ]
+   },
+   "chosen_mult": 8.0,
+   "chosen_lr": 0.04,
+   "extended_x8": true,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2026.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2027.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2028.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2029.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2030.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2031.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2032.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2033.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2034.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2035.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2036.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2037.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2038.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2039.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2040.json"
+   ],
+   "final_mean_val": 0.8739014676392594
+  },
+  "ETTh1 Linear H=336": {
+   "dataset": "ETTh1",
+   "model": "Linear",
+   "H": 336,
+   "base_lr": 0.005,
+   "mean_val_by_mult": {
+    "0.5": 1.0525775252089562,
+    "1": 1.0414959727208923,
+    "2": 1.0415516836597918,
+    "4": 1.044472907969813
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H336_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_b1_b4\\ETTh1\\Linear_H336_seed2021.json",
+     "results\\sgd_b1_b4\\ETTh1\\Linear_H336_seed2022.json",
+     "results\\sgd_b1_b4\\ETTh1\\Linear_H336_seed2023.json",
+     "results\\sgd_b1_b4\\ETTh1\\Linear_H336_seed2024.json",
+     "results\\sgd_b1_b4\\ETTh1\\Linear_H336_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTh1\\x2\\Linear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x2\\Linear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x2\\Linear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x2\\Linear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x2\\Linear_H336_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTh1\\x4\\Linear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x4\\Linear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x4\\Linear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x4\\Linear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x4\\Linear_H336_seed2025.json"
+    ]
+   },
+   "chosen_mult": 1.0,
+   "chosen_lr": 0.005,
+   "extended_x8": false,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_b1_b4\\ETTh1\\Linear_H336_seed2026.json",
+    "results\\sgd_b1_b4\\ETTh1\\Linear_H336_seed2027.json",
+    "results\\sgd_b1_b4\\ETTh1\\Linear_H336_seed2028.json",
+    "results\\sgd_b1_b4\\ETTh1\\Linear_H336_seed2029.json",
+    "results\\sgd_b1_b4\\ETTh1\\Linear_H336_seed2030.json",
+    "results\\sgd_b1_b4\\ETTh1\\Linear_H336_seed2031.json",
+    "results\\sgd_b1_b4\\ETTh1\\Linear_H336_seed2032.json",
+    "results\\sgd_b1_b4\\ETTh1\\Linear_H336_seed2033.json",
+    "results\\sgd_b1_b4\\ETTh1\\Linear_H336_seed2034.json",
+    "results\\sgd_b1_b4\\ETTh1\\Linear_H336_seed2035.json",
+    "results\\sgd_b1_b4\\ETTh1\\Linear_H336_seed2036.json",
+    "results\\sgd_b1_b4\\ETTh1\\Linear_H336_seed2037.json",
+    "results\\sgd_b1_b4\\ETTh1\\Linear_H336_seed2038.json",
+    "results\\sgd_b1_b4\\ETTh1\\Linear_H336_seed2039.json",
+    "results\\sgd_b1_b4\\ETTh1\\Linear_H336_seed2040.json"
+   ],
+   "final_mean_val": 1.0535924766912024
+  },
+  "ETTh1 Linear H=720": {
+   "dataset": "ETTh1",
+   "model": "Linear",
+   "H": 720,
+   "base_lr": 0.005,
+   "mean_val_by_mult": {
+    "0.5": 1.196025223139316,
+    "1": 1.2074552223811303,
+    "2": 1.2131366121861633,
+    "4": 1.200102856234985
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_b1_b4\\ETTh1\\Linear_H720_seed2021.json",
+     "results\\sgd_b1_b4\\ETTh1\\Linear_H720_seed2022.json",
+     "results\\sgd_b1_b4\\ETTh1\\Linear_H720_seed2023.json",
+     "results\\sgd_b1_b4\\ETTh1\\Linear_H720_seed2024.json",
+     "results\\sgd_b1_b4\\ETTh1\\Linear_H720_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTh1\\x2\\Linear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x2\\Linear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x2\\Linear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x2\\Linear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x2\\Linear_H720_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTh1\\x4\\Linear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x4\\Linear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x4\\Linear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x4\\Linear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x4\\Linear_H720_seed2025.json"
+    ]
+   },
+   "chosen_mult": 0.5,
+   "chosen_lr": 0.0025,
+   "extended_x8": false,
+   "at_lower_edge": true,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2026.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2027.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2028.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2029.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2030.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2031.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2032.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2033.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2034.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2035.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2036.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2037.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2038.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2039.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2040.json"
+   ],
+   "final_mean_val": 1.2067314970524528
+  },
+  "ETTh1 DLinear H=96": {
+   "dataset": "ETTh1",
+   "model": "DLinear",
+   "H": 96,
+   "base_lr": 0.005,
+   "mean_val_by_mult": {
+    "0.5": 0.6486791071053626,
+    "1": 0.6480032239672602,
+    "2": 0.648318977611951,
+    "4": 0.6486873421801278
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H96_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_b1_b4\\ETTh1\\DLinear_H96_seed2021.json",
+     "results\\sgd_b1_b4\\ETTh1\\DLinear_H96_seed2022.json",
+     "results\\sgd_b1_b4\\ETTh1\\DLinear_H96_seed2023.json",
+     "results\\sgd_b1_b4\\ETTh1\\DLinear_H96_seed2024.json",
+     "results\\sgd_b1_b4\\ETTh1\\DLinear_H96_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTh1\\x2\\DLinear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x2\\DLinear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x2\\DLinear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x2\\DLinear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x2\\DLinear_H96_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTh1\\x4\\DLinear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x4\\DLinear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x4\\DLinear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x4\\DLinear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x4\\DLinear_H96_seed2025.json"
+    ]
+   },
+   "chosen_mult": 1.0,
+   "chosen_lr": 0.005,
+   "extended_x8": false,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_b1_b4\\ETTh1\\DLinear_H96_seed2026.json",
+    "results\\sgd_b1_b4\\ETTh1\\DLinear_H96_seed2027.json",
+    "results\\sgd_b1_b4\\ETTh1\\DLinear_H96_seed2028.json",
+    "results\\sgd_b1_b4\\ETTh1\\DLinear_H96_seed2029.json",
+    "results\\sgd_b1_b4\\ETTh1\\DLinear_H96_seed2030.json",
+    "results\\sgd_b1_b4\\ETTh1\\DLinear_H96_seed2031.json",
+    "results\\sgd_b1_b4\\ETTh1\\DLinear_H96_seed2032.json",
+    "results\\sgd_b1_b4\\ETTh1\\DLinear_H96_seed2033.json",
+    "results\\sgd_b1_b4\\ETTh1\\DLinear_H96_seed2034.json",
+    "results\\sgd_b1_b4\\ETTh1\\DLinear_H96_seed2035.json",
+    "results\\sgd_b1_b4\\ETTh1\\DLinear_H96_seed2036.json",
+    "results\\sgd_b1_b4\\ETTh1\\DLinear_H96_seed2037.json",
+    "results\\sgd_b1_b4\\ETTh1\\DLinear_H96_seed2038.json",
+    "results\\sgd_b1_b4\\ETTh1\\DLinear_H96_seed2039.json",
+    "results\\sgd_b1_b4\\ETTh1\\DLinear_H96_seed2040.json"
+   ],
+   "final_mean_val": 0.6456968593038538
+  },
+  "ETTh1 DLinear H=192": {
+   "dataset": "ETTh1",
+   "model": "DLinear",
+   "H": 192,
+   "base_lr": 0.005,
+   "mean_val_by_mult": {
+    "0.5": 0.8727773652837021,
+    "1": 0.8643166560892839,
+    "2": 0.8543453110103023,
+    "4": 0.8565254141024303
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H192_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_b1_b4\\ETTh1\\DLinear_H192_seed2021.json",
+     "results\\sgd_b1_b4\\ETTh1\\DLinear_H192_seed2022.json",
+     "results\\sgd_b1_b4\\ETTh1\\DLinear_H192_seed2023.json",
+     "results\\sgd_b1_b4\\ETTh1\\DLinear_H192_seed2024.json",
+     "results\\sgd_b1_b4\\ETTh1\\DLinear_H192_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTh1\\x2\\DLinear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x2\\DLinear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x2\\DLinear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x2\\DLinear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x2\\DLinear_H192_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTh1\\x4\\DLinear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x4\\DLinear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x4\\DLinear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x4\\DLinear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x4\\DLinear_H192_seed2025.json"
+    ]
+   },
+   "chosen_mult": 2.0,
+   "chosen_lr": 0.01,
+   "extended_x8": false,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh1\\x2\\DLinear_H192_seed2026.json",
+    "results\\sgd_lr\\ETTh1\\x2\\DLinear_H192_seed2027.json",
+    "results\\sgd_lr\\ETTh1\\x2\\DLinear_H192_seed2028.json",
+    "results\\sgd_lr\\ETTh1\\x2\\DLinear_H192_seed2029.json",
+    "results\\sgd_lr\\ETTh1\\x2\\DLinear_H192_seed2030.json",
+    "results\\sgd_lr\\ETTh1\\x2\\DLinear_H192_seed2031.json",
+    "results\\sgd_lr\\ETTh1\\x2\\DLinear_H192_seed2032.json",
+    "results\\sgd_lr\\ETTh1\\x2\\DLinear_H192_seed2033.json",
+    "results\\sgd_lr\\ETTh1\\x2\\DLinear_H192_seed2034.json",
+    "results\\sgd_lr\\ETTh1\\x2\\DLinear_H192_seed2035.json",
+    "results\\sgd_lr\\ETTh1\\x2\\DLinear_H192_seed2036.json",
+    "results\\sgd_lr\\ETTh1\\x2\\DLinear_H192_seed2037.json",
+    "results\\sgd_lr\\ETTh1\\x2\\DLinear_H192_seed2038.json",
+    "results\\sgd_lr\\ETTh1\\x2\\DLinear_H192_seed2039.json",
+    "results\\sgd_lr\\ETTh1\\x2\\DLinear_H192_seed2040.json"
+   ],
+   "final_mean_val": 0.8662125704220466
+  },
+  "ETTh1 DLinear H=336": {
+   "dataset": "ETTh1",
+   "model": "DLinear",
+   "H": 336,
+   "base_lr": 0.005,
+   "mean_val_by_mult": {
+    "0.5": 1.0450179665534236,
+    "1": 1.0525126793767865,
+    "2": 1.0493211918224206,
+    "4": 1.072834664746102
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_b1_b4\\ETTh1\\DLinear_H336_seed2021.json",
+     "results\\sgd_b1_b4\\ETTh1\\DLinear_H336_seed2022.json",
+     "results\\sgd_b1_b4\\ETTh1\\DLinear_H336_seed2023.json",
+     "results\\sgd_b1_b4\\ETTh1\\DLinear_H336_seed2024.json",
+     "results\\sgd_b1_b4\\ETTh1\\DLinear_H336_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTh1\\x2\\DLinear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x2\\DLinear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x2\\DLinear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x2\\DLinear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x2\\DLinear_H336_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTh1\\x4\\DLinear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x4\\DLinear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x4\\DLinear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x4\\DLinear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x4\\DLinear_H336_seed2025.json"
+    ]
+   },
+   "chosen_mult": 0.5,
+   "chosen_lr": 0.0025,
+   "extended_x8": false,
+   "at_lower_edge": true,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2026.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2027.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2028.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2029.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2030.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2031.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2032.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2033.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2034.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2035.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2036.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2037.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2038.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2039.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2040.json"
+   ],
+   "final_mean_val": 1.0494883315791572
+  },
+  "ETTh1 DLinear H=720": {
+   "dataset": "ETTh1",
+   "model": "DLinear",
+   "H": 720,
+   "base_lr": 0.005,
+   "mean_val_by_mult": {
+    "0.5": 1.213278745268968,
+    "1": 1.2222551519917133,
+    "2": 1.2398948436719237,
+    "4": 1.2032435694018146,
+    "8": 1.2029952028432096
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H720_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_b1_b4\\ETTh1\\DLinear_H720_seed2021.json",
+     "results\\sgd_b1_b4\\ETTh1\\DLinear_H720_seed2022.json",
+     "results\\sgd_b1_b4\\ETTh1\\DLinear_H720_seed2023.json",
+     "results\\sgd_b1_b4\\ETTh1\\DLinear_H720_seed2024.json",
+     "results\\sgd_b1_b4\\ETTh1\\DLinear_H720_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTh1\\x2\\DLinear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x2\\DLinear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x2\\DLinear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x2\\DLinear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x2\\DLinear_H720_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTh1\\x4\\DLinear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x4\\DLinear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x4\\DLinear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x4\\DLinear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x4\\DLinear_H720_seed2025.json"
+    ],
+    "8": [
+     "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2025.json"
+    ]
+   },
+   "chosen_mult": 8.0,
+   "chosen_lr": 0.04,
+   "extended_x8": true,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2026.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2027.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2028.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2029.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2030.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2031.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2032.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2033.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2034.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2035.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2036.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2037.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2038.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2039.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2040.json"
+   ],
+   "final_mean_val": 1.2118807681569197
+  },
+  "ETTh1 NLinear H=96": {
+   "dataset": "ETTh1",
+   "model": "NLinear",
+   "H": 96,
+   "base_lr": 0.005,
+   "mean_val_by_mult": {
+    "0.5": 0.6680975933282817,
+    "1": 0.6770716592999338,
+    "2": 0.6821841096230843,
+    "4": 0.6672891776480973,
+    "8": 0.6675709450119018
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTh1\\x0.5\\NLinear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\NLinear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\NLinear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\NLinear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\NLinear_H96_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_b1_b4\\ETTh1\\NLinear_H96_seed2021.json",
+     "results\\sgd_b1_b4\\ETTh1\\NLinear_H96_seed2022.json",
+     "results\\sgd_b1_b4\\ETTh1\\NLinear_H96_seed2023.json",
+     "results\\sgd_b1_b4\\ETTh1\\NLinear_H96_seed2024.json",
+     "results\\sgd_b1_b4\\ETTh1\\NLinear_H96_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTh1\\x2\\NLinear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x2\\NLinear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x2\\NLinear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x2\\NLinear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x2\\NLinear_H96_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTh1\\x4\\NLinear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x4\\NLinear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x4\\NLinear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x4\\NLinear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x4\\NLinear_H96_seed2025.json"
+    ],
+    "8": [
+     "results\\sgd_lr\\ETTh1\\x8\\NLinear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x8\\NLinear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x8\\NLinear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x8\\NLinear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x8\\NLinear_H96_seed2025.json"
+    ]
+   },
+   "chosen_mult": 4.0,
+   "chosen_lr": 0.02,
+   "extended_x8": true,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H96_seed2026.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H96_seed2027.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H96_seed2028.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H96_seed2029.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H96_seed2030.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H96_seed2031.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H96_seed2032.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H96_seed2033.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H96_seed2034.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H96_seed2035.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H96_seed2036.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H96_seed2037.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H96_seed2038.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H96_seed2039.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H96_seed2040.json"
+   ],
+   "final_mean_val": 0.664918605564686
+  },
+  "ETTh1 NLinear H=192": {
+   "dataset": "ETTh1",
+   "model": "NLinear",
+   "H": 192,
+   "base_lr": 0.005,
+   "mean_val_by_mult": {
+    "0.5": 0.9165202279031529,
+    "1": 0.9210371845799985,
+    "2": 0.9129156254781939,
+    "4": 0.9127114823028218,
+    "8": 0.9130088324682607
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTh1\\x0.5\\NLinear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\NLinear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\NLinear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\NLinear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\NLinear_H192_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_b1_b4\\ETTh1\\NLinear_H192_seed2021.json",
+     "results\\sgd_b1_b4\\ETTh1\\NLinear_H192_seed2022.json",
+     "results\\sgd_b1_b4\\ETTh1\\NLinear_H192_seed2023.json",
+     "results\\sgd_b1_b4\\ETTh1\\NLinear_H192_seed2024.json",
+     "results\\sgd_b1_b4\\ETTh1\\NLinear_H192_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTh1\\x2\\NLinear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x2\\NLinear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x2\\NLinear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x2\\NLinear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x2\\NLinear_H192_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTh1\\x4\\NLinear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x4\\NLinear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x4\\NLinear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x4\\NLinear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x4\\NLinear_H192_seed2025.json"
+    ],
+    "8": [
+     "results\\sgd_lr\\ETTh1\\x8\\NLinear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x8\\NLinear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x8\\NLinear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x8\\NLinear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x8\\NLinear_H192_seed2025.json"
+    ]
+   },
+   "chosen_mult": 4.0,
+   "chosen_lr": 0.02,
+   "extended_x8": true,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H192_seed2026.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H192_seed2027.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H192_seed2028.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H192_seed2029.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H192_seed2030.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H192_seed2031.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H192_seed2032.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H192_seed2033.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H192_seed2034.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H192_seed2035.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H192_seed2036.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H192_seed2037.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H192_seed2038.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H192_seed2039.json",
+    "results\\sgd_lr\\ETTh1\\x4\\NLinear_H192_seed2040.json"
+   ],
+   "final_mean_val": 0.9206053376650762
+  },
+  "ETTh1 NLinear H=336": {
+   "dataset": "ETTh1",
+   "model": "NLinear",
+   "H": 336,
+   "base_lr": 0.005,
+   "mean_val_by_mult": {
+    "0.5": 1.1568194400254197,
+    "1": 1.1543007266646614,
+    "2": 1.1523769575148555,
+    "4": 1.1531352731387579
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTh1\\x0.5\\NLinear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\NLinear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\NLinear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\NLinear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\NLinear_H336_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_b1_b4\\ETTh1\\NLinear_H336_seed2021.json",
+     "results\\sgd_b1_b4\\ETTh1\\NLinear_H336_seed2022.json",
+     "results\\sgd_b1_b4\\ETTh1\\NLinear_H336_seed2023.json",
+     "results\\sgd_b1_b4\\ETTh1\\NLinear_H336_seed2024.json",
+     "results\\sgd_b1_b4\\ETTh1\\NLinear_H336_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTh1\\x2\\NLinear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x2\\NLinear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x2\\NLinear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x2\\NLinear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x2\\NLinear_H336_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTh1\\x4\\NLinear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x4\\NLinear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x4\\NLinear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x4\\NLinear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x4\\NLinear_H336_seed2025.json"
+    ]
+   },
+   "chosen_mult": 2.0,
+   "chosen_lr": 0.01,
+   "extended_x8": false,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H336_seed2026.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H336_seed2027.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H336_seed2028.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H336_seed2029.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H336_seed2030.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H336_seed2031.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H336_seed2032.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H336_seed2033.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H336_seed2034.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H336_seed2035.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H336_seed2036.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H336_seed2037.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H336_seed2038.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H336_seed2039.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H336_seed2040.json"
+   ],
+   "final_mean_val": 1.1540581931028329
+  },
+  "ETTh1 NLinear H=720": {
+   "dataset": "ETTh1",
+   "model": "NLinear",
+   "H": 720,
+   "base_lr": 0.005,
+   "mean_val_by_mult": {
+    "0.5": 1.430783267851291,
+    "1": 1.4291526974818185,
+    "2": 1.4291134377729784,
+    "4": 1.4292476742778406
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTh1\\x0.5\\NLinear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\NLinear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\NLinear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\NLinear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x0.5\\NLinear_H720_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_b1_b4\\ETTh1\\NLinear_H720_seed2021.json",
+     "results\\sgd_b1_b4\\ETTh1\\NLinear_H720_seed2022.json",
+     "results\\sgd_b1_b4\\ETTh1\\NLinear_H720_seed2023.json",
+     "results\\sgd_b1_b4\\ETTh1\\NLinear_H720_seed2024.json",
+     "results\\sgd_b1_b4\\ETTh1\\NLinear_H720_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTh1\\x2\\NLinear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x2\\NLinear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x2\\NLinear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x2\\NLinear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x2\\NLinear_H720_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTh1\\x4\\NLinear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTh1\\x4\\NLinear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTh1\\x4\\NLinear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTh1\\x4\\NLinear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTh1\\x4\\NLinear_H720_seed2025.json"
+    ]
+   },
+   "chosen_mult": 2.0,
+   "chosen_lr": 0.01,
+   "extended_x8": false,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H720_seed2026.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H720_seed2027.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H720_seed2028.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H720_seed2029.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H720_seed2030.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H720_seed2031.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H720_seed2032.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H720_seed2033.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H720_seed2034.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H720_seed2035.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H720_seed2036.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H720_seed2037.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H720_seed2038.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H720_seed2039.json",
+    "results\\sgd_lr\\ETTh1\\x2\\NLinear_H720_seed2040.json"
+   ],
+   "final_mean_val": 1.4283696253801825
+  },
+  "ETTm1 Linear H=96": {
+   "dataset": "ETTm1",
+   "model": "Linear",
+   "H": 96,
+   "base_lr": 0.0001,
+   "mean_val_by_mult": {
+    "0.5": 0.3922439247410002,
+    "1": 0.38793902448809814,
+    "2": 0.38459449334738127,
+    "4": 0.3820192540115068,
+    "8": 0.3815266628647434
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTm1\\x0.5\\Linear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\Linear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\Linear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\Linear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\Linear_H96_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_b1_b4\\ETTm1\\Linear_H96_seed2021.json",
+     "results\\sgd_b1_b4\\ETTm1\\Linear_H96_seed2022.json",
+     "results\\sgd_b1_b4\\ETTm1\\Linear_H96_seed2023.json",
+     "results\\sgd_b1_b4\\ETTm1\\Linear_H96_seed2024.json",
+     "results\\sgd_b1_b4\\ETTm1\\Linear_H96_seed2025.json"
+    ],
+    "2": [
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H96_seed2021.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H96_seed2022.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H96_seed2023.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H96_seed2024.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H96_seed2025.json"
+    ],
+    "4": [
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0004\\Linear_H96_seed2021.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0004\\Linear_H96_seed2022.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0004\\Linear_H96_seed2023.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0004\\Linear_H96_seed2024.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0004\\Linear_H96_seed2025.json"
+    ],
+    "8": [
+     "results\\sgd_lr\\ETTm1\\x8\\Linear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x8\\Linear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x8\\Linear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x8\\Linear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x8\\Linear_H96_seed2025.json"
+    ]
+   },
+   "chosen_mult": 8.0,
+   "chosen_lr": 0.0008,
+   "extended_x8": true,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H96_seed2026.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H96_seed2027.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H96_seed2028.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H96_seed2029.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H96_seed2030.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H96_seed2031.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H96_seed2032.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H96_seed2033.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H96_seed2034.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H96_seed2035.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H96_seed2036.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H96_seed2037.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H96_seed2038.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H96_seed2039.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H96_seed2040.json"
+   ],
+   "final_mean_val": 0.3812082519143863
+  },
+  "ETTm1 Linear H=192": {
+   "dataset": "ETTm1",
+   "model": "Linear",
+   "H": 192,
+   "base_lr": 0.0001,
+   "mean_val_by_mult": {
+    "0.5": 0.49933134856343686,
+    "1": 0.49452837343452555,
+    "2": 0.49141102446269225,
+    "4": 0.49126968293042406,
+    "8": 0.4887977041205052
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTm1\\x0.5\\Linear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\Linear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\Linear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\Linear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\Linear_H192_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_b1_b4\\ETTm1\\Linear_H192_seed2021.json",
+     "results\\sgd_b1_b4\\ETTm1\\Linear_H192_seed2022.json",
+     "results\\sgd_b1_b4\\ETTm1\\Linear_H192_seed2023.json",
+     "results\\sgd_b1_b4\\ETTm1\\Linear_H192_seed2024.json",
+     "results\\sgd_b1_b4\\ETTm1\\Linear_H192_seed2025.json"
+    ],
+    "2": [
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H192_seed2021.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H192_seed2022.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H192_seed2023.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H192_seed2024.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H192_seed2025.json"
+    ],
+    "4": [
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0004\\Linear_H192_seed2021.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0004\\Linear_H192_seed2022.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0004\\Linear_H192_seed2023.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0004\\Linear_H192_seed2024.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0004\\Linear_H192_seed2025.json"
+    ],
+    "8": [
+     "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2025.json"
+    ]
+   },
+   "chosen_mult": 8.0,
+   "chosen_lr": 0.0008,
+   "extended_x8": true,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2026.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2027.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2028.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2029.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2030.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2031.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2032.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2033.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2034.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2035.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2036.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2037.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2038.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2039.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2040.json"
+   ],
+   "final_mean_val": 0.4882534149470807
+  },
+  "ETTm1 Linear H=336": {
+   "dataset": "ETTm1",
+   "model": "Linear",
+   "H": 336,
+   "base_lr": 0.0001,
+   "mean_val_by_mult": {
+    "0.5": 0.6250760463888577,
+    "1": 0.6198280490159471,
+    "2": 0.616403152416502,
+    "4": 0.6118309833705219,
+    "8": 0.6106387008252498
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTm1\\x0.5\\Linear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\Linear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\Linear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\Linear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\Linear_H336_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_b1_b4\\ETTm1\\Linear_H336_seed2021.json",
+     "results\\sgd_b1_b4\\ETTm1\\Linear_H336_seed2022.json",
+     "results\\sgd_b1_b4\\ETTm1\\Linear_H336_seed2023.json",
+     "results\\sgd_b1_b4\\ETTm1\\Linear_H336_seed2024.json",
+     "results\\sgd_b1_b4\\ETTm1\\Linear_H336_seed2025.json"
+    ],
+    "2": [
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H336_seed2021.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H336_seed2022.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H336_seed2023.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H336_seed2024.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H336_seed2025.json"
+    ],
+    "4": [
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0004\\Linear_H336_seed2021.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0004\\Linear_H336_seed2022.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0004\\Linear_H336_seed2023.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0004\\Linear_H336_seed2024.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0004\\Linear_H336_seed2025.json"
+    ],
+    "8": [
+     "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2025.json"
+    ]
+   },
+   "chosen_mult": 8.0,
+   "chosen_lr": 0.0008,
+   "extended_x8": true,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2026.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2027.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2028.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2029.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2030.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2031.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2032.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2033.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2034.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2035.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2036.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2037.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2038.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2039.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2040.json"
+   ],
+   "final_mean_val": 0.6148783573012871
+  },
+  "ETTm1 Linear H=720": {
+   "dataset": "ETTm1",
+   "model": "Linear",
+   "H": 720,
+   "base_lr": 0.0001,
+   "mean_val_by_mult": {
+    "0.5": 0.8761766777783222,
+    "1": 0.8686074816261389,
+    "2": 0.8611743620839836,
+    "4": 0.861666373550845
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTm1\\x0.5\\Linear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\Linear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\Linear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\Linear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\Linear_H720_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_b1_b4\\ETTm1\\Linear_H720_seed2021.json",
+     "results\\sgd_b1_b4\\ETTm1\\Linear_H720_seed2022.json",
+     "results\\sgd_b1_b4\\ETTm1\\Linear_H720_seed2023.json",
+     "results\\sgd_b1_b4\\ETTm1\\Linear_H720_seed2024.json",
+     "results\\sgd_b1_b4\\ETTm1\\Linear_H720_seed2025.json"
+    ],
+    "2": [
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H720_seed2021.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H720_seed2022.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H720_seed2023.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H720_seed2024.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H720_seed2025.json"
+    ],
+    "4": [
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0004\\Linear_H720_seed2021.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0004\\Linear_H720_seed2022.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0004\\Linear_H720_seed2023.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0004\\Linear_H720_seed2024.json",
+     "results\\outliers\\d2_lr\\ETTm1_lr0.0004\\Linear_H720_seed2025.json"
+    ]
+   },
+   "chosen_mult": 2.0,
+   "chosen_lr": 0.0002,
+   "extended_x8": false,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H720_seed2026.json",
+    "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H720_seed2027.json",
+    "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H720_seed2028.json",
+    "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H720_seed2029.json",
+    "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H720_seed2030.json",
+    "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H720_seed2031.json",
+    "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H720_seed2032.json",
+    "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H720_seed2033.json",
+    "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H720_seed2034.json",
+    "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H720_seed2035.json",
+    "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H720_seed2036.json",
+    "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H720_seed2037.json",
+    "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H720_seed2038.json",
+    "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H720_seed2039.json",
+    "results\\outliers\\d2_lr\\ETTm1_lr0.0002\\Linear_H720_seed2040.json"
+   ],
+   "final_mean_val": 0.8616591694357606
+  },
+  "ETTm1 DLinear H=96": {
+   "dataset": "ETTm1",
+   "model": "DLinear",
+   "H": 96,
+   "base_lr": 0.0001,
+   "mean_val_by_mult": {
+    "0.5": 0.3845806646776988,
+    "1": 0.3826465842916428,
+    "2": 0.38129511457067283,
+    "4": 0.3817036035721974
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTm1\\x0.5\\DLinear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\DLinear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\DLinear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\DLinear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\DLinear_H96_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_b1_b4\\ETTm1\\DLinear_H96_seed2021.json",
+     "results\\sgd_b1_b4\\ETTm1\\DLinear_H96_seed2022.json",
+     "results\\sgd_b1_b4\\ETTm1\\DLinear_H96_seed2023.json",
+     "results\\sgd_b1_b4\\ETTm1\\DLinear_H96_seed2024.json",
+     "results\\sgd_b1_b4\\ETTm1\\DLinear_H96_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTm1\\x2\\DLinear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x2\\DLinear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x2\\DLinear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x2\\DLinear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x2\\DLinear_H96_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTm1\\x4\\DLinear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x4\\DLinear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x4\\DLinear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x4\\DLinear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x4\\DLinear_H96_seed2025.json"
+    ]
+   },
+   "chosen_mult": 2.0,
+   "chosen_lr": 0.0002,
+   "extended_x8": false,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H96_seed2026.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H96_seed2027.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H96_seed2028.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H96_seed2029.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H96_seed2030.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H96_seed2031.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H96_seed2032.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H96_seed2033.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H96_seed2034.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H96_seed2035.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H96_seed2036.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H96_seed2037.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H96_seed2038.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H96_seed2039.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H96_seed2040.json"
+   ],
+   "final_mean_val": 0.38086550646365125
+  },
+  "ETTm1 DLinear H=192": {
+   "dataset": "ETTm1",
+   "model": "DLinear",
+   "H": 192,
+   "base_lr": 0.0001,
+   "mean_val_by_mult": {
+    "0.5": 0.4921960742380838,
+    "1": 0.48918791198750666,
+    "2": 0.48790376224310333,
+    "4": 0.48790502861938123
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTm1\\x0.5\\DLinear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\DLinear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\DLinear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\DLinear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\DLinear_H192_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_b1_b4\\ETTm1\\DLinear_H192_seed2021.json",
+     "results\\sgd_b1_b4\\ETTm1\\DLinear_H192_seed2022.json",
+     "results\\sgd_b1_b4\\ETTm1\\DLinear_H192_seed2023.json",
+     "results\\sgd_b1_b4\\ETTm1\\DLinear_H192_seed2024.json",
+     "results\\sgd_b1_b4\\ETTm1\\DLinear_H192_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTm1\\x2\\DLinear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x2\\DLinear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x2\\DLinear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x2\\DLinear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x2\\DLinear_H192_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTm1\\x4\\DLinear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x4\\DLinear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x4\\DLinear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x4\\DLinear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x4\\DLinear_H192_seed2025.json"
+    ]
+   },
+   "chosen_mult": 2.0,
+   "chosen_lr": 0.0002,
+   "extended_x8": false,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H192_seed2026.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H192_seed2027.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H192_seed2028.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H192_seed2029.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H192_seed2030.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H192_seed2031.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H192_seed2032.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H192_seed2033.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H192_seed2034.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H192_seed2035.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H192_seed2036.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H192_seed2037.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H192_seed2038.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H192_seed2039.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H192_seed2040.json"
+   ],
+   "final_mean_val": 0.4880549775729928
+  },
+  "ETTm1 DLinear H=336": {
+   "dataset": "ETTm1",
+   "model": "DLinear",
+   "H": 336,
+   "base_lr": 0.0001,
+   "mean_val_by_mult": {
+    "0.5": 0.617295924325217,
+    "1": 0.6151669348615444,
+    "2": 0.6141914738181847,
+    "4": 0.6134741303366754,
+    "8": 0.6176572345995032
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTm1\\x0.5\\DLinear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\DLinear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\DLinear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\DLinear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\DLinear_H336_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_b1_b4\\ETTm1\\DLinear_H336_seed2021.json",
+     "results\\sgd_b1_b4\\ETTm1\\DLinear_H336_seed2022.json",
+     "results\\sgd_b1_b4\\ETTm1\\DLinear_H336_seed2023.json",
+     "results\\sgd_b1_b4\\ETTm1\\DLinear_H336_seed2024.json",
+     "results\\sgd_b1_b4\\ETTm1\\DLinear_H336_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTm1\\x2\\DLinear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x2\\DLinear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x2\\DLinear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x2\\DLinear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x2\\DLinear_H336_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTm1\\x4\\DLinear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x4\\DLinear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x4\\DLinear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x4\\DLinear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x4\\DLinear_H336_seed2025.json"
+    ],
+    "8": [
+     "results\\sgd_lr\\ETTm1\\x8\\DLinear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x8\\DLinear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x8\\DLinear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x8\\DLinear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x8\\DLinear_H336_seed2025.json"
+    ]
+   },
+   "chosen_mult": 4.0,
+   "chosen_lr": 0.0004,
+   "extended_x8": true,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTm1\\x4\\DLinear_H336_seed2026.json",
+    "results\\sgd_lr\\ETTm1\\x4\\DLinear_H336_seed2027.json",
+    "results\\sgd_lr\\ETTm1\\x4\\DLinear_H336_seed2028.json",
+    "results\\sgd_lr\\ETTm1\\x4\\DLinear_H336_seed2029.json",
+    "results\\sgd_lr\\ETTm1\\x4\\DLinear_H336_seed2030.json",
+    "results\\sgd_lr\\ETTm1\\x4\\DLinear_H336_seed2031.json",
+    "results\\sgd_lr\\ETTm1\\x4\\DLinear_H336_seed2032.json",
+    "results\\sgd_lr\\ETTm1\\x4\\DLinear_H336_seed2033.json",
+    "results\\sgd_lr\\ETTm1\\x4\\DLinear_H336_seed2034.json",
+    "results\\sgd_lr\\ETTm1\\x4\\DLinear_H336_seed2035.json",
+    "results\\sgd_lr\\ETTm1\\x4\\DLinear_H336_seed2036.json",
+    "results\\sgd_lr\\ETTm1\\x4\\DLinear_H336_seed2037.json",
+    "results\\sgd_lr\\ETTm1\\x4\\DLinear_H336_seed2038.json",
+    "results\\sgd_lr\\ETTm1\\x4\\DLinear_H336_seed2039.json",
+    "results\\sgd_lr\\ETTm1\\x4\\DLinear_H336_seed2040.json"
+   ],
+   "final_mean_val": 0.6139994507702811
+  },
+  "ETTm1 DLinear H=720": {
+   "dataset": "ETTm1",
+   "model": "DLinear",
+   "H": 720,
+   "base_lr": 0.0001,
+   "mean_val_by_mult": {
+    "0.5": 0.868106841755482,
+    "1": 0.8618243134135024,
+    "2": 0.8523798855529632,
+    "4": 0.856306725483314
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTm1\\x0.5\\DLinear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\DLinear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\DLinear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\DLinear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\DLinear_H720_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_b1_b4\\ETTm1\\DLinear_H720_seed2021.json",
+     "results\\sgd_b1_b4\\ETTm1\\DLinear_H720_seed2022.json",
+     "results\\sgd_b1_b4\\ETTm1\\DLinear_H720_seed2023.json",
+     "results\\sgd_b1_b4\\ETTm1\\DLinear_H720_seed2024.json",
+     "results\\sgd_b1_b4\\ETTm1\\DLinear_H720_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTm1\\x2\\DLinear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x2\\DLinear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x2\\DLinear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x2\\DLinear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x2\\DLinear_H720_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTm1\\x4\\DLinear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x4\\DLinear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x4\\DLinear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x4\\DLinear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x4\\DLinear_H720_seed2025.json"
+    ]
+   },
+   "chosen_mult": 2.0,
+   "chosen_lr": 0.0002,
+   "extended_x8": false,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H720_seed2026.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H720_seed2027.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H720_seed2028.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H720_seed2029.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H720_seed2030.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H720_seed2031.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H720_seed2032.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H720_seed2033.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H720_seed2034.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H720_seed2035.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H720_seed2036.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H720_seed2037.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H720_seed2038.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H720_seed2039.json",
+    "results\\sgd_lr\\ETTm1\\x2\\DLinear_H720_seed2040.json"
+   ],
+   "final_mean_val": 0.8601904346970658
+  },
+  "ETTm1 NLinear H=96": {
+   "dataset": "ETTm1",
+   "model": "NLinear",
+   "H": 96,
+   "base_lr": 0.0001,
+   "mean_val_by_mult": {
+    "0.5": 0.3958273366118401,
+    "1": 0.39279808559131213,
+    "2": 0.3903255846367656,
+    "4": 0.3877101524610791,
+    "8": 0.3844686518150936
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTm1\\x0.5\\NLinear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\NLinear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\NLinear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\NLinear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\NLinear_H96_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_b1_b4\\ETTm1\\NLinear_H96_seed2021.json",
+     "results\\sgd_b1_b4\\ETTm1\\NLinear_H96_seed2022.json",
+     "results\\sgd_b1_b4\\ETTm1\\NLinear_H96_seed2023.json",
+     "results\\sgd_b1_b4\\ETTm1\\NLinear_H96_seed2024.json",
+     "results\\sgd_b1_b4\\ETTm1\\NLinear_H96_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTm1\\x2\\NLinear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x2\\NLinear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x2\\NLinear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x2\\NLinear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x2\\NLinear_H96_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTm1\\x4\\NLinear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x4\\NLinear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x4\\NLinear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x4\\NLinear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x4\\NLinear_H96_seed2025.json"
+    ],
+    "8": [
+     "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2025.json"
+    ]
+   },
+   "chosen_mult": 8.0,
+   "chosen_lr": 0.0008,
+   "extended_x8": true,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2026.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2027.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2028.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2029.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2030.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2031.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2032.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2033.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2034.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2035.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2036.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2037.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2038.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2039.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2040.json"
+   ],
+   "final_mean_val": 0.3878994122786981
+  },
+  "ETTm1 NLinear H=192": {
+   "dataset": "ETTm1",
+   "model": "NLinear",
+   "H": 192,
+   "base_lr": 0.0001,
+   "mean_val_by_mult": {
+    "0.5": 0.5129534532560268,
+    "1": 0.5095661409178797,
+    "2": 0.5060319562798615,
+    "4": 0.5045685588198504,
+    "8": 0.5050831526314257
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTm1\\x0.5\\NLinear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\NLinear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\NLinear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\NLinear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\NLinear_H192_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_b1_b4\\ETTm1\\NLinear_H192_seed2021.json",
+     "results\\sgd_b1_b4\\ETTm1\\NLinear_H192_seed2022.json",
+     "results\\sgd_b1_b4\\ETTm1\\NLinear_H192_seed2023.json",
+     "results\\sgd_b1_b4\\ETTm1\\NLinear_H192_seed2024.json",
+     "results\\sgd_b1_b4\\ETTm1\\NLinear_H192_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTm1\\x2\\NLinear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x2\\NLinear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x2\\NLinear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x2\\NLinear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x2\\NLinear_H192_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTm1\\x4\\NLinear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x4\\NLinear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x4\\NLinear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x4\\NLinear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x4\\NLinear_H192_seed2025.json"
+    ],
+    "8": [
+     "results\\sgd_lr\\ETTm1\\x8\\NLinear_H192_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x8\\NLinear_H192_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x8\\NLinear_H192_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x8\\NLinear_H192_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x8\\NLinear_H192_seed2025.json"
+    ]
+   },
+   "chosen_mult": 4.0,
+   "chosen_lr": 0.0004,
+   "extended_x8": true,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H192_seed2026.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H192_seed2027.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H192_seed2028.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H192_seed2029.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H192_seed2030.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H192_seed2031.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H192_seed2032.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H192_seed2033.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H192_seed2034.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H192_seed2035.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H192_seed2036.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H192_seed2037.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H192_seed2038.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H192_seed2039.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H192_seed2040.json"
+   ],
+   "final_mean_val": 0.5051972643143313
+  },
+  "ETTm1 NLinear H=336": {
+   "dataset": "ETTm1",
+   "model": "NLinear",
+   "H": 336,
+   "base_lr": 0.0001,
+   "mean_val_by_mult": {
+    "0.5": 0.6573609830388022,
+    "1": 0.6539107527511274,
+    "2": 0.6518619148635408,
+    "4": 0.6503067364036293,
+    "8": 0.6512858956319226
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTm1\\x0.5\\NLinear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\NLinear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\NLinear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\NLinear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\NLinear_H336_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_b1_b4\\ETTm1\\NLinear_H336_seed2021.json",
+     "results\\sgd_b1_b4\\ETTm1\\NLinear_H336_seed2022.json",
+     "results\\sgd_b1_b4\\ETTm1\\NLinear_H336_seed2023.json",
+     "results\\sgd_b1_b4\\ETTm1\\NLinear_H336_seed2024.json",
+     "results\\sgd_b1_b4\\ETTm1\\NLinear_H336_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTm1\\x2\\NLinear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x2\\NLinear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x2\\NLinear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x2\\NLinear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x2\\NLinear_H336_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTm1\\x4\\NLinear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x4\\NLinear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x4\\NLinear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x4\\NLinear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x4\\NLinear_H336_seed2025.json"
+    ],
+    "8": [
+     "results\\sgd_lr\\ETTm1\\x8\\NLinear_H336_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x8\\NLinear_H336_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x8\\NLinear_H336_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x8\\NLinear_H336_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x8\\NLinear_H336_seed2025.json"
+    ]
+   },
+   "chosen_mult": 4.0,
+   "chosen_lr": 0.0004,
+   "extended_x8": true,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H336_seed2026.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H336_seed2027.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H336_seed2028.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H336_seed2029.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H336_seed2030.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H336_seed2031.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H336_seed2032.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H336_seed2033.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H336_seed2034.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H336_seed2035.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H336_seed2036.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H336_seed2037.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H336_seed2038.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H336_seed2039.json",
+    "results\\sgd_lr\\ETTm1\\x4\\NLinear_H336_seed2040.json"
+   ],
+   "final_mean_val": 0.6503005486117078
+  },
+  "ETTm1 NLinear H=720": {
+   "dataset": "ETTm1",
+   "model": "NLinear",
+   "H": 720,
+   "base_lr": 0.0001,
+   "mean_val_by_mult": {
+    "0.5": 0.9677534587119782,
+    "1": 0.9648758193446099,
+    "2": 0.962472665838078,
+    "4": 0.9614207683141412,
+    "8": 0.9607291061931983
+   },
+   "sel_files": {
+    "0.5": [
+     "results\\sgd_lr\\ETTm1\\x0.5\\NLinear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\NLinear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\NLinear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\NLinear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x0.5\\NLinear_H720_seed2025.json"
+    ],
+    "1": [
+     "results\\sgd_b1_b4\\ETTm1\\NLinear_H720_seed2021.json",
+     "results\\sgd_b1_b4\\ETTm1\\NLinear_H720_seed2022.json",
+     "results\\sgd_b1_b4\\ETTm1\\NLinear_H720_seed2023.json",
+     "results\\sgd_b1_b4\\ETTm1\\NLinear_H720_seed2024.json",
+     "results\\sgd_b1_b4\\ETTm1\\NLinear_H720_seed2025.json"
+    ],
+    "2": [
+     "results\\sgd_lr\\ETTm1\\x2\\NLinear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x2\\NLinear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x2\\NLinear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x2\\NLinear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x2\\NLinear_H720_seed2025.json"
+    ],
+    "4": [
+     "results\\sgd_lr\\ETTm1\\x4\\NLinear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x4\\NLinear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x4\\NLinear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x4\\NLinear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x4\\NLinear_H720_seed2025.json"
+    ],
+    "8": [
+     "results\\sgd_lr\\ETTm1\\x8\\NLinear_H720_seed2021.json",
+     "results\\sgd_lr\\ETTm1\\x8\\NLinear_H720_seed2022.json",
+     "results\\sgd_lr\\ETTm1\\x8\\NLinear_H720_seed2023.json",
+     "results\\sgd_lr\\ETTm1\\x8\\NLinear_H720_seed2024.json",
+     "results\\sgd_lr\\ETTm1\\x8\\NLinear_H720_seed2025.json"
+    ]
+   },
+   "chosen_mult": 8.0,
+   "chosen_lr": 0.0008,
+   "extended_x8": true,
+   "at_lower_edge": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H720_seed2026.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H720_seed2027.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H720_seed2028.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H720_seed2029.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H720_seed2030.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H720_seed2031.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H720_seed2032.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H720_seed2033.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H720_seed2034.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H720_seed2035.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H720_seed2036.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H720_seed2037.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H720_seed2038.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H720_seed2039.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H720_seed2040.json"
+   ],
+   "final_mean_val": 0.9586379177419939
+  }
+ }
+}

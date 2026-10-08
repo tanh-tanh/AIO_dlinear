@@ -794,11 +794,17 @@ def part_d(summ):
         df = (va + vb) ** 2 / (va ** 2 / (len(a) - 1) + vb ** 2 / (len(b) - 1))
         return float(a.mean() - b.mean()), float(stats.t.ppf(0.975, df) * np.sqrt(va + vb))
 
+    def g(x):
+        return f"{x:g}".replace(".", ",")
+
     def fci(m, h):
         return f"{num(m)} [{num(m - h)}; {num(m + h)}]"
 
-    def runs(ds, m, H, mult, seeds):
-        return [T.find(ds, m, H, mult, s)[1] for s in seeds]
+    def runs(ds, m, H, mult, seeds, allow_missing=False):
+        rs = [T.find(ds, m, H, mult, s) for s in seeds]
+        if not allow_missing:
+            assert all(r is not None for r in rs), (ds, m, H, mult)
+        return [r[1] for r in rs if r is not None]
 
     md = ["# Phần D: SGD đã tinh chỉnh learning rate", "",
           "Chọn lr ∈ {0,5; 1; 2; 4} × lr gốc (thêm ×8 nếu ×4 thắng) theo trung bình val MSE của seed 2021–2025; chạy cuối "
@@ -813,13 +819,13 @@ def part_d(summ):
                 c = sel[f"{ds} {m} H={H}"]
                 mv = c["mean_val_by_mult"]
                 chosen[(ds, m, H)] = c["chosen_mult"]
-                md.append(f"| {ds} | {m} | {H} | {c['base_lr']:g} | " + " / ".join(
+                md.append(f"| {ds} | {m} | {H} | {g(c['base_lr'])} | " + " / ".join(
                     (f"**{num(mv[k], 5)}**" if float(k) == c["chosen_mult"] else num(mv[k], 5)) if k in mv else "—"
-                    for k in ("0.5", "1", "2", "4", "8")) + f" | ×{c['chosen_mult']:g} | {c['chosen_lr']:g} |")
+                    for k in ("0.5", "1", "2", "4", "8")) + f" | ×{g(c['chosen_mult'])} | {g(c['chosen_lr'])} |")
     cnt = {}
     for v in chosen.values():
         cnt[v] = cnt.get(v, 0) + 1
-    md += ["", "Số ô theo mức chọn: " + ", ".join(f"×{k:g}: {v}" for k, v in sorted(cnt.items())) + ".", ""]
+    md += ["", "Số ô theo mức chọn: " + ", ".join(f"×{g(k)}: {v}" for k, v in sorted(cnt.items())) + ".", ""]
 
     # B4-tinh chỉnh
     star = {}
@@ -839,7 +845,7 @@ def part_d(summ):
                 cv, ct = float(cf["val_mse"]), float(cf["test_mse"])
                 labs = {}
                 for tag, mult in (("tuned", chosen[(ds, m, H)]), ("x1", 1.0)):
-                    rs = runs(ds, m, H, mult, T.FINAL_SEEDS)
+                    rs = runs(ds, m, H, mult, T.FINAL_SEEDS, allow_missing=(tag == "x1"))
                     mv, hv = ci([r["val_mse"] - cv for r in rs])
                     mt, ht = ci([r["test_mse"] - ct for r in rs])
                     labs[tag] = {"d_val": mv, "d_val_ci": hv, "d_test": mt, "d_test_ci": ht,
@@ -849,8 +855,8 @@ def part_d(summ):
                        "label_old": o["label"], "d_test_old": o["d_test"]}
                 b4.append(row)
                 t = labs["tuned"]
-                md.append(f"| {ds} | {H} | {m} | ×{chosen[(ds, m, H)]:g} | {fci(t['d_val'], t['d_val_ci'])} | {fci(t['d_test'], t['d_test_ci'])} | "
-                          f"{t['label']} | {labs['x1']['label']} | {o['label']} |")
+                md.append(f"| {ds} | {H} | {m} | ×{g(chosen[(ds, m, H)])} | {fci(t['d_val'], t['d_val_ci'])} | {fci(t['d_test'], t['d_test_ci'])} | "
+                          f"{t['label']} | {labs['x1']['label']}{'' if labs['x1']['n'] == 15 else ' (n = ' + str(labs['x1']['n']) + ')'} | {o['label']} |")
     labels = ["SGD tốt hơn thật", "dạng đóng tốt hơn thật", "khác biệt do val khác test", "SGD có dấu hiệu khớp val quá mức",
               "dạng đóng có dấu hiệu khớp val quá mức", "không phân biệt được"]
     md += ["", "| nhãn | tinh chỉnh (15 seed) | ×1, 2026–2040 | B4 cũ (×1, 20 seed) |", "|---|---|---|---|"]
@@ -870,7 +876,7 @@ def part_d(summ):
            f"(đổi do lr), {len(changed) - len(by_lr)} ô nhãn ×1 trên 15 seed đã khác B4 cũ (đổi do bớt seed).", "",
            "| Dataset | H | Mô hình | lr | B4 cũ | ×1, 2026–2040 | tinh chỉnh |", "|---|---|---|---|---|---|---|"]
     for r in changed:
-        md.append(f"| {r['dataset']} | {r['H']} | {r['model']} | ×{r['mult']:g} | {r['label_old']} | {r['label_x1']} | {r['label_tuned']} |")
+        md.append(f"| {r['dataset']} | {r['H']} | {r['model']} | ×{g(r['mult'])} | {r['label_old']} | {r['label_x1']} | {r['label_tuned']} |")
     # Δ test: tinh chỉnh so với ×1 trên cùng seed
     imp = [r["d_test_tuned"] - r["d_test_x1"] for r in b4 if r["mult"] != 1.0]
     md += ["", f"Ở {len(imp)} ô có lr chọn khác ×1: TB test (tinh chỉnh) − TB test (×1), cùng 15 seed: "
@@ -896,7 +902,7 @@ def part_d(summ):
                        "dlinear_better_val": bv, "dlinear_better_test": bt, "linear_better_val": lv, "linear_better_test": lt,
                        "old_dlinear_better_test": o["dlinear_better_test"]})
             yn = lambda x: "có" if x else "không"
-            md.append(f"| {ds} | {H} | ×{chosen[(ds, 'Linear', H)]:g} / ×{chosen[(ds, 'DLinear', H)]:g} | {fci(*dv)} | {fci(*dt)} | "
+            md.append(f"| {ds} | {H} | ×{g(chosen[(ds, 'Linear', H)])} / ×{g(chosen[(ds, 'DLinear', H)])} | {fci(*dv)} | {fci(*dt)} | "
                       f"{yn(bv)} / {yn(bt)}{' (Linear tốt hơn: ' + yn(lv) + ' / ' + yn(lt) + ')' if lv or lt else ''} | "
                       f"{fci(o['d_test'], o['d_test_ci'])} |")
     n_b = sum(r["dlinear_better_val"] and r["dlinear_better_test"] for r in c3)
