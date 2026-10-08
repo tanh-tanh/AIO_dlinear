@@ -760,7 +760,7 @@ def figure_c(S, vals):
             if j == 0:
                 ax.set_ylabel(f"{met.upper()} test ở λ*_{met.upper()}")
             if i == 1:
-                ax.set_xlabel("độ lớn outlier (× độ lệch chuẩn; 0 = dữ liệu gốc)")
+                ax.set_xlabel("độ lớn outlier (× sd; 0 = gốc)")
             _style(ax)
     h, l = axes[0, 0].get_legend_handles_labels()
     fig.legend(h, l, loc="lower center", ncol=6, frameon=False, fontsize=9)
