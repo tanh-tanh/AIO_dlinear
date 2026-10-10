@@ -1,0 +1,17 @@
+% Mục từ của bảng thuật ngữ (glossaries noidx: phải định nghĩa trong preamble). In ở sections/00_thuat_ngu.tex.
+\newglossaryentry{closedform}{name={closed-form solution}, user1={nghiệm dạng đóng}, description={Nghiệm tính trực tiếp bằng công thức đại số (OLS, ridge, NLinear có ràng buộc), không lặp.}}
+\newglossaryentry{optimum}{name={optimum}, user1={nghiệm tối ưu}, description={Điểm cực tiểu toàn cục của hàm mục tiêu trên tập huấn luyện. Với MSE là nghiệm dạng đóng; với MAE, Huber là điểm IRLS hội tụ tới.}}
+\newglossaryentry{objective}{name={objective}, user1={hàm mục tiêu}, description={Hàm được cực tiểu khi huấn luyện: MSE, MAE hoặc Huber, cộng phạt $\lambda\|W\|^2$ nếu có.}}
+\newglossaryentry{val}{name={validation set}, user1={tập kiểm định (val)}, description={Dùng để chọn $\lambda$, $\delta$, learning rate và epoch. Không bao giờ dùng tập kiểm tra để chọn.}}
+\newglossaryentry{test}{name={test set}, user1={tập kiểm tra (test)}, description={Chỉ dùng để báo cáo sai số cuối.}}
+\newglossaryentry{stuck}{name={stuck sensor segment}, user1={đoạn cảm biến bị kẹt}, description={Đoạn chuỗi giữ nguyên một giá trị trong thời gian dài (ở ETTh2); cửa sổ có đầu vào hoặc đích hằng.}}
+\newglossaryentry{horizon}{name={horizon $H$}, user1={độ dài dự báo}, description={Số bước tương lai cần dự báo: 96, 192, 336, 720.}}
+\newglossaryentry{lookback}{name={look-back window $L$}, user1={cửa sổ đầu vào}, description={Số bước quá khứ làm đầu vào; cố định $L = 336$.}}
+\newglossaryentry{ridge}{name={ridge}, user1={hồi quy phạt L2}, description={Bình phương tối thiểu cộng $\lambda\|W\|^2$; tương đương weight decay.}}
+\newglossaryentry{ols}{name={OLS}, user1={bình phương tối thiểu thường}, description={Ridge với $\lambda = 0$.}}
+\newglossaryentry{irls}{name={IRLS}, user1={bình phương tối thiểu có trọng số lặp lại}, description={Thuật toán cực tiểu MAE, Huber bằng một chuỗi bài toán bình phương tối thiểu có trọng số; là thuật toán MM nên hàm mục tiêu không tăng.}}
+\newglossaryentry{sgd}{name={SGD}, user1={gradient ngẫu nhiên}, description={Ở đây là cách huấn luyện của LTSF-Linear: Adam theo mini-batch, dừng sớm theo MSE val.}}
+\newglossaryentry{seed}{name={seed}, user1={hạt giống ngẫu nhiên}, description={Quyết định khởi tạo và thứ tự mini-batch của SGD, và vị trí outlier nhân tạo.}}
+\newglossaryentry{lr}{name={learning rate}, user1={tốc độ học (lr)}, description={Bước của Adam; được tinh chỉnh ở mục~\ref{sec:rq3}.}}
+\newglossaryentry{huber}{name={Huber loss}, user1={hàm mất mát Huber}, description={Bậc hai khi $|r| \le \delta$, tuyến tính khi $|r| > \delta$; nằm giữa MSE và MAE.}}
+\newglossaryentry{outlier}{name={outlier}, user1={giá trị ngoại lai}, description={Ở đây là điểm được cộng $\pm k$ lần độ lệch chuẩn của kênh trong train.}}

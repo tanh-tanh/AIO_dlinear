@@ -19,7 +19,7 @@
 \input{generated/tab_b2.tex}
 \end{center}
 \begin{captionbelowboxaivn}
-\captab{Bảng B2: ba dự đoán của RQ1, ETTh1, $L = 336$, $H = 96$, nghiệm tối ưu dạng đóng. $\Delta W$: chênh của $\Weff$ so với Linear cùng $\lambda$. RMS chênh dự báo: căn trung bình bình phương chênh lệch dự báo trên test, cùng đơn vị với RMSE.}\label{tab:b2}
+\captab{(B2)ba dự đoán của RQ1, ETTh1, $L = 336$, $H = 96$, nghiệm tối ưu dạng đóng. $\Delta W$: chênh của $\Weff$ so với Linear cùng $\lambda$. RMS chênh dự báo: căn trung bình bình phương chênh lệch dự báo trên test, cùng đơn vị với RMSE.}\label{tab:b2}
 \end{captionbelowboxaivn}
 
 \begin{itemize}
@@ -32,7 +32,7 @@
 \centering
 \includegraphics[width=\linewidth]{H1_three_predictions.pdf}
 \begin{figurecardcaptionaivn}
-\capfig{Hình H1: RMS chênh lệch dự báo trên test giữa DLinear (trái, bốn kernel $k$) hoặc NLinear (phải) và Linear, theo $\lambda$; ETTh1, $H = 96$, nghiệm tối ưu. Nét liền: so với Linear cùng $\lambda$; nét chấm: so với Linear ở $\lambda'$ khớp nhất. Dải xám: sai số máy float64. Đường đứt: RMSE test của Linear (\nmBTwoLinRmseTest).}\label{fig:h1}
+\capfig{(H1)RMS chênh lệch dự báo trên test giữa DLinear (trái, bốn kernel $k$) hoặc NLinear (phải) và Linear, theo $\lambda$; ETTh1, $H = 96$, nghiệm tối ưu. Nét liền: so với Linear cùng $\lambda$; nét chấm: so với Linear ở $\lambda'$ khớp nhất. Dải xám: sai số máy float64. Đường đứt: RMSE test của Linear (\nmBTwoLinRmseTest).}\label{fig:h1}
 \end{figurecardcaptionaivn}
 \end{figure}
 
@@ -68,7 +68,7 @@ Tại nghiệm tối ưu, DLinear thu về đúng Linear khi không phạt, và 
 \input{generated/tab_b3_main.tex}
 }
 \begin{captionbelowboxaivn}
-\captab{Bảng B3 (bản gọn): sai số test tại nghiệm tối ưu của ba mục tiêu huấn luyện (cột MSE, MAE, Huber trong mỗi nhóm). \textbf{Đậm}: thấp nhất giữa ba mục tiêu trong cùng (dataset, $H$, mô hình, metric).}\label{tab:b3}
+\captab{(B3, bản gọn)sai số test tại nghiệm tối ưu của ba mục tiêu huấn luyện (cột MSE, MAE, Huber trong mỗi nhóm). \textbf{Đậm}: thấp nhất giữa ba mục tiêu trong cùng (dataset, $H$, mô hình, metric).}\label{tab:b3}
 \end{captionbelowboxaivn}
 
 \paragraph{MAE so với MSE.} Huấn luyện bằng MAE cho MSE test thấp hơn huấn luyện bằng MSE ở \nmBThreeMaeBeatsMseTotalCount/\nmBThreeCellCount{} ô. Với Linear và DLinear, điều này đúng ở cả 4 horizon của cả ba dataset. Chênh lớn nhất ở ETTh2 (\nmBThreeMaeGainETThTwoLinDLinRange), nhỏ ở ETTh1 (\nmBThreeMaeGainETThOneLinDLinRange) và ETTm1 (\nmBThreeMaeGainETTmOneLinDLinRange). Với NLinear, MAE tốt hơn ở \nmBThreeMaeBeatsMseETThOneNLinearCount/4 horizon của ETTh1 và \nmBThreeMaeBeatsMseETTmOneNLinearCount/4 của ETTm1, nhưng kém hơn ở cả 4 horizon của ETTh2 (chênh \nmBThreeMaeGainETThTwoNLinearRange). Theo MSE test, mục tiêu tốt nhất trong ô là MAE ở \nmBThreeBestMAEMseCount{} ô, Huber ở \nmBThreeBestHuberMseCount{} và MSE ở \nmBThreeBestMSEMseCount. Theo MAE test, các con số là \nmBThreeBestMAEMaeCount{} / \nmBThreeBestHuberMaeCount{} / \nmBThreeBestMSEMaeCount. Trên ETTh2, khoảng một nửa lợi thế của MAE với Linear ở $H \ge 336$ đến từ các đoạn cảm biến bị kẹt (\secref{sec:etth2}).
@@ -81,7 +81,7 @@ Tại nghiệm tối ưu, DLinear thu về đúng Linear khi không phạt, và 
 \centering
 \includegraphics[width=\linewidth]{H4_delta_sensitivity.pdf}
 \begin{figurecardcaptionaivn}
-\capfig{Hình H4: độ nhạy của Huber theo $\delta$. Trục hoành $\delta/\dmad$ (log); hình thoi xám: $\delta = 1$ cố định. Đường đứt: mục tiêu MSE (xanh) và MAE (cam). Hàng trên: MSE test ở $\lambda^*_{\mathrm{MSE}}$; hàng dưới: MAE test ở $\lambda^*_{\mathrm{MAE}}$.}\label{fig:h4}
+\capfig{(H4)độ nhạy của Huber theo $\delta$. Trục hoành $\delta/\dmad$ (log); hình thoi xám: $\delta = 1$ cố định. Đường đứt: mục tiêu MSE (xanh) và MAE (cam). Hàng trên: MSE test ở $\lambda^*_{\mathrm{MSE}}$; hàng dưới: MAE test ở $\lambda^*_{\mathrm{MAE}}$.}\label{fig:h4}
 \end{figurecardcaptionaivn}
 \end{figure}
 
@@ -93,7 +93,7 @@ Tại nghiệm tối ưu, DLinear thu về đúng Linear khi không phạt, và 
 \centering
 \includegraphics[width=\linewidth]{H2_outlier_mse.pdf}
 \begin{figurecardcaptionaivn}
-\capfig{Hình H2: MSE test theo tỷ lệ outlier trong train, ETTh1, outlier $\pm 10$ độ lệch chuẩn, seed 2026; $\lambda^*$ chọn theo MSE val sạch; Huber dùng $\dmad$ của chính tập train đã chèn. Nét liền: chèn vào chuỗi ($0$, $1$, $5$, $10\%$); nét đứt: chèn chỉ vào đích ($0$, $1$, $10\%$, chỉ $H = 96, 720$). Bản theo MAE test ở Phụ lục~\ref{app:tables}.}\label{fig:h2}
+\capfig{(H2)MSE test theo tỷ lệ outlier trong train, ETTh1, outlier $\pm 10$ độ lệch chuẩn, seed 2026; $\lambda^*$ chọn theo MSE val sạch; Huber dùng $\dmad$ của chính tập train đã chèn. Nét liền: chèn vào chuỗi ($0$, $1$, $5$, $10\%$); nét đứt: chèn chỉ vào đích ($0$, $1$, $10\%$, chỉ $H = 96, 720$). Bản theo MAE test ở Phụ lục~\ref{app:tables}.}\label{fig:h2}
 \end{figurecardcaptionaivn}
 \end{figure}
 
@@ -110,7 +110,7 @@ Như vậy, MAE và Huber chỉ mất lợi thế khi outlier vừa nhiều ($10
 \centering
 \includegraphics[width=\linewidth]{H5_outlier_magnitude.pdf}
 \begin{figurecardcaptionaivn}
-\capfig{Hình H5: sai số test theo độ lớn outlier, Linear, ETTh1, seed 2026, cùng vị trí outlier ở mọi độ lớn. Hàng trên: MSE test ở $\lambda^*_{\mathrm{MSE}}$; hàng dưới: MAE test ở $\lambda^*_{\mathrm{MAE}}$. Trục hoành: độ lớn (bội của độ lệch chuẩn; $0$ là dữ liệu gốc). Nét đứt: tỷ lệ $1\%$; nét liền: $10\%$.}\label{fig:h5}
+\capfig{(H5)sai số test theo độ lớn outlier, Linear, ETTh1, seed 2026, cùng vị trí outlier ở mọi độ lớn. Hàng trên: MSE test ở $\lambda^*_{\mathrm{MSE}}$; hàng dưới: MAE test ở $\lambda^*_{\mathrm{MAE}}$. Trục hoành: độ lớn (bội của độ lệch chuẩn; $0$ là dữ liệu gốc). Nét đứt: tỷ lệ $1\%$; nét liền: $10\%$.}\label{fig:h5}
 \end{figurecardcaptionaivn}
 \end{figure}
 
@@ -129,14 +129,14 @@ Trên dữ liệu gốc, huấn luyện bằng MAE cho sai số test thấp hơn
 \input{generated/tab_b1.tex}
 \end{center}
 \begin{captionbelowboxaivn}
-\captab{Bảng B1: MSE test của SGD (lr gốc; trung bình $\pm$ độ lệch chuẩn theo seed; 20 seed, số khác ghi trong ngoặc) và số công bố của LTSF-Linear. $^\dagger$\textbf{Đậm}: số công bố nằm ngoài khoảng [min, max] của các seed.}\label{tab:b1}
+\captab{(B1)MSE test của SGD (lr gốc; trung bình $\pm$ độ lệch chuẩn theo seed; 20 seed, số khác ghi trong ngoặc) và số công bố của LTSF-Linear. $^\dagger$\textbf{Đậm}: số công bố nằm ngoài khoảng [min, max] của các seed.}\label{tab:b1}
 \end{captionbelowboxaivn}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{H3_sgd_vs_optimum.pdf}
 \begin{figurecardcaptionaivn}
-\capfig{Hình H3: MSE test của SGD theo seed (lr gốc; mỗi điểm một seed), so với nghiệm dạng đóng MSE ở $\lambda^*$ (vạch đen) và số công bố (dấu sao). Mỗi ô một (dataset, $H$), thang trục tung riêng.}\label{fig:h3}
+\capfig{(H3)MSE test của SGD theo seed (lr gốc; mỗi điểm một seed), so với nghiệm dạng đóng MSE ở $\lambda^*$ (vạch đen) và số công bố (dấu sao). Mỗi ô một (dataset, $H$), thang trục tung riêng.}\label{fig:h3}
 \end{figurecardcaptionaivn}
 \end{figure}
 
@@ -152,7 +152,7 @@ Trên dữ liệu gốc, huấn luyện bằng MAE cho sai số test thấp hơn
 \input{generated/tab_b4_counts.tex}
 \end{center}
 \begin{captionbelowboxaivn}
-\captab{Bảng B4: số ô (trên 36) theo nhãn của quy tắc ba trường hợp, $\Delta = $ SGD $-$ dạng đóng MSE ở $\lambda^*$. Cột giữa: lr gốc trên đúng 15 seed mới (2026--2040), để tách phần thay đổi do lr khỏi phần do bớt seed.}\label{tab:b4}
+\captab{(B4)số ô (trên 36) theo nhãn của quy tắc ba trường hợp, $\Delta = $ SGD $-$ dạng đóng MSE ở $\lambda^*$. Cột giữa: lr gốc trên đúng 15 seed mới (2026--2040), để tách phần thay đổi do lr khỏi phần do bớt seed.}\label{tab:b4}
 \end{captionbelowboxaivn}
 
 \paragraph{Các cơ chế đã loại trừ trên ETTh2.} Hiện tượng SGD tốt hơn nghiệm tối ưu trên cả val và test chỉ xuất hiện ở ETTh2, với Linear và DLinear. Chúng tôi đã kiểm và không thấy ủng hộ cho các giải thích sau:
