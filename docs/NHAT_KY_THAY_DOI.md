@@ -463,3 +463,33 @@ Báo cáo: [BAO_CAO_NV7.md](BAO_CAO_NV7.md). Không đổi toán của `irls`, k
 - **`scripts/sgd_lr_tune.py`:** Phần D. Điều phối `sgd_etth2.py --lr` cho 36 ô (chọn lr trên 5 seed, ×8 khi ×4 thắng, chạy cuối 15 seed mới), dùng lại kết quả ×1 có sẵn và Linear ETTm1 ×2, ×4 của nhiệm vụ 6; ghi `results/sgd_lr/selection.json`.
 - **`scripts/report_nv7.py`:** mọi bảng và hình của báo cáo.
 - **`.gitignore`:** thêm `results/huber_mad/**/weights/`, `results/outliers_mag/**/weights/`, `results/sgd_lr/**/*.npy`.
+
+# Nhật ký thay đổi code: nhiệm vụ 8, dọn repo và báo cáo LaTeX (11/10/2026)
+
+Báo cáo: [reports/BAO_CAO_NV8.md](reports/BAO_CAO_NV8.md). Không đổi toán hay hành vi của `src/`, không chạy thí nghiệm mới (trừ phép kiểm một ô ETTh1 H = 96, ghi vào thư mục tạm), không sửa file nào trong `results/` (chỉ thêm `results/README.md`). Từ mục này, các đường dẫn trong nhật ký là đường dẫn mới; mục 1–12 giữ đường dẫn cũ (tra `DUONG_DAN_CU.md`).
+
+## 13.1. Dời file (commit `069f88c`)
+
+- `git mv` mọi script vào `scripts/{grid,sgd,checks,report}/`, báo cáo vào `docs/reports/`, nhiệm vụ vào `docs/tasks/` (kể cả `NHIEM_VU_5060TI.md` ở gốc), checklist vào `docs/plan/`. Template LaTeX `TEMPLATE/` (chưa track) → `report/template/`. Bảng đầy đủ: `docs/DUONG_DAN_CU.md`.
+- Mỗi script: `ROOT = Path(__file__).resolve().parents[1]` → `parents[2]`; `sys.path.insert(0, <thư mục script>)` và `sys.path.insert(0, ROOT / "scripts")` → thêm cả bốn thư mục `scripts/{grid,sgd,checks,report}`, nên import chéo (`from bench_5060ti import …`, `import runner as R`, …) không đổi. `sgd_lr_tune.py` gọi `scripts/sgd/sgd_etth2.py`. Docstring, chú thích đổi `scripts/X.py` → đường dẫn mới, `docs/NHIEM_VU_*`, `docs/BAO_CAO_*` → `docs/tasks/`, `docs/reports/` (cả trong `src/`, `tests/`: chỉ chú thích).
+- Kiểm: 63 test đạt; mọi script có argparse chạy `--help` được; chạy lại năm script `report_*.py` cho nội dung `results/` trùng bản cũ (chỉ khác `git_commit`, `date` trong `summary.json`; đã khôi phục bằng `git checkout`).
+- `.gitignore`: `.venv*/`, `docs/refs/*.pdf`, `report/build/*` (trừ `main.pdf`), file phụ của LaTeX. `.gitattributes`: `*.sh` và `report/latexmkrc` giữ LF.
+
+## 13.2. Báo cáo LaTeX (`scripts/report/`, `report/`)
+
+- **`report_data.py` (mới):** đọc `results/` cho báo cáo và notebook (B3 theo tiêu chí λ\*_MSE / λ\*_MAE, outlier, B1, B4, C.3, lr đã chọn, ETTh2). Chỉ đọc.
+- **`make_numbers.py` (mới):** → `report/generated/numbers.tex`, macro `\nm…` (quy ước tên ở đầu file). **`make_tables.py` (mới):** → `report/generated/tab_*.tex` (booktabs, dấu phẩy thập phân, đậm giá trị nhỏ nhất giữa ba mục tiêu). **`make_figures.py` (mới):** H1–H5 → `report/figures/*.pdf`; gọi đúng `figure_h2_v2`, `figure_sensitivity`, `figure_c` (`report_nv7.py`), `figure` (`report_sgd_b1_b4.py`) và ô vẽ H1 của notebook 01, chặn `Figure.savefig` để ghi PDF (không ghi `results/`), PDF tất định; `capture`, `capture_png` cho notebook.
+- **`audit_numbers.py`, `check_latex.py` (mới):** số thập phân ngoài macro trong `report/sections/`; kiểm tĩnh LaTeX (macro, nhãn, trích dẫn, ngoặc, môi trường, file, `\TODO`) vì máy không có TeX.
+- **`scripts/checks/compare_cell.py` (mới):** so một ô grid chạy lại với `results/lambda_path.csv` (MSE 1e-10, MAE/Huber 1e-8).
+- `report/preamble.tex`: preamble của `report/template/template.tex` chép nguyên, đổi tên file `.bib`, tiêu đề PDF, khối tiêu đề và tác giả (chú thích `NV8`), thêm vài macro.
+
+## 13.3. Notebook
+
+- **`notebooks/02_loss_comparison.ipynb`, `03_outliers_and_sgd.ipynb` (mới):** gọi `report_data.py`, `make_figures.capture_png`; đã chạy, lưu output. **`scripts/report/run_notebooks.py` (mới):** chạy 02, 03 và lưu; `--check` chạy bản sao của notebook cũ.
+- **`00_nlinear_closed_form.ipynb`:** cell cuối dùng `pred_V` chưa định nghĩa (`NameError`, đã ghi trong checklist) → `V.sum(axis=1)` (vi phạm tổng hàng của nghiệm NLinear, song song với dòng `W_ols` ngay trên). Xóa output lỗi cũ của cell đó; các cell khác giữ nguyên.
+- `.venv-gpu`: cài thêm `nbclient`, `nbformat`, `ipykernel` (không thêm vào `requirements.txt`; README ghi là tùy chọn).
+
+## 13.4. `run_all.sh`, `README.md`
+
+- **`run_all.sh` (mới):** `quick` (venv, torch đúng bản CUDA qua `TORCH_INDEX`, test, chạy lại grid ETTh1 H = 96 vào thư mục tạm và `compare_cell.py`, sinh số/bảng/hình, biên dịch nếu có latexmk); `full` (thứ tự các nhiệm vụ, có `--dry-run`).
+- **`README.md`:** viết lại theo NHIEM_VU_8 D.3.
