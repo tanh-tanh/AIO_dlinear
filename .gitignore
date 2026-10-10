@@ -13,3 +13,27 @@ results/outliers/d2_lr/**/*.npy
 results/huber_mad/**/weights/
 results/outliers_mag/**/weights/
 results/sgd_lr/**/*.npy
+
+# Nhiệm vụ 8 (A.4)
+.venv*/
+docs/refs/*.pdf
+report/build/*
+!report/build/main.pdf
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.glo
+*.gls
+*.glg
+*.ist
+*.xdv

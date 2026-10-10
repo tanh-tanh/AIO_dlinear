@@ -1,6 +1,6 @@
-"""Lập các bảng của docs/BAO_CAO_ETTH2_2.md (docs/NHIEM_VU_4.md, Phần E).
+"""Lập các bảng của docs/reports/BAO_CAO_ETTH2_2.md (docs/tasks/NHIEM_VU_4.md, Phần E).
 
-    python scripts/report_etth2_2.py
+    python scripts/report/report_etth2_2.py
 
 Đọc results/sgd_etth2_20seed/ (A), results/sgd_etth2_filtered/ (B), results/constant_windows/ (dạng đóng trên
 train đã lọc, NHIEM_VU_3 C.3), results/mae_filtered/ (C), results/official_ltsf/ (D), results/results.csv và
@@ -19,8 +19,8 @@ from pathlib import Path
 import numpy as np
 from scipy import stats
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "scripts"))
+ROOT = Path(__file__).resolve().parents[2]
+sys.path[:0] = [str(ROOT / "scripts" / d) for d in ("grid", "sgd", "checks", "report")]
 from bench_5060ti import load_cell, save_json      # noqa: E402
 from constant_windows import EPS, constant_mask    # noqa: E402
 

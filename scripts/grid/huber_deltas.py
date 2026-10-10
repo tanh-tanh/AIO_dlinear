@@ -1,6 +1,6 @@
 """δ của Huber theo thang phần dư cho mọi tập train của NHIEM_VU_7 (Phần A.1), ghi results/huber_mad/deltas.csv.
 
-    python scripts/huber_deltas.py
+    python scripts/grid/huber_deltas.py
 
 Mỗi dòng: một (dataset, H, mô hình, tập train). δ = 1,345·σ̂, σ̂ = 1,4826·MAD của mọi phần tử phần dư train của
 nghiệm MSE λ = 0 của chính mô hình đó (NLinear: nghiệm có ràng buộc) trên chính tập train đó, đúng hàm runner dùng
@@ -18,7 +18,7 @@ from pathlib import Path
 
 import numpy as np
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path[:0] = [str(Path(__file__).resolve().parents[1] / d) for d in ("grid", "sgd", "checks", "report")]
 import runner as R                                     # noqa: E402
 from bench_5060ti import ROOT, git_commit, hw_info     # noqa: E402
 

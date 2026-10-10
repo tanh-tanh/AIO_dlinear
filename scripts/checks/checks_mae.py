@@ -1,8 +1,8 @@
 """Nhiệm vụ 2, Phần B: các phép kiểm trên dữ liệu thật (ETTh1, L = 336, H = 96), chế độ pha, chunk 16.
 
-    python scripts/checks_mae.py --check unique        # B.1: MAE từ ba điểm khởi tạo có cùng nghiệm?
-    python scripts/checks_mae.py --check dlinear       # B.2: DLinear 2L chiều ≡ L chiều với pen = N⁻¹
-    python scripts/checks_mae.py --check dlinear_f64   # B.2, MAE: so hai cách ở cùng số vòng, float64
+    python scripts/checks/checks_mae.py --check unique        # B.1: MAE từ ba điểm khởi tạo có cùng nghiệm?
+    python scripts/checks/checks_mae.py --check dlinear       # B.2: DLinear 2L chiều ≡ L chiều với pen = N⁻¹
+    python scripts/checks/checks_mae.py --check dlinear_f64   # B.2, MAE: so hai cách ở cùng số vòng, float64
 
 Kết quả: results/checks_mae/*.json. Test trên dữ liệu giả của cùng các phép kiểm ở tests/test_irls.py.
 """
@@ -15,7 +15,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path[:0] = [str(Path(__file__).resolve().parents[1] / d) for d in ("grid", "sgd", "checks", "report")]
 import bench_5060ti as B                    # noqa: E402  (tắt TF32 khi import)
 from bench_5060ti import MAE_DELTA, ROOT, load_cell, metrics64, ols_init, save_json, to_gpu, warmup  # noqa: E402
 from src.operators import build_N, build_P, dlinear_effective, make_Z  # noqa: E402

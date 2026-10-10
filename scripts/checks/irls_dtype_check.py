@@ -5,8 +5,8 @@ Mỗi lần chạy một mục tiêu (mae: δ = MAE_DELTA, huber: δ = HUBER_DEL
 Mọi sai số (J train, MSE/MAE test) và số điều kiện đều tính lại bằng float64, để hai kiểu
 được chấm như nhau.
 
-    python scripts/irls_dtype_check.py --loss mae --dtype float32     # float32 | float64 | mixed
-    python scripts/irls_dtype_check.py --summary
+    python scripts/checks/irls_dtype_check.py --loss mae --dtype float32     # float32 | float64 | mixed
+    python scripts/checks/irls_dtype_check.py --summary
 
 mixed: dữ liệu và W float64, chỉ lập A_h bằng float32 (irls(..., gram_dtype=torch.float32)).
 
@@ -22,7 +22,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from src.data import load_etth1, make_dataset          # noqa: E402

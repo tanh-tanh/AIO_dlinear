@@ -108,7 +108,7 @@ HUBER_K = 1.345        # δ = 1,345·σ̂: hiệu quả 95% so với MSE khi ph�
 
 
 def huber_delta_mad(R, k=HUBER_K):
-    """δ của Huber theo thang phần dư (docs/NHIEM_VU_7.md, A.1): trả (δ, σ̂).
+    """δ của Huber theo thang phần dư (docs/tasks/NHIEM_VU_7.md, A.1): trả (δ, σ̂).
 
     σ̂ = 1,4826 · median(|R − median(R)|), gộp mọi phần tử của R (numpy, mọi kích thước); δ = k · σ̂.
     MAD bền vững: tới gần 50% phần tử là outlier vẫn không làm σ̂ đổi nhiều.
@@ -148,13 +148,13 @@ def irls(Xt, Y, delta, W0, lam=0.0, pen=None, constrained=False, max_iter=1000, 
              (weight decay của DLinear chỉ phụ thuộc W_eff nên tương đương này đúng với mọi hàm mất mát).
         constrained  True cho NLinear: mỗi hàng có tổng L hệ số đầu bằng 1, bias tự do.
         tol  dừng khi J giảm tương đối ít hơn tol sau một vòng. Với 1e-9, MAE trên ETTh1 H = 96
-             cho MSE/MAE test lệch nghiệm ở vòng 1000 khoảng 2e-6 / 5e-6 (docs/BAO_CAO_IRLS_DTYPE.md).
+             cho MSE/MAE test lệch nghiệm ở vòng 1000 khoảng 2e-6 / 5e-6 (docs/reports/BAO_CAO_IRLS_DTYPE.md).
         callback  nếu có, gọi callback(it, W, J_new) mỗi vòng, trước phép kiểm J không tăng.
         gram_dtype  kiểu số để lập A_h (vd torch.float32 khi Xt là float64). Mặc định: kiểu của Xt.
         chunk  số bước h lập A_h cùng lúc, chuyển thẳng cho weight_gram. Chỉ đổi tốc độ và bộ nhớ.
         patience  chỉ dừng khi J giảm tương đối ít hơn tol trong patience vòng liên tiếp; một vòng
              giảm ≥ tol đặt lại bộ đếm. Cần khi warm start: vòng đầu giảm rất ít dù chưa hội tụ
-             (docs/BAO_CAO_TIEU_CHI_DUNG.md). J tăng trong ngưỡng rise_tol vẫn dừng ngay.
+             (docs/reports/BAO_CAO_TIEU_CHI_DUNG.md). J tăng trong ngưỡng rise_tol vẫn dừng ngay.
         gram_fallback  chỉ có tác dụng khi gram_dtype khác kiểu của Xt: bước h nào làm J_h tăng
              (A_h lập bằng gram_dtype quá xấu điều kiện) thì lập lại A_h đó bằng kiểu của Xt và giải
              lại. Không bao giờ chạy khi các bước đều tốt, nên không đổi kết quả trong trường hợp đó.
@@ -203,7 +203,7 @@ def irls(Xt, Y, delta, W0, lam=0.0, pen=None, constrained=False, max_iter=1000, 
 
     # Fallback theo h (chỉ ở chế độ pha): nếu A_h lập bằng gram_dtype quá xấu điều kiện (κ(A_h)·ε ≳ 1),
     # bước h đó đi sai và J_h tăng. Vì J tách theo h, lập lại riêng các A_h đó bằng kiểu của Xt rồi
-    # giải lại; các h khác giữ nguyên. Toán của IRLS không đổi (docs/BAO_CAO_TIEU_CHI_DUNG.md mục 8).
+    # giải lại; các h khác giữ nguyên. Toán của IRLS không đổi (docs/reports/BAO_CAO_TIEU_CHI_DUNG.md mục 8).
     fallback = gram_fallback and Xg.dtype != Xt.dtype
     fb_chunk = max(1, chunk * Xg.element_size() // Xt.element_size())
     if fallback:

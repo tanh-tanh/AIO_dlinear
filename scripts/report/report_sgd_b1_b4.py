@@ -1,6 +1,6 @@
-"""Lập bảng B1, B4, C.3 và hình H3 của docs/BAO_CAO_SGD_B1_B4.md (docs/NHIEM_VU_5.md, Phần C).
+"""Lập bảng B1, B4, C.3 và hình H3 của docs/reports/BAO_CAO_SGD_B1_B4.md (docs/tasks/NHIEM_VU_5.md, Phần C).
 
-    python scripts/report_sgd_b1_b4.py
+    python scripts/report/report_sgd_b1_b4.py
 
 Đọc SGD: results/sgd_b1_b4/{ETTh1,ETTm1}/ (Phần B) và results/sgd_etth2_20seed/ (ETTh2, nhiệm vụ 4); dạng đóng λ*:
 results/results.csv (mục tiêu MSE, λ* chọn theo val MSE). Ghi results/sgd_b1_b4/{tables.md, summary.json,
@@ -19,8 +19,8 @@ from pathlib import Path
 import numpy as np
 from scipy import stats
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "scripts"))
+ROOT = Path(__file__).resolve().parents[2]
+sys.path[:0] = [str(ROOT / "scripts" / d) for d in ("grid", "sgd", "checks", "report")]
 from bench_5060ti import save_json                          # noqa: E402
 from optim_etth2 import label, side                         # noqa: E402
 

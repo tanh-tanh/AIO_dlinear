@@ -1,8 +1,8 @@
-"""SGD đã tinh chỉnh learning rate (docs/NHIEM_VU_7.md, Phần D), chạy trên CPU bằng scripts/sgd_etth2.py.
+"""SGD đã tinh chỉnh learning rate (docs/tasks/NHIEM_VU_7.md, Phần D), chạy trên CPU bằng scripts/sgd/sgd_etth2.py.
 
-    python scripts/sgd_lr_tune.py                       # cả 36 ô, 5 tiến trình song song, mỗi tiến trình 2 luồng
-    python scripts/sgd_lr_tune.py --dry-run             # in danh sách việc còn thiếu
-    python scripts/sgd_lr_tune.py --dataset ETTh2 --workers 3
+    python scripts/sgd/sgd_lr_tune.py                       # cả 36 ô, 5 tiến trình song song, mỗi tiến trình 2 luồng
+    python scripts/sgd/sgd_lr_tune.py --dry-run             # in danh sách việc còn thiếu
+    python scripts/sgd/sgd_lr_tune.py --dataset ETTh2 --workers 3
 
 Mỗi (dataset, mô hình, H), như nhau cho mọi ô:
     1. Chọn lr: lr ∈ {0,5; 1; 2; 4} × lr của script gốc (HPS của sgd_etth2.py), mỗi mức seed 2021–2025. Chọn mức
@@ -27,8 +27,8 @@ from pathlib import Path
 
 import numpy as np
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "scripts"))
+ROOT = Path(__file__).resolve().parents[2]
+sys.path[:0] = [str(ROOT / "scripts" / d) for d in ("grid", "sgd", "checks", "report")]
 from bench_5060ti import git_commit, hw_info       # noqa: E402
 from sgd_etth2 import HPS                         # noqa: E402
 
@@ -78,7 +78,7 @@ def run(ds, model, H, mult, seeds, threads, dry, log):
     if not missing:
         return
     lr = HPS[ds]["lr"] * mult
-    cmd = [PY, str(ROOT / "scripts" / "sgd_etth2.py"), "--step", "run", "--dataset", ds, "--model", model,
+    cmd = [PY, str(ROOT / "scripts" / "sgd" / "sgd_etth2.py"), "--step", "run", "--dataset", ds, "--model", model,
            "--H", str(H), "--seed", *map(str, missing), "--lr", repr(lr), "--threads", str(threads),
            "--out", str(new_dir(ds, mult).relative_to(ROOT / "results")).replace("\\", "/")]
     with LOCK:

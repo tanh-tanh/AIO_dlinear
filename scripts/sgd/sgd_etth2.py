@@ -1,11 +1,11 @@
-"""SGD (Adam) của repo trên ETTh2, theo siêu tham số của LTSF-Linear (docs/NHIEM_VU_3.md, Phần A).
+"""SGD (Adam) của repo trên ETTh2, theo siêu tham số của LTSF-Linear (docs/tasks/NHIEM_VU_3.md, Phần A).
 
-    python scripts/sgd_etth2.py --step a2                          # A.2: tái lập ETTh1 H = 96, seed 42
-    python scripts/sgd_etth2.py --step run                         # A.3: 3 mô hình × 4 H × 3 seed
-    python scripts/sgd_etth2.py --step run --model DLinear --H 96 --seed 2021
-    python scripts/sgd_etth2.py --step run --out sgd_etth2_20seed --seed $(seq 2021 2040)      # NHIEM_VU_4 A
-    python scripts/sgd_etth2.py --step run --out sgd_etth2_filtered --filtered ...             # NHIEM_VU_4 B
-    python scripts/sgd_etth2.py --step run --dataset ETTh1 --out sgd_b1_b4/ETTh1 --seed ...    # NHIEM_VU_5 B
+    python scripts/sgd/sgd_etth2.py --step a2                          # A.2: tái lập ETTh1 H = 96, seed 42
+    python scripts/sgd/sgd_etth2.py --step run                         # A.3: 3 mô hình × 4 H × 3 seed
+    python scripts/sgd/sgd_etth2.py --step run --model DLinear --H 96 --seed 2021
+    python scripts/sgd/sgd_etth2.py --step run --out sgd_etth2_20seed --seed $(seq 2021 2040)      # NHIEM_VU_4 A
+    python scripts/sgd/sgd_etth2.py --step run --out sgd_etth2_filtered --filtered ...             # NHIEM_VU_4 B
+    python scripts/sgd/sgd_etth2.py --step run --dataset ETTh1 --out sgd_b1_b4/ETTh1 --seed ...    # NHIEM_VU_5 B
 
 --dataset (mặc định ETTh2): chọn dữ liệu và siêu tham số của script chính thức tương ứng (HPS). Với ETTh2 code
 chạy y như trước. --threads: torch.set_num_threads (mặc định không đặt); số luồng thực tế ghi vào JSON.
@@ -19,7 +19,7 @@ Siêu tham số (scripts/EXP-LongForecasting/Linear/etth2.sh và run_longExp.py 
 và 107: Linear, NLinear, DLinear dùng chung script): lr 0,05, batch 32, 10 epoch, patience 3, lradj type1,
 individual=False, k = 25, seed mặc định 2021. Khởi tạo mặc định của nn.Linear.
 
-Khác repo gốc (ghi trong docs/BAO_CAO_ETTH2_SGD.md):
+Khác repo gốc (ghi trong docs/reports/BAO_CAO_ETTH2_SGD.md):
     - train: shuffle, drop_last=True như gốc;
     - val để dừng sớm: MSE trung bình toàn cục trên đủ cửa sổ (gốc: shuffle, drop_last, trung bình theo batch);
     - thứ tự lấy số ngẫu nhiên: manual_seed(seed) → tạo mô hình → các epoch (gốc tạo mô hình sau vài bước khác).
@@ -37,9 +37,9 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
-sys.path.insert(0, str(ROOT / "scripts"))
+sys.path[:0] = [str(ROOT / "scripts" / d) for d in ("grid", "sgd", "checks", "report")]
 
 from bench_5060ti import load_cell, save_json                 # noqa: E402  (tắt TF32 khi import)
 from src.data import load_ett, load_etth1                      # noqa: E402

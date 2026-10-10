@@ -1,12 +1,12 @@
 """Chạy grid: đường λ của Linear, DLinear, NLinear × MSE, MAE, Huber × ETTh1, ETTh2, ETTm1 × H.
 
 Không chọn λ* ở đây: mỗi (dataset, H, mô hình, mục tiêu, λ) là một dòng của results/lambda_path.csv.
-Chọn λ* bằng scripts/select_lambda.py.
+Chọn λ* bằng scripts/grid/select_lambda.py.
 
-    python scripts/runner.py                                   # toàn bộ grid; chạy lại = chạy tiếp
-    python scripts/runner.py --data ETTh1 --H 96               # lọc
-    python scripts/runner.py --dry-run                         # danh sách việc và ước lượng thời gian
-    python scripts/runner.py --data ETTh1 --model Linear NLinear --out outliers         --outlier-mode series --outlier-rate 0.1 --outlier-seed 2026   # NHIEM_VU_6: train có outlier
+    python scripts/grid/runner.py                                   # toàn bộ grid; chạy lại = chạy tiếp
+    python scripts/grid/runner.py --data ETTh1 --H 96               # lọc
+    python scripts/grid/runner.py --dry-run                         # danh sách việc và ước lượng thời gian
+    python scripts/grid/runner.py --data ETTh1 --model Linear NLinear --out outliers         --outlier-mode series --outlier-rate 0.1 --outlier-seed 2026   # NHIEM_VU_6: train có outlier
 
 Cách giải
     MSE: dạng đóng trên λ ∈ {0} ∪ logspace(−2, 5, 141) (20 giá trị mỗi bậc; lưới cũ 36 giá trị là tập con). Linear: ridge; DLinear: ridge với phạt λ·N⁻¹;
@@ -24,7 +24,7 @@ Không phạt bias. Quy ước λ ghi trong cột lam_convention.
 
 Chạy tiếp: khóa (dataset, H, model, objective, lam); W mỗi dòng ở results/weights/*.npy (float64).
 
-Outlier (docs/NHIEM_VU_6.md): --out <thư mục con của results/> ghi vào results/<out>/lambda_path.csv và
+Outlier (docs/tasks/NHIEM_VU_6.md): --out <thư mục con của results/> ghi vào results/<out>/lambda_path.csv và
 results/<out>/weights/, thêm các cột OUTLIER_COLUMNS; khóa chạy tiếp gồm cả (mode, rate, seed).
 --outlier-mode series: src.outliers.contaminate_series trên chuỗi train đã chuẩn hóa (scaler của train sạch),
 protect_last = L, rồi cắt cửa sổ; target: contaminate_targets trên Y của các cửa sổ train. Val, test giữ
@@ -32,7 +32,7 @@ nguyên. Không có --outlier-mode thì code chạy y như trước.
 --outlier-magnitude (NHIEM_VU_7 C, mặc định 10): độ lớn ±magnitude truyền cho contaminate_*; cột outlier_magnitude
 (file mới luôn có; dòng cũ thiếu cột coi là 10), vào khóa chạy tiếp và tên file W (chỉ khi khác 10).
 
-δ của Huber (docs/NHIEM_VU_7.md, Phần A): --huber-delta mad lấy δ = --delta-scale × 1,345·σ̂ theo từng (ô, mô hình,
+δ của Huber (docs/tasks/NHIEM_VU_7.md, Phần A): --huber-delta mad lấy δ = --delta-scale × 1,345·σ̂ theo từng (ô, mô hình,
 tập train), σ̂ = 1,4826·MAD của phần dư train của nghiệm MSE λ = 0 của chính mô hình đó trên chính tập train đó
 (Cell.huber_delta, src.solvers.huber_delta_mad; tập train đã chèn outlier thì tính trên tập đã chèn). Số thực
 (vd --huber-delta 1) là δ cố định. Không đặt thì δ = 1, chạy y như trước. δ vào irls, train_obj, val_huber (metric
@@ -58,7 +58,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path[:0] = [str(Path(__file__).resolve().parents[1] / d) for d in ("grid", "sgd", "checks", "report")]
 import bench_5060ti as B                    # noqa: E402  (tắt TF32 khi import)
 from bench_5060ti import HUBER_DELTA, MAE_DELTA, ROOT, git_commit, load_cell  # noqa: E402
 from src.operators import build_N, build_P, nlinear_effective, nlinear_transform  # noqa: E402
@@ -76,7 +76,7 @@ IRLS_LAMS = [0.0, 1.0, 3.0, 10.0, 30.0, 100.0, 300.0, 1000.0, 3000.0, 10000.0]
 MAX_EXTEND = 2
 CHUNK = 16
 MAX_ITER = 1000
-# Tiêu chí dừng theo docs/BAO_CAO_TIEU_CHI_DUNG.md (Phần A của NHIEM_VU_2, phương án a′): λ = 0 khởi tạo
+# Tiêu chí dừng theo docs/reports/BAO_CAO_TIEU_CHI_DUNG.md (Phần A của NHIEM_VU_2, phương án a′): λ = 0 khởi tạo
 # từ nghiệm MSE, mặt MAE phẳng nhất ở đó nên cần tol chặt hơn (tol_lam0); λ > 0 warm start.
 STOP = {"MAE": {"tol": 1e-10, "patience": 1, "tol_lam0": 3e-11},
         "Huber": {"tol": 1e-9, "patience": 1, "tol_lam0": 1e-9}}
@@ -185,7 +185,7 @@ class Cell:
             self.contaminate(**OUTLIER)
 
     def contaminate(self, mode, rate, seed, magnitude=DEFAULT_MAGNITUDE):
-        """Thay train bằng bản có outlier (docs/NHIEM_VU_6.md). Val, test không đổi."""
+        """Thay train bằng bản có outlier (docs/tasks/NHIEM_VU_6.md). Val, test không đổi."""
         if mode == "series":
             train, _, _ = load_ett(ROOT / "data" / f"{self.ds}.csv", L, self.ds)
             train_c, info = contaminate_series(train, rate, magnitude=magnitude, seed=seed, protect_last=L,
@@ -203,7 +203,7 @@ class Cell:
 
     def set_train(self, X, Y):
         """Đặt tập train (X, Y) và các thống kê của MSE dạng đóng. Dùng lại khi bỏ bớt cửa sổ train
-        (scripts/constant_windows.py); chỉ hợp lệ trước khi dùng GPU."""
+        (scripts/checks/constant_windows.py); chỉ hợp lệ trước khi dùng GPU."""
         assert self._gpu is None
         self._huber = {}
         self.d["X"], self.d["Y"] = X, Y
@@ -253,7 +253,7 @@ class Cell:
         """δ của Huber cho mô hình này trên tập train hiện tại, theo HUBER_RULE; trả (δ, σ̂, quy tắc).
 
         "mad": δ = scale × 1,345·σ̂, σ̂ = 1,4826·MAD của mọi phần tử phần dư train của closed_form(model, 0).
-        residual_stats=True trả thêm σ̂ theo từng bước h (mảng [H]) để tham khảo (scripts/huber_deltas.py).
+        residual_stats=True trả thêm σ̂ theo từng bước h (mảng [H]) để tham khảo (scripts/grid/huber_deltas.py).
         """
         if HUBER_RULE["delta"] != "mad":
             return float(HUBER_RULE["delta"]), None, f"fixed {float(HUBER_RULE['delta']):g}"
@@ -428,7 +428,7 @@ def plan(args):
 
 
 def estimate(jobs, done):
-    """Giây ước lượng cho các việc chưa xong, từ số đo của docs/BAO_CAO_5060TI.md và BAO_CAO_TIEU_CHI_DUNG.md."""
+    """Giây ước lượng cho các việc chưa xong, từ số đo của docs/reports/BAO_CAO_5060TI.md và BAO_CAO_TIEU_CHI_DUNG.md."""
     s_iter = {}
     for ds in DATASETS:
         for H in HORIZONS:
@@ -496,7 +496,7 @@ def main():
             sys.exit("--skip-mse cần --out")
         SKIP_MSE = True
     if any(v is None for s in STOP.values() for v in s.values()):
-        sys.exit("STOP chưa điền: cần kết quả Phần A (docs/BAO_CAO_TIEU_CHI_DUNG.md)")
+        sys.exit("STOP chưa điền: cần kết quả Phần A (docs/reports/BAO_CAO_TIEU_CHI_DUNG.md)")
     # DLinear λ = 0 chép từ Linear, MAE/Huber λ = 0 khởi tạo từ MSE λ = 0 của cùng mô hình
     if "DLinear" in args.model and "Linear" not in args.model:
         args.model = ["Linear"] + args.model

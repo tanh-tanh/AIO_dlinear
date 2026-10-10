@@ -1,8 +1,8 @@
 """Chạy lại bằng code hiện tại (có fallback float64 theo h) một số đường λ đã chạy trước khi có fallback,
-rồi so với results/lambda_path.csv (docs/NHIEM_VU_3.md, C.1). Không đụng file chính.
+rồi so với results/lambda_path.csv (docs/tasks/NHIEM_VU_3.md, C.1). Không đụng file chính.
 
-    python scripts/recheck_paths.py            # chạy (chạy lại = chạy tiếp) rồi so
-    python scripts/recheck_paths.py --compare  # chỉ so
+    python scripts/checks/recheck_paths.py            # chạy (chạy lại = chạy tiếp) rồi so
+    python scripts/checks/recheck_paths.py --compare  # chỉ so
 
 Ghi results/recheck/lambda_path_recheck.csv, W ở results/recheck/weights/, bảng so ở results/recheck/compare.json.
 Khởi tạo λ = 0 lấy nghiệm MSE λ = 0 của file chính (chép sang thư mục recheck, chỉ đọc). Với DLinear,
@@ -14,7 +14,7 @@ import shutil
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path[:0] = [str(Path(__file__).resolve().parents[1] / d) for d in ("grid", "sgd", "checks", "report")]
 import runner as R                                   # noqa: E402  (tắt TF32, đặt expandable_segments)
 from bench_5060ti import save_json                   # noqa: E402
 from src.solvers import irls                         # noqa: E402

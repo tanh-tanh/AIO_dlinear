@@ -1,4 +1,4 @@
-"""Ridge co về W₀ thay vì 0 (docs/NHIEM_VU_3.md, B.2). Chỉ MSE, dạng đóng.
+"""Ridge co về W₀ thay vì 0 (docs/tasks/NHIEM_VU_3.md, B.2). Chỉ MSE, dạng đóng.
 
     min ‖Y − X Wᵀ − b‖² + λ·Σ_h (w_h − w0_h)ᵀ Pen (w_h − w0_h),   bias không phạt.
 
@@ -10,7 +10,7 @@ với mọi W₀ (runner.Cell.closed_form).
 W₀: zero (0), mean (mọi phần tử 1/L), last (1 ở lag cuối). Mô hình: Linear (Pen = I), DLinear (Pen = N⁻¹, k = 25).
 Lưới λ = runner.MSE_LAMS (141 giá trị dương và 0); λ* tối thiểu val MSE.
 
-    python scripts/ridge_w0.py
+    python scripts/checks/ridge_w0.py
 
 Kết quả: results/ridge_w0/path.csv (mọi λ), results/ridge_w0/summary.json (λ*, kiểm zero).
 Mỗi ô ghi riêng results/ridge_w0/cells/{ds}_H{H}.csv nên chạy lại = chạy tiếp.
@@ -21,7 +21,7 @@ from pathlib import Path
 
 import numpy as np
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path[:0] = [str(Path(__file__).resolve().parents[1] / d) for d in ("grid", "sgd", "checks", "report")]
 import runner as R                                   # noqa: E402
 from bench_5060ti import save_json                   # noqa: E402
 

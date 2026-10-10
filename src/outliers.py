@@ -1,4 +1,4 @@
-"""Chèn outlier nhân tạo vào train (docs/NHIEM_VU_6.md, Phần A và C).
+"""Chèn outlier nhân tạo vào train (docs/tasks/NHIEM_VU_6.md, Phần A và C).
 
 contaminate_series: chèn vào chuỗi train đã chuẩn hóa, trước khi cắt cửa sổ. Một điểm outlier vì vậy
     xuất hiện ở nhiều cửa sổ, cả trong x lẫn y.

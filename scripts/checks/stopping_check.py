@@ -2,9 +2,9 @@
 
 Ô: DLinear (Linear có bias, pen = N⁻¹, k = 25), ETTh1 H = 96, chế độ pha, chunk 16, TF32 tắt.
 
-    python scripts/stopping_check.py --step reference                    # A.2: tol = 0, 2000 vòng, λ ∈ {0, 30, 100, 300, 1000}
-    python scripts/stopping_check.py --step sweep --loss mae --tol 1e-9 --patience 5   # A.3
-    python scripts/stopping_check.py --step analyze                      # A.4: ba tiêu chí, chọn cấu hình
+    python scripts/checks/stopping_check.py --step reference                    # A.2: tol = 0, 2000 vòng, λ ∈ {0, 30, 100, 300, 1000}
+    python scripts/checks/stopping_check.py --step sweep --loss mae --tol 1e-9 --patience 5   # A.3
+    python scripts/checks/stopping_check.py --step analyze                      # A.4: ba tiêu chí, chọn cấu hình
 
 Kết quả: results/stopping/*.json. Tập test chỉ ghi để tham khảo, không dùng để chọn gì.
 Bước reference và sweep bỏ qua file đã có (chạy tiếp được); --force để chạy lại.
@@ -18,7 +18,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path[:0] = [str(Path(__file__).resolve().parents[1] / d) for d in ("grid", "sgd", "checks", "report")]
 import bench_5060ti as B                    # noqa: E402  (tắt TF32 khi import)
 from bench_5060ti import (LOSSES, MAE_DELTA, ROOT, load_cell, metrics64, ols_init,  # noqa: E402
                           run_irls, save_json, to_gpu, warmup)
@@ -33,7 +33,7 @@ REF_LAMS = [0, 30, 100, 300, 1000]
 REF_ITERS = 2000
 REF_EVERY = 50
 MAE_CONFIGS = [(1e-9, 1), (1e-9, 5), (1e-10, 1), (1e-10, 5)]
-# phương án (a′) sau khi A.3 không đạt: λ = 0 dùng tol riêng (docs/BAO_CAO_TIEU_CHI_DUNG.md mục 4.4)
+# phương án (a′) sau khi A.3 không đạt: λ = 0 dùng tol riêng (docs/reports/BAO_CAO_TIEU_CHI_DUNG.md mục 4.4)
 EXTRA_MAE_CONFIGS = [(1e-10, 1, 3e-11)]
 HUBER_CONFIGS = [(1e-9, 1), (1e-9, 5)]
 GAP_TOL = 1e-5            # tiêu chí 3: lệch nghiệm tham chiếu

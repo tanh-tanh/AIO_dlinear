@@ -1,11 +1,11 @@
-"""Trình tối ưu toàn batch trên Linear, ETTh2, H = 720 (docs/NHIEM_VU_5.md, Phần A).
+"""Trình tối ưu toàn batch trên Linear, ETTh2, H = 720 (docs/tasks/NHIEM_VU_5.md, Phần A).
 
 Ba cách, so với ridge λ* và Adam mini-batch 20 seed đã có (results/sgd_etth2_20seed/):
     gd_zero    GD toàn batch, lr = 1/λ_max, W = 0, b = 0 (tất định)
     gd_init    GD toàn batch, lr = 1/λ_max, khởi tạo nn.Linear mặc định (seed 2021–2030)
     adam_full  Adam toàn batch, lr chọn trong {0,05; 0,005; 0,0005} theo val của seed 2021, rồi seed 2021–2030
 
-Hàm mất mát giống scripts/sgd_etth2.py: MSE trung bình trên mọi phần tử, có bias, J = ‖Y − Xt Wtᵀ‖² / (n·H),
+Hàm mất mát giống scripts/sgd/sgd_etth2.py: MSE trung bình trên mọi phần tử, có bias, J = ‖Y − Xt Wtᵀ‖² / (n·H),
 với Xt = [X, 1], Wt = [W, b]. Mọi thứ tính bằng float64 trên CPU qua ma trận Gram G = Xtᵀ Xt, C = Xtᵀ Y:
 gradient đúng của toàn batch là (2/(nH))(Wt G − Cᵀ), MSE = (‖Y‖² − 2 tr(Wt C) + tr(Wt G Wtᵀ)) / (nH).
 Hessian theo mỗi hàng của Wt là 2G/(nH); λ_max tính bằng power iteration (kiểm chéo bằng eigvalsh).
@@ -14,8 +14,8 @@ Hessian theo mỗi hàng của Wt là 2G/(nH); λ_max tính bằng power iterati
 ở bước có val tốt nhất, dừng khi val không cải thiện trong 25% số bước tối đa. Test chỉ ghi, không dùng để chọn.
 MSE val/test của Wt tốt nhất tính lại bằng phần dư trực tiếp (như dạng đóng).
 
-    python scripts/optim_etth2.py            # chạy (bỏ qua file đã có) rồi lập bảng
-    python scripts/optim_etth2.py --report   # chỉ lập bảng
+    python scripts/sgd/optim_etth2.py            # chạy (bỏ qua file đã có) rồi lập bảng
+    python scripts/sgd/optim_etth2.py --report   # chỉ lập bảng
 
 Kết quả: results/optim_etth2/{cách}_seed{s}.json (+ .npy: Wt tốt nhất [H, L + 1]), tables.md, summary.json.
 """
@@ -30,9 +30,9 @@ import numpy as np
 import torch
 from scipy import stats
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
-sys.path.insert(0, str(ROOT / "scripts"))
+sys.path[:0] = [str(ROOT / "scripts" / d) for d in ("grid", "sgd", "checks", "report")]
 from bench_5060ti import load_cell, save_json                   # noqa: E402  (tắt TF32 khi import)
 from src.models import MODELS, effective_weights                # noqa: E402
 from src.solvers import ridge_path                              # noqa: E402
@@ -182,7 +182,7 @@ def ci(x):
 
 
 def side(m, h):
-    """thắng / thua / hòa theo CI 95% của Δ = SGD − dạng đóng (docs/NHIEM_VU_5.md, B.4)."""
+    """thắng / thua / hòa theo CI 95% của Δ = SGD − dạng đóng (docs/tasks/NHIEM_VU_5.md, B.4)."""
     if m + h < 0:
         return "thắng"
     if m - h > 0:

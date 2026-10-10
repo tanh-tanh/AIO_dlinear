@@ -1,11 +1,11 @@
-"""Độ nhạy với đoạn hằng của ETTh2 (docs/NHIEM_VU_3.md, C.3).
+"""Độ nhạy với đoạn hằng của ETTh2 (docs/tasks/NHIEM_VU_3.md, C.3).
 
 Cửa sổ hằng: cửa sổ (một kênh, sau chuẩn hóa) có max − min của x hoặc của y nhỏ hơn 1e-12.
 Đếm cửa sổ hằng trong train/val/test theo H và kênh; rồi giải MSE dạng đóng (Linear, DLinear, NLinear,
 lưới runner.MSE_LAMS) với train bỏ các cửa sổ hằng, val và test giữ nguyên, λ* theo val MSE.
 "Trước" lấy từ results/lambda_path.csv (cùng lưới, train đủ).
 
-    python scripts/constant_windows.py
+    python scripts/checks/constant_windows.py
 
 Kết quả: results/constant_windows/summary.json, path.csv.
 """
@@ -15,7 +15,7 @@ from pathlib import Path
 
 import numpy as np
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path[:0] = [str(Path(__file__).resolve().parents[1] / d) for d in ("grid", "sgd", "checks", "report")]
 import runner as R                                   # noqa: E402
 from bench_5060ti import save_json                   # noqa: E402
 

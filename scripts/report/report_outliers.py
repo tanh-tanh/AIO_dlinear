@@ -1,7 +1,7 @@
-"""Lập bảng và hình của docs/BAO_CAO_OUTLIER.md (docs/NHIEM_VU_6.md, Phần E).
+"""Lập bảng và hình của docs/reports/BAO_CAO_OUTLIER.md (docs/tasks/NHIEM_VU_6.md, Phần E).
 
-    python scripts/select_lambda.py --in results/outliers/lambda_path.csv --out results/outliers/results.csv
-    python scripts/report_outliers.py
+    python scripts/grid/select_lambda.py --in results/outliers/lambda_path.csv --out results/outliers/results.csv
+    python scripts/report/report_outliers.py
 
 Đọc:
     results/outliers/results.csv      λ* của train có outlier (select_lambda trên results/outliers/lambda_path.csv)
@@ -23,8 +23,8 @@ from pathlib import Path
 import numpy as np
 from scipy import stats
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "scripts"))
+ROOT = Path(__file__).resolve().parents[2]
+sys.path[:0] = [str(ROOT / "scripts" / d) for d in ("grid", "sgd", "checks", "report")]
 from bench_5060ti import save_json                          # noqa: E402
 
 OUT = ROOT / "results" / "outliers"

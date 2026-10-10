@@ -1,7 +1,7 @@
-"""Chạy code gốc của LTSF-Linear trên ETTh2 và chấm chéo bằng pipeline của repo (docs/NHIEM_VU_4.md, Phần D).
+"""Chạy code gốc của LTSF-Linear trên ETTh2 và chấm chéo bằng pipeline của repo (docs/tasks/NHIEM_VU_4.md, Phần D).
 
-    python scripts/official_ltsf.py --prepare                 # chép third_party/LTSF-Linear → scratch/ltsf_official, áp patch
-    python scripts/official_ltsf.py --model DLinear Linear --H 720 --seed 2021 2022 2023 2024 2025
+    python scripts/sgd/official_ltsf.py --prepare                 # chép third_party/LTSF-Linear → scratch/ltsf_official, áp patch
+    python scripts/sgd/official_ltsf.py --model DLinear Linear --H 720 --seed 2021 2022 2023 2024 2025
 
 Bản chép không sửa gì ngoài results/official_ltsf/patch.diff:
     - run_longExp.py: thêm --seed (mặc định 2021 = hành vi gốc; gốc đặt cứng fix_seed = 2021 ở dòng 8–11);
@@ -21,7 +21,7 @@ data/ETTm1.csv vào dataset/ nếu chưa có), --out <thư mục con của resul
 cho tiến trình con: code gốc dùng `--use_gpu type=bool` nên không tắt GPU được bằng tham số). Mặc định
 (ETTh2, official_ltsf, GPU) chạy y như trước.
 
-    python scripts/official_ltsf.py --dataset ETTm1 --model DLinear --H 96 --out outliers/d1_official --cpu
+    python scripts/sgd/official_ltsf.py --dataset ETTm1 --model DLinear --H 96 --out outliers/d1_official --cpu
 """
 import argparse
 import os
@@ -35,9 +35,9 @@ from pathlib import Path
 import numpy as np
 import torch
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
-sys.path.insert(0, str(ROOT / "scripts"))
+sys.path[:0] = [str(ROOT / "scripts" / d) for d in ("grid", "sgd", "checks", "report")]
 
 from bench_5060ti import load_cell, save_json              # noqa: E402
 from src.models import MODELS, effective_weights          # noqa: E402

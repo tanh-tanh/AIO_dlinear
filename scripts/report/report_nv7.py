@@ -1,7 +1,7 @@
-"""Lập bảng và hình của docs/BAO_CAO_NV7.md (docs/NHIEM_VU_7.md).
+"""Lập bảng và hình của docs/reports/BAO_CAO_NV7.md (docs/tasks/NHIEM_VU_7.md).
 
-    python scripts/report_nv7.py --part B        # B: đổi tiêu chí chọn λ* (không chạy lại gì)
-    python scripts/report_nv7.py --part all
+    python scripts/report/report_nv7.py --part B        # B: đổi tiêu chí chọn λ* (không chạy lại gì)
+    python scripts/report/report_nv7.py --part all
 
 Ghi results/nv7/tables_<phần>.md và results/nv7/summary.json (gộp các phần đã chạy). Không chọn gì trên test.
 
@@ -18,8 +18,8 @@ from pathlib import Path
 
 import numpy as np
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "scripts"))
+ROOT = Path(__file__).resolve().parents[2]
+sys.path[:0] = [str(ROOT / "scripts" / d) for d in ("grid", "sgd", "checks", "report")]
 from bench_5060ti import git_commit                       # noqa: E402
 
 OUT = ROOT / "results" / "nv7"
@@ -783,7 +783,7 @@ def part_d(summ):
     old = json.loads((ROOT / "results" / "sgd_b1_b4" / "summary.json").read_text(encoding="utf-8"))
     old_b4 = {(r["dataset"], r["H"], r["model"]): r for r in old["B4"]["rows"]}
     old_c3 = {(r["dataset"], r["H"]): r for r in old["C3"]["rows"]}
-    sys.path.insert(0, str(ROOT / "scripts"))
+    sys.path[:0] = [str(ROOT / "scripts" / d) for d in ("grid", "sgd", "checks", "report")]
     import sgd_lr_tune as T
 
     def ci(x):

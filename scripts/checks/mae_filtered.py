@@ -1,11 +1,11 @@
-"""MAE λ = 0 trên train đã lọc cửa sổ hằng, ETTh2 (docs/NHIEM_VU_4.md, Phần C).
+"""MAE λ = 0 trên train đã lọc cửa sổ hằng, ETTh2 (docs/tasks/NHIEM_VU_4.md, Phần C).
 
-Train đã lọc: đúng hàm constant_mask của scripts/constant_windows.py (NHIEM_VU_3 C.3); val, test giữ nguyên.
+Train đã lọc: đúng hàm constant_mask của scripts/checks/constant_windows.py (NHIEM_VU_3 C.3); val, test giữ nguyên.
 IRLS như grid: chế độ pha, chunk theo runner.Cell, tol = runner.STOP["MAE"]["tol_lam0"] (3e-11), patience 1,
 khởi tạo từ nghiệm MSE λ = 0 trên cùng train đã lọc (runner.Cell.closed_form sau set_train).
 
-    python scripts/mae_filtered.py                        # Linear, 4 H
-    python scripts/mae_filtered.py --model NLinear --H 96 192 336
+    python scripts/checks/mae_filtered.py                        # Linear, 4 H
+    python scripts/checks/mae_filtered.py --model NLinear --H 96 192 336
 
 Kết quả: results/mae_filtered/{model}_H{H}.json (mỗi ô một file; chạy lại bỏ qua ô đã có).
 """
@@ -13,7 +13,7 @@ import argparse
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path[:0] = [str(Path(__file__).resolve().parents[1] / d) for d in ("grid", "sgd", "checks", "report")]
 import runner as R                                   # noqa: E402  (tắt TF32, đặt expandable_segments)
 from bench_5060ti import save_json                   # noqa: E402
 from constant_windows import constant_mask           # noqa: E402

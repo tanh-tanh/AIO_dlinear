@@ -2,21 +2,21 @@
 
 Mỗi (dataset, H, mô hình, mục tiêu) cho hai mức λ: λ = 0 và λ*. λ* có ba cách chọn (cột selection):
     val_objective  λ* tối thiểu metric val của chính mục tiêu (MSE → val_mse, MAE → val_mae, Huber → val_huber)
-    val_mse        λ* tối thiểu val_mse với mọi mục tiêu; dùng để báo MSE test (docs/NHIEM_VU_7.md, B.1)
+    val_mse        λ* tối thiểu val_mse với mọi mục tiêu; dùng để báo MSE test (docs/tasks/NHIEM_VU_7.md, B.1)
     val_mae        λ* tối thiểu val_mae với mọi mục tiêu; dùng để báo MAE test (NHIEM_VU_7, B.1)
 Mặc định chỉ sinh val_objective và val_mse như trước (results.csv 432 dòng khi grid chạy xong); chọn bằng
 --selections. λ* có thể bằng 0. Test không dùng để chọn gì. Các cột val_* của lambda_path.csv không chứa số hạng
 phạt λ‖w‖² (kiểm bằng tests/test_val_metrics.py).
 
-    python scripts/select_lambda.py
-    python scripts/select_lambda.py --in results/outliers/lambda_path.csv --out results/outliers/results.csv
-    python scripts/select_lambda.py --selections val_mse val_mae val_objective --out results/results_v2.csv
-    python scripts/select_lambda.py --in results/lambda_path.csv results/huber_mad/lambda_path.csv ...   # NV7 A
+    python scripts/grid/select_lambda.py
+    python scripts/grid/select_lambda.py --in results/outliers/lambda_path.csv --out results/outliers/results.csv
+    python scripts/grid/select_lambda.py --selections val_mse val_mae val_objective --out results/results_v2.csv
+    python scripts/grid/select_lambda.py --in results/lambda_path.csv results/huber_mad/lambda_path.csv ...   # NV7 A
 
 Nhiều file --in: một đường λ (cùng khóa nhóm) có ở nhiều file thì lấy trọn đường của file sau cùng, không trộn
 dòng giữa các file. Dùng để thay đường Huber δ = 1 của grid bằng đường Huber δ_MAD (results/huber_mad/).
 
-File có các cột outlier (docs/NHIEM_VU_6.md) thì mỗi (outlier_mode, outlier_rate, outlier_seed) là một nhóm
+File có các cột outlier (docs/tasks/NHIEM_VU_6.md) thì mỗi (outlier_mode, outlier_rate, outlier_seed) là một nhóm
 riêng, và các cột đó được giữ trong file ra; có thêm cột outlier_magnitude (NV7 C) thì nó cũng vào khóa nhóm,
 dòng thiếu cột coi là 10. Không có thì chạy y như trước.
 """
@@ -25,7 +25,7 @@ import csv
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 PATH_CSV = ROOT / "results" / "lambda_path.csv"
 OUT_CSV = ROOT / "results" / "results.csv"
 OWN = {"MSE": "val_mse", "MAE": "val_mae", "Huber": "val_huber"}

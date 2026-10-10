@@ -1,4 +1,4 @@
-"""Gradient descent toàn batch, lr cố định, trên MSE của Linear (docs/NHIEM_VU_3.md, B.3).
+"""Gradient descent toàn batch, lr cố định, trên MSE của Linear (docs/tasks/NHIEM_VU_3.md, B.3).
 
 Tách tác dụng của dừng sớm khỏi nhiễu mini-batch: không có Adam, không có batch, chỉ GD trên
 J(W, b) = ‖Y − X Wᵀ − b‖² / (n·H), xuất phát từ khởi tạo nn.Linear mặc định của LTSF-Linear (seed 2021).
@@ -7,7 +7,7 @@ Mọi thứ tính qua ma trận Gram của Xt = [X, 1] (float64, GPU): bước G
 MSE val/test tính đúng bằng ‖Y‖² − 2 tr(Wt C) + tr(Wt G Wtᵀ). η = 1/λ_max(2G/(nH)) (bước an toàn).
 Ghi MSE val/test theo số bước (lưới log), chọn số bước theo val MSE.
 
-    python scripts/gd_early_stop.py --H 720 --steps 1000000
+    python scripts/checks/gd_early_stop.py --H 720 --steps 1000000
 
 Kết quả: results/gd_early_stop/Linear_H{H}.json.
 """
@@ -19,10 +19,10 @@ from pathlib import Path
 import numpy as np
 import torch
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path[:0] = [str(Path(__file__).resolve().parents[1] / d) for d in ("grid", "sgd", "checks", "report")]
 from bench_5060ti import load_cell, save_json                  # noqa: E402  (tắt TF32 khi import)
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "results" / "gd_early_stop"
 L, SEED = 336, 2021
 DEV = "cuda"

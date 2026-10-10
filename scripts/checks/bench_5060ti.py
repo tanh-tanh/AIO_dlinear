@@ -4,12 +4,12 @@ Mọi lần chạy ở chế độ pha (Xt, Y, W0 float64 trên GPU, gram_dtype=
 Linear, khởi tạo OLS (fit_with_bias(ols), bias ghép vào cột cuối), trừ khi ghi khác.
 Mọi sai số (J, MSE/MAE val/test) tính lại bằng float64 trên CPU.
 
-    python scripts/bench_5060ti.py --step chunk                  # 3.2: quét chunk, ETTh1 H = 96
-    python scripts/bench_5060ti.py --step full                   # 3.2: Huber và MAE chạy đủ, so với máy cũ
-    python scripts/bench_5060ti.py --step ettm1                  # 3.3: ETTm1 H = 720, 3 vòng MAE
-    python scripts/bench_5060ti.py --step cell --data ETTh1 --H 720   # 3.4: ô bất kỳ, 3 vòng MAE
-    python scripts/bench_5060ti.py --step warmstart --loss mae   # 4: quét λ cho DLinear, lạnh và warm
-    python scripts/bench_5060ti.py --summary                     # in bảng, ước lượng grid
+    python scripts/checks/bench_5060ti.py --step chunk                  # 3.2: quét chunk, ETTh1 H = 96
+    python scripts/checks/bench_5060ti.py --step full                   # 3.2: Huber và MAE chạy đủ, so với máy cũ
+    python scripts/checks/bench_5060ti.py --step ettm1                  # 3.3: ETTm1 H = 720, 3 vòng MAE
+    python scripts/checks/bench_5060ti.py --step cell --data ETTh1 --H 720   # 3.4: ô bất kỳ, 3 vòng MAE
+    python scripts/checks/bench_5060ti.py --step warmstart --loss mae   # 4: quét λ cho DLinear, lạnh và warm
+    python scripts/checks/bench_5060ti.py --summary                     # in bảng, ước lượng grid
 
 `chunk` mặc định lấy từ results/bench_5060ti/chunk.json (nhanh nhất theo một vòng irls);
 đổi bằng --chunk. Kết quả: results/bench_5060ti/*.json (và .npy cho W của bước full).
@@ -26,7 +26,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from src.data import load_ett, make_dataset, split_borders            # noqa: E402

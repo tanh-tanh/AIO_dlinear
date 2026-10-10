@@ -1,6 +1,6 @@
-"""Lập các bảng của docs/BAO_CAO_ETTH2_SGD.md từ kết quả đã chạy (docs/NHIEM_VU_3.md, Phần D).
+"""Lập các bảng của docs/reports/BAO_CAO_ETTH2_SGD.md từ kết quả đã chạy (docs/tasks/NHIEM_VU_3.md, Phần D).
 
-    python scripts/report_etth2.py
+    python scripts/report/report_etth2.py
 
 Đọc results/sgd_etth2/, results/results.csv (lưới đã làm dày), results/weights/, results/ridge_w0/,
 results/recheck/, results/constant_windows/, và results.csv của commit 0563109 (trước khi làm dày).
@@ -15,8 +15,8 @@ from pathlib import Path
 
 import numpy as np
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "scripts"))
+ROOT = Path(__file__).resolve().parents[2]
+sys.path[:0] = [str(ROOT / "scripts" / d) for d in ("grid", "sgd", "checks", "report")]
 from bench_5060ti import save_json              # noqa: E402
 
 OUT = ROOT / "results" / "etth2_report"
@@ -27,7 +27,7 @@ HORIZONS = [96, 192, 336, 720]
 DATASETS = ["ETTh1", "ETTh2", "ETTm1"]
 MODELS = ["Linear", "NLinear", "DLinear"]
 SEEDS = [2021, 2022, 2023]
-# Bảng 2 của Zeng et al. (AAAI 2023), L = 336, (MSE, MAE); chép nguyên từ docs/NHIEM_VU_3.md mục 0.1
+# Bảng 2 của Zeng et al. (AAAI 2023), L = 336, (MSE, MAE); chép nguyên từ docs/tasks/NHIEM_VU_3.md mục 0.1
 PUB = {
     ("ETTh1", 96): {"Linear": (0.375, 0.397), "NLinear": (0.374, 0.394), "DLinear": (0.375, 0.399)},
     ("ETTh1", 192): {"Linear": (0.418, 0.429), "NLinear": (0.408, 0.415), "DLinear": (0.405, 0.416)},

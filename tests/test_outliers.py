@@ -1,4 +1,4 @@
-"""Kiểm src/outliers.py (docs/NHIEM_VU_6.md, A.2 và C)."""
+"""Kiểm src/outliers.py (docs/tasks/NHIEM_VU_6.md, A.2 và C)."""
 import os
 import unittest
 
