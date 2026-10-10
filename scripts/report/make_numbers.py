@@ -374,8 +374,9 @@ def repro(M):
     sel = D.read_json("sgd_lr/selection.json")
     M.put(name("Repro", "SgdLrWallHours"), fnum(sel["wall_seconds_last_call"] / 3600, 1))
     import subprocess
-    head = subprocess.run(["git", "rev-parse", "--short=7", "HEAD"], cwd=D.ROOT, capture_output=True,
-                          text=True).stdout.strip() or "?"
+    # commit cuối cùng đổi results/ (không dùng HEAD, để sinh lại không tạo khác biệt ở mỗi commit)
+    head = subprocess.run(["git", "log", "-1", "--format=%h", "--abbrev=7", "--", "results"], cwd=D.ROOT,
+                          capture_output=True, text=True).stdout.strip() or "?"
     M.put(name("Repro", "Head"), rf"\texttt{{{head}}}")
 
 
