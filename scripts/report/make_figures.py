@@ -8,6 +8,8 @@ H1 chép từ notebooks/01_three_predictions.ipynb), với cùng dữ liệu đ�
 - bỏ tiêu đề chung (suptitle), vì chú thích hình nằm trong LaTeX;
 - cùng phông (DejaVu Sans, có dấu tiếng Việt) và cỡ chữ cho mọi hình.
 """
+import contextlib
+import io
 import json
 import sys
 from pathlib import Path
@@ -47,6 +49,7 @@ def _redirect(self, fname, *a, **kw):
     out = FIG / NAMES[name]
     kw.pop("dpi", None)
     kw.setdefault("bbox_inches", "tight")
+    kw.setdefault("metadata", {"CreationDate": None})           # PDF giống hệt nhau giữa các lần sinh
     _orig_savefig(self, out, *a, format="pdf", **kw)
     written.append(out)
 
@@ -106,14 +109,60 @@ def h1():
     plt.close(fig)
 
 
-def h2_h4_h5():
+def _nv7_summary():
+    return json.loads((ROOT / "results" / "nv7" / "summary.json").read_text(encoding="utf-8"))
+
+
+def h2():
     import report_nv7 as N
-    N.figure_h2_v2()                                              # H2 (MSE test, MAE test)
-    summ = json.loads((ROOT / "results" / "nv7" / "summary.json").read_text(encoding="utf-8"))
-    N.figure_sensitivity(summ["A_sensitivity"])                   # H4
+    N.figure_h2_v2()                                              # MSE test và MAE test
+
+
+def h4():
+    import report_nv7 as N
+    N.figure_sensitivity(_nv7_summary()["A_sensitivity"])
+
+
+def h5():
+    import report_nv7 as N
     rows = (N.read(ROOT / "results" / "outliers_mag" / "results_v2.csv")
             + N.read(N.HM / "outliers" / "results_v2.csv") + N.read(N.HM / "results_v2.csv"))
-    N.figure_c(N.Sel(N.index(rows)), summ["C"]["values"])         # H5
+    N.figure_c(N.Sel(N.index(rows)), _nv7_summary()["C"]["values"])
+
+
+def h2_h4_h5():
+    h2()
+    h4()
+    h5()
+
+
+def capture(fn):
+    """Gọi một hàm vẽ (h1, h2, h3, h4, h5), giữ lại các Figure thay vì ghi file. Dùng trong notebook 02, 03."""
+    figs = []
+
+    def keep(self, fname, *a, **kw):
+        figs.append(self)
+
+    plt.rcParams.update(STYLE)
+    Figure.savefig = keep
+    try:
+        with contextlib.redirect_stdout(io.StringIO()):     # các hàm vẽ cũ in đường dẫn results/ không còn đúng
+            fn()
+    finally:
+        Figure.savefig = _orig_savefig
+    return figs
+
+
+def capture_png(fn, dpi=100):
+    """Như capture nhưng trả ảnh PNG (bytes), hiển thị được trong notebook dù backend là Agg."""
+
+    out = []
+    for fig in capture(fn):
+        buf = io.BytesIO()
+        _orig_savefig(fig, buf, format="png", dpi=dpi, bbox_inches="tight")
+        out.append(buf.getvalue())
+        plt.close(fig)
+    return out
 
 
 def h3():
@@ -129,11 +178,14 @@ def main():
     plt.rcParams.update(STYLE)
     Figure.savefig = _redirect
     try:
-        h1()
+        with contextlib.redirect_stdout(io.StringIO()):
+            h1()
         plt.rcParams.update(STYLE)
-        h2_h4_h5()
+        with contextlib.redirect_stdout(io.StringIO()):
+            h2_h4_h5()
         plt.rcParams.update(STYLE)
-        h3()
+        with contextlib.redirect_stdout(io.StringIO()):
+            h3()
     finally:
         Figure.savefig = _orig_savefig
     for f in written:
