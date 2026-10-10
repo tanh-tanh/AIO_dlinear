@@ -1,89 +1,86 @@
 # dlinear-objective-lab
 
-So sánh Linear / DLinear / NLinear (LTSF-Linear, Zeng et al., 2023) tại **nghiệm tối ưu tất định** thay vì huấn luyện SGD. Kế hoạch đầy đủ: [docs/outline.docx](docs/outline.docx). Tiến độ so với kế hoạch: [docs/BAO_CAO_TIEN_DO.md](docs/BAO_CAO_TIEN_DO.md). Việc còn lại: [docs/CHECKLIST_CON_LAI.md](docs/CHECKLIST_CON_LAI.md).
+Bài LTSF-Linear (Zeng et al., 2023) cho thấy các mô hình tuyến tính Linear, DLinear, NLinear dự báo chuỗi thời gian dài tốt hơn nhiều mô hình Transformer, nhưng mọi so sánh đều qua huấn luyện bằng SGD. Đề tài này so ba mô hình **tại nghiệm tối ưu tất định**: nghiệm dạng đóng cho MSE (OLS, ridge, NLinear có ràng buộc) và IRLS trên GPU cho MAE, Huber. Ma trận thí nghiệm gồm 3 mô hình × 3 mục tiêu × {λ = 0, λ\*} × 3 dataset (ETTh1, ETTh2, ETTm1) × 4 horizon, cộng outlier nhân tạo và so sánh với SGD nhiều seed. Ba câu hỏi:
+
+- **RQ1:** tại nghiệm tối ưu, khi nào DLinear và NLinear thu về Linear, và khi nào thì không?
+- **RQ2:** hàm mục tiêu (MSE, MAE, Huber) ảnh hưởng thế nào đến sai số test, và mức bền vững với outlier ra sao?
+- **RQ3:** SGD kém nghiệm tối ưu (ridge ở λ\*) bao nhiêu, và khoảng cách thay đổi thế nào theo dataset, horizon?
+
+## Ba kết quả chính
+
+Số lấy từ `report/generated/numbers.tex` (sinh tự động từ `results/`); chi tiết ở báo cáo.
+
+| | Kết quả |
+|---|---|
+| RQ1 | DLinear trùng Linear khi λ = 0 và chỉ tách khi có weight decay (ridge trong metric N⁻¹). Ở λ\*, MSE test của DLinear và Linear chênh không quá **0,0006** trên cả 12 cặp (dataset, H). NLinear (ràng buộc tổng hàng bằng 1) tách ở mọi λ, lợi rõ trên ETTh2 (MSE test −0,029 đến −0,348 so với Linear). |
+| RQ2 | Huấn luyện bằng MAE cho MSE test thấp hơn MSE ở **30/36** ô, thấp nhất trong ba mục tiêu ở 24/36. Huber (δ = 1,345·σ̂_MAD) đứng giữa MSE và MAE ở 28/36 ô. Outlier chỉ ở đích: MAE, Huber đổi MSE test không quá 0,003, MSE tăng tới 0,014; outlier trong chuỗi ở 10% và ±10σ: MSE suy giảm ít nhất. |
+| RQ3 | Sau khi tinh chỉnh learning rate, SGD vẫn kém nghiệm dạng đóng trên test ở **27/36** ô (CI 95%). "SGD tốt hơn thật" chỉ ở 5 ô, đều ETTh2 với Linear/DLinear. DLinear tốt hơn Linear khi huấn luyện bằng SGD: 4/12 ô với lr gốc (đều ETTm1), **0/12** khi tinh chỉnh lr cho cả hai. |
 
 ## Cấu trúc
 
 ```
-├── data/                 ETTh1.csv (ETTh2, ETTm1 chưa có)
-├── src/                  code dùng chung, chỉ numpy trừ models.py và sgd.py
-│   ├── data.py           load_ett / load_etth1, make_windows, make_dataset (gộp 7 kênh)
-│   ├── operators.py      build_P, build_N, make_Z, nlinear_transform, W_eff của DLinear/NLinear
-│   ├── solvers.py        ols, ridge, ridge_pen, lstsq_solver, nlinear_constrained, fit_with_bias, ridge_path
-│   ├── metrics.py        predict, sse, mse, mae (trung bình toàn cục)
-│   ├── models.py         DLinear bằng PyTorch (moving_avg, series_decomp)
-│   └── sgd.py            ETTDataset, evaluate, train_sgd (baseline SGD)
-├── scripts/              runner.py, select_lambda.py (grid); bench_5060ti.py, stopping_check.py, checks_mae.py,
-│                         irls_dtype_check.py (đo đạc và kiểm, xem docs/BAO_CAO_*.md)
-├── tests/                kiểm src/ trên dữ liệu giả và kiểm hồi quy các số trong notebook
-├── notebooks/
-│   ├── 00_dlinear_sgd_baseline.ipynb   (trước là dlinearv2.ipynb)  SGD, ma trận P, dự đoán 1.1–1.3 bản nháp
-│   ├── 00_nlinear_closed_form.ipynb    (trước là Nlinear.ipynb)    pipeline dữ liệu, solver dạng đóng
-│   ├── 01_three_predictions.ipynb      (trước là 01_three_predictions_1.ipynb)  kiểm RQ1 qua module của repo
-│   └── archive/00_dlinear_v1.ipynb     (trước là dlinear.ipynb) bản đầu, thứ tự cell sai, chỉ để tham khảo
-├── checkpoints/          dlinear_sgd_ETTh1_L336_H96.pt (trước là best.pt)
-├── results/              CSV, bảng, hình do notebook sinh ra
-├── third_party/          (tự tạo) nơi clone LTSF-Linear cho notebook 01
-└── docs/                 outline.docx, báo cáo tiến độ
+├── README.md, run_all.sh, requirements.txt, .gitignore
+├── src/                 thư viện: data, operators, solvers (OLS, ridge, NLinear, IRLS), models, sgd, metrics, outliers
+├── tests/               63 test (dữ liệu giả, kiểm hồi quy số của notebook, metric val không chứa phạt)
+├── scripts/
+│   ├── grid/            runner.py (grid), select_lambda.py (λ*), huber_deltas.py (δ_MAD)
+│   ├── sgd/             sgd_etth2.py (SGD như LTSF-Linear, mọi dataset), sgd_lr_tune.py, optim_etth2.py, official_ltsf.py
+│   ├── checks/          đo đạc và các phép kiểm của từng nhiệm vụ (bench, stopping, checks_mae, irls_dtype, compare_cell, …)
+│   └── report/          report_*.py (bảng của từng nhiệm vụ); make_numbers/make_tables/make_figures (báo cáo LaTeX);
+│                        audit_numbers.py, check_latex.py, run_notebooks.py; report_data.py (đọc results/)
+├── notebooks/           00_* (baseline, solver dạng đóng), 01_three_predictions (RQ1), 02_loss_comparison (RQ2),
+│                        03_outliers_and_sgd (RQ3); archive/ (bản cũ, không chạy lại)
+├── results/             mọi kết quả, xem results/README.md (weights/ và .npy lớn không commit)
+├── report/              báo cáo LaTeX theo template AIO2026, xem report/README.md
+├── docs/                tasks/ (NHIEM_VU_*), reports/ (BAO_CAO_*: báo cáo kỹ thuật), plan/, NHAT_KY_THAY_DOI.md,
+│                        DUONG_DAN_CU.md (đường dẫn cũ → mới), outline.docx; refs/ (PDF, không commit)
+├── checkpoints/         checkpoint DLinear SGD của notebook 00
+├── data/                ETTh1.csv, ETTh2.csv, ETTm1.csv
+└── third_party/         LTSF-Linear (git submodule, ghim commit 0c11366)
 ```
 
-Các notebook giữ nguyên code và output đã chạy, chỉ sửa đường dẫn cho vị trí mới (chạy với thư mục làm việc là `notebooks/`). Notebook mới nên import từ `src/` thay vì chép hàm:
+## Cài đặt
 
-```python
-import sys; sys.path.insert(0, "..")
-from src.data import load_ett, make_dataset
-from src.solvers import fit_with_bias, ols, ridge
-```
-
-## Chạy
+Đã kiểm với Python 3.13.5. Cài **torch trước**, đúng bản CUDA của GPU, rồi mới cài phần còn lại (xem chú thích trong `requirements.txt`):
 
 ```bash
+python -m venv .venv && source .venv/bin/activate        # Windows/Git Bash: source .venv/Scripts/activate
+pip install torch==2.14.0 --index-url https://download.pytorch.org/whl/cu130   # RTX 50xx (Blackwell, CUDA ≥ 12.8)
+# hoặc, không có GPU NVIDIA:  pip install torch==2.14.0 --index-url https://download.pytorch.org/whl/cpu
 pip install -r requirements.txt
+git submodule update --init                               # LTSF-Linear, cho notebook 01 và official_ltsf.py
+pip install nbclient nbformat ipykernel                   # tùy chọn: chạy notebook bằng scripts/report/run_notebooks.py
 ```
+
+Grid (`scripts/grid/runner.py`) cần GPU CUDA. SGD chạy trên CPU. Test, notebook 02, 03 và việc sinh bảng, hình không cần GPU.
+
+## Tái lập
 
 ```bash
-python -m unittest discover -s tests -t . -v
+./run_all.sh quick     # venv, 63 test, chạy lại grid ETTh1 H = 96 và so với results/, sinh lại số/bảng/hình, biên dịch báo cáo
+./run_all.sh full      # chạy lại toàn bộ thí nghiệm theo thứ tự (khoảng 15 giờ GPU cho grid, thêm vài giờ GPU, vài giờ CPU)
+./run_all.sh full --dry-run   # chỉ in các lệnh
 ```
 
-Notebook 01 cần mã nguồn LTSF-Linear để nạp đúng module `DLinear` / `NLinear` của repo:
+`VENV=.venv-gpu ./run_all.sh` dùng một venv có sẵn; `TORCH_INDEX=…/whl/cpu` cài torch bản CPU. Chạy được trên Linux, macOS và Windows qua Git Bash. Trên Windows, bước 3 của `quick` cần GPU NVIDIA; không có GPU thì bước này tự bỏ qua. Bước 5 cần `latexmk` và `pdflatex`; không có thì bỏ qua.
 
-```bash
-git clone https://github.com/cure-lab/LTSF-Linear third_party/LTSF-Linear
-```
+- Chỉ mục mọi bảng, hình, thư mục kết quả và script sinh ra chúng: [results/README.md](results/README.md).
+- Các báo cáo kỹ thuật cũ dùng đường dẫn trước khi dọn repo; tra [docs/DUONG_DAN_CU.md](docs/DUONG_DAN_CU.md).
 
-## Chạy grid
+## Báo cáo
 
-Cần GPU CUDA (đã kiểm trên RTX 5060 Ti 16 GB, torch 2.14.0+cu130; xem `requirements.txt`). Cả grid ước lượng **khoảng 19 giờ**: ETTh1 3,0 giờ, ETTh2 3,2 giờ, ETTm1 12,9 giờ. MAE chiếm gần hết (docs/BAO_CAO_TIEU_CHI_DUNG.md). Commit trước khi chạy, để cột `git_commit` có nghĩa.
-
-```bash
-export PYTHONIOENCODING=utf-8
-python scripts/runner.py --dry-run                   # danh sách việc còn lại và ước lượng thời gian
-python scripts/runner.py                             # toàn bộ grid → results/lambda_path.csv, results/weights/
-python scripts/runner.py --data ETTh1 ETTh2          # hoặc từng phần; lọc thêm bằng --H, --model, --objective
-```
-
-**Chạy tiếp sau gián đoạn:** chạy lại đúng lệnh cũ.
-
-- Mỗi dòng (dataset, H, mô hình, mục tiêu, λ) được ghi và `flush` ngay khi xong, kèm W ở `results/weights/`, nên các khóa đã có trong `results/lambda_path.csv` sẽ được bỏ qua.
-- Warm start đọc W của λ liền trước từ `results/weights/`, nên đừng xóa thư mục này giữa chừng. Thư mục khoảng 1,9 GB, không commit.
-
-**Chọn λ\*** (theo validation, không bao giờ theo test) và sinh bảng kết quả:
-
-```bash
-python scripts/select_lambda.py                      # → results/results.csv
-```
-
-`results.csv` có hai cách chọn (cột `selection`):
-
-- `val_objective`: metric val của chính mục tiêu huấn luyện.
-- `val_mse`: val MSE cho mọi mục tiêu.
-
-Mỗi cách chọn gồm 216 ô: 3 mô hình × 3 mục tiêu × {λ = 0, λ\*} × 3 dataset × 4 horizon. Cột `lam_at_edge` báo λ\* nằm ở đầu mút lưới.
+- Báo cáo cuối (LaTeX): `report/main.tex` → `report/build/main.pdf` (biên dịch theo [report/README.md](report/README.md)).
+- Báo cáo kỹ thuật theo từng nhiệm vụ: [docs/reports/](docs/reports/), mới nhất là [BAO_CAO_NV7.md](docs/reports/BAO_CAO_NV7.md) và [BAO_CAO_NV8.md](docs/reports/BAO_CAO_NV8.md).
+- Nhật ký thay đổi code: [docs/NHAT_KY_THAY_DOI.md](docs/NHAT_KY_THAY_DOI.md).
 
 ## Quy ước
 
-- λ phạt trên **tổng** bình phương lỗi: `‖Y − XWᵀ‖² + λ‖W‖²`, không phạt bias. Tương ứng `weight_decay ≈ 2λ/(n·H)` của PyTorch khi loss là MSE trung bình.
-- MAE/Huber (`irls`) dùng cùng kiểu tổng: MAE là `Σ|r| + λ‖W‖²`, Huber là `Σ ρ_δ(r)/δ + λ‖W‖²` (ρ_δ = r²/2 trong ngưỡng δ). Không phạt bias. DLinear có weight decay dùng `pen = N⁻¹`, giống `ridge_pen`.
-- NLinear có weight decay phạt L − 1 hệ số đầu của W_eff, không phạt lag cuối: `irls(..., constrained=True, pen=diag(1, …, 1, 0))`. Với MSE, cách này bằng ridge trên chuỗi đã trừ giá trị cuối.
+- λ phạt trên **tổng** bình phương lỗi: `‖Y − XWᵀ‖² + λ‖W‖²`, không phạt bias; tương ứng `weight_decay ≈ 2λ/(n·H)` của PyTorch khi loss là MSE trung bình.
+- MAE, Huber (`irls`) dùng cùng kiểu tổng: MAE là `Σ|r| + λ‖W‖²`, Huber là `Σ ρ_δ(r)/δ + λ‖W‖²`. DLinear có weight decay dùng `pen = N⁻¹`; NLinear phạt L − 1 hệ số đầu của W_eff.
 - Mọi mô hình dùng chung trọng số cho 7 kênh (`individual=False`), chuẩn hóa từng kênh bằng mean/std của train, giống baseline SGD.
-- λ chỉ chọn trên validation.
+- λ, δ, learning rate và epoch chỉ chọn trên validation. MSE test báo ở λ\*_MSE (argmin MSE val), MAE test ở λ\*_MAE.
+
+## Trích dẫn
+
+- Zeng, A., Chen, M., Zhang, L., Xu, Q. *Are Transformers Effective for Time Series Forecasting?* AAAI 2023. Code: https://github.com/cure-lab/LTSF-Linear
+- Dữ liệu ETT: Zhou, H. et al. *Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting.* AAAI 2021. https://github.com/zhouhaoyi/ETDataset
