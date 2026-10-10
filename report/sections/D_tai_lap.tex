@@ -1,0 +1,35 @@
+\section{Tái lập}
+\label{app:repro}
+
+\subsection{Môi trường và phần cứng}
+
+\begin{itemize}
+    \item Python 3.13.5; numpy 2.3.1, pandas 2.3.1, scipy 1.18.1, matplotlib 3.11.0 (\texttt{requirements.txt}).
+    \item PyTorch 2.14.0. Bản \texttt{+cu130} cho GPU RTX 50xx (Blackwell cần CUDA $\ge$ 12.8); bản CPU nếu không có GPU. Cài torch \emph{trước} \texttt{requirements.txt}, xem \texttt{README.md}.
+    \item GPU (grid, IRLS): NVIDIA RTX 5060 Ti 16 GB, driver 616.92, TF32 tắt. CPU (SGD): Intel 12 luồng. Hệ điều hành Windows 11; lệnh chạy qua Git Bash.
+\end{itemize}
+
+\subsection{Lệnh}
+
+\begin{aivncodebox}[Tái lập]
+\begin{python}
+git clone --recurse-submodules <repo> && cd dlinear-objective-lab
+./run_all.sh quick   # test, chạy lại một ô grid để kiểm, sinh bảng, hình, số, biên dịch báo cáo
+./run_all.sh full    # chạy lại toàn bộ thí nghiệm (nhiều giờ GPU và CPU)
+\end{python}
+\end{aivncodebox}
+
+Chế độ \texttt{quick} chạy lại toàn bộ grid của ETTh1 $H = 96$ (3 mô hình, 3 mục tiêu) vào một thư mục tạm, rồi so với \texttt{results/lambda\_path.csv} bằng \texttt{scripts/checks/compare\_cell.py}. Ngưỡng là $10^{-10}$ với MSE và $10^{-8}$ với MAE, Huber. Trên máy ở trên, bước này mất khoảng \nmReproCheckCellMinutes{} phút. Chế độ \texttt{full} chạy theo đúng thứ tự các nhiệm vụ: grid, $\lambda^*$, Huber $\dmad$, outlier, SGD, tinh chỉnh lr. Các lệnh chi tiết của từng bước nằm trong mục ``Tái lập'' của từng báo cáo kỹ thuật ở \texttt{docs/reports/}. Đường dẫn cũ trong các báo cáo đó tra ở \texttt{docs/DUONG\_DAN\_CU.md}.
+
+\subsection{Thời gian chạy đã đo}
+
+\begin{itemize}
+    \item Grid (MSE dạng đóng, MAE và Huber $\delta = 1$ bằng IRLS, GPU): \nmReproGridHours{} giờ, gồm ETTh1 \nmReproGridHoursETThOne, ETTh2 \nmReproGridHoursETThTwo{} và ETTm1 \nmReproGridHoursETTmOne{} giờ. MAE chiếm gần hết thời gian.
+    \item Grid Huber $\dmad$ (GPU): \nmReproHuberMadHours{} giờ.
+    \item SGD với lr gốc (CPU, tổng thời gian của các lần chạy, 20 seed): \nmReproSgdCpuHours{} giờ.
+    \item Tinh chỉnh lr (CPU, 5 tiến trình song song): \nmReproSgdLrWallHours{} giờ thời gian thực.
+\end{itemize}
+
+\subsection{Phiên bản}
+
+Các bảng, hình và số trong báo cáo được sinh từ commit \nmReproHead. Mỗi dòng trong các file \texttt{lambda\_path.csv} và mỗi JSON của SGD ghi commit đã sinh ra nó (cột \texttt{git\_commit}). LTSF-Linear được ghim ở commit \texttt{0c11366} qua git submodule.

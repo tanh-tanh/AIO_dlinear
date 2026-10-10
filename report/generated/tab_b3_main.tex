@@ -1,0 +1,57 @@
+% Tự động sinh bởi scripts/report/make_tables.py từ results/. KHÔNG SỬA TAY.
+\begin{longtable}{@{}llr rrr rrr@{}}
+\toprule
+ & & & \multicolumn{3}{c}{MSE test ở $\lambda^*_{\mathrm{MSE}}$} & \multicolumn{3}{c}{MAE test ở $\lambda^*_{\mathrm{MAE}}$} \\
+\cmidrule(lr){4-6}\cmidrule(l){7-9}
+Dataset & Mô hình & $H$ & MSE & MAE & Huber & MSE & MAE & Huber \\
+\midrule
+\endhead
+ETTh1 & Linear & 96 & {,}702 & \textbf{{,}653} & {,}658 & {,}915 & \textbf{{,}833} & {,}852 \\
+ETTh1 & Linear & 192 & {,}040 & {,}031 & \textbf{{,}025} & {,}126 & \textbf{{,}074} & {,}082 \\
+ETTh1 & Linear & 336 & {,}324 & {,}302 & \textbf{{,}296} & {,}340 & \textbf{{,}275} & {,}285 \\
+ETTh1 & Linear & 720 & {,}701 & \textbf{{,}553} & {,}624 & {,}878 & \textbf{{,}747} & {,}767 \\
+\addlinespace[2pt]
+ETTh1 & DLinear & 96 & {,}698 & \textbf{{,}647} & {,}652 & {,}914 & \textbf{{,}832} & {,}851 \\
+ETTh1 & DLinear & 192 & {,}036 & \textbf{{,}014} & {,}017 & {,}125 & \textbf{{,}074} & {,}080 \\
+ETTh1 & DLinear & 336 & {,}317 & {,}296 & \textbf{{,}290} & {,}340 & \textbf{{,}272} & {,}285 \\
+ETTh1 & DLinear & 720 & {,}697 & \textbf{{,}549} & {,}620 & {,}879 & \textbf{{,}746} & {,}766 \\
+\addlinespace[2pt]
+ETTh1 & NLinear & 96 & {,}695 & \textbf{{,}638} & {,}656 & {,}913 & \textbf{{,}839} & {,}860 \\
+ETTh1 & NLinear & 192 & {,}027 & {,}026 & \textbf{{,}024} & {,}110 & \textbf{{,}075} & {,}084 \\
+ETTh1 & NLinear & 336 & \textbf{{,}261} & {,}290 & {,}307 & {,}260 & \textbf{{,}237} & {,}246 \\
+ETTh1 & NLinear & 720 & {,}329 & \textbf{{,}282} & {,}329 & {,}505 & \textbf{{,}454} & {,}468 \\
+\addlinespace[2pt]
+\midrule
+ETTh2 & Linear & 96 & {,}009 & \textbf{{,}779} & {,}818 & {,}649 & \textbf{{,}334} & {,}410 \\
+ETTh2 & Linear & 192 & {,}966 & \textbf{{,}531} & {,}600 & {,}273 & \textbf{{,}855} & {,}945 \\
+ETTh2 & Linear & 336 & {,}853 & \textbf{{,}106} & {,}220 & {,}835 & \textbf{{,}296} & {,}400 \\
+ETTh2 & Linear & 720 & {,}404 & \textbf{{,}893} & {,}277 & {,}115 & \textbf{{,}335} & {,}541 \\
+\addlinespace[2pt]
+ETTh2 & DLinear & 96 & {,}008 & \textbf{{,}778} & {,}817 & {,}649 & \textbf{{,}333} & {,}410 \\
+ETTh2 & DLinear & 192 & {,}966 & \textbf{{,}531} & {,}600 & {,}273 & \textbf{{,}855} & {,}945 \\
+ETTh2 & DLinear & 336 & {,}853 & \textbf{{,}106} & {,}220 & {,}835 & \textbf{{,}296} & {,}400 \\
+ETTh2 & DLinear & 720 & {,}403 & \textbf{{,}892} & {,}276 & {,}115 & \textbf{{,}335} & {,}541 \\
+\addlinespace[2pt]
+ETTh2 & NLinear & 96 & \textbf{{,}717} & {,}764 & {,}756 & {,}342 & {,}307 & \textbf{{,}306} \\
+ETTh2 & NLinear & 192 & \textbf{{,}336} & {,}447 & {,}427 & {,}754 & {,}756 & \textbf{{,}744} \\
+ETTh2 & NLinear & 336 & \textbf{{,}581} & {,}760 & {,}727 & \textbf{{,}997} & {,}028 & {,}008 \\
+ETTh2 & NLinear & 720 & {,}924 & {,}926 & \textbf{{,}912} & {,}341 & \textbf{{,}242} & {,}251 \\
+\addlinespace[2pt]
+\midrule
+ETTm1 & Linear & 96 & {,}992 & \textbf{{,}929} & {,}953 & {,}427 & \textbf{{,}331} & {,}362 \\
+ETTm1 & Linear & 192 & {,}340 & \textbf{{,}322} & {,}327 & {,}637 & \textbf{{,}553} & {,}578 \\
+ETTm1 & Linear & 336 & {,}683 & \textbf{{,}658} & {,}661 & {,}843 & \textbf{{,}759} & {,}782 \\
+ETTm1 & Linear & 720 & {,}232 & {,}216 & \textbf{{,}210} & {,}181 & \textbf{{,}101} & {,}120 \\
+\addlinespace[2pt]
+ETTm1 & DLinear & 96 & {,}992 & \textbf{{,}929} & {,}952 & {,}427 & \textbf{{,}331} & {,}362 \\
+ETTm1 & DLinear & 192 & {,}339 & \textbf{{,}319} & {,}326 & {,}637 & \textbf{{,}553} & {,}578 \\
+ETTm1 & DLinear & 336 & {,}683 & \textbf{{,}655} & {,}660 & {,}843 & \textbf{{,}759} & {,}782 \\
+ETTm1 & DLinear & 720 & {,}232 & {,}213 & \textbf{{,}208} & {,}181 & \textbf{{,}101} & {,}121 \\
+\addlinespace[2pt]
+ETTm1 & NLinear & 96 & {,}004 & \textbf{{,}937} & {,}964 & {,}426 & \textbf{{,}337} & {,}367 \\
+ETTm1 & NLinear & 192 & {,}356 & \textbf{{,}335} & {,}345 & {,}634 & \textbf{{,}563} & {,}585 \\
+ETTm1 & NLinear & 336 & {,}703 & \textbf{{,}685} & {,}691 & {,}834 & \textbf{{,}770} & {,}790 \\
+ETTm1 & NLinear & 720 & \textbf{{,}262} & {,}270 & {,}264 & {,}157 & \textbf{{,}113} & {,}126 \\
+\addlinespace[2pt]
+\bottomrule
+\end{longtable}

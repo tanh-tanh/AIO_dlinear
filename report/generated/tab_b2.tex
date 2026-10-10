@@ -1,0 +1,10 @@
+% Tự động sinh bởi scripts/report/make_tables.py từ results/. KHÔNG SỬA TAY.
+\begin{tabular}{@{}p{0.2\linewidth}p{0.36\linewidth}p{0.36\linewidth}@{}}
+\toprule
+ & $\lambda = 0$ & $\lambda > 0$ \\
+\midrule
+DLinear so với Linear & \textbf{Trùng} với cả 4 kernel $k$: $\operatorname{rank} Z = 336/672$; $\|\Delta W\|/\|W\| \le 5\cdot 10^{-13}$; gradient qua module $\approx 6\cdot 10^{-15}$ lần lúc khởi tạo. & \textbf{Tách}, mức tách tăng theo $k$. Tại $\lambda = 10^4$, $k = 5/15/25/49$: $\|\Delta W\|/\|W\| = {,}2/{,}9/{,}8/{,}7$; không $\lambda'$ nào của Linear xóa được phần tách. \\
+\addlinespace
+NLinear so với Linear & \textbf{Tách}: $\|\Delta W\|_F = {,}694$; RMS chênh dự báo test ${,}514$. & \textbf{Tách}, tăng theo $\lambda$: RMS chênh ${,}69$ ($\lambda = 10^4$) đến ${,}73$ ($\lambda = 10^8$). \\
+\bottomrule
+\end{tabular}

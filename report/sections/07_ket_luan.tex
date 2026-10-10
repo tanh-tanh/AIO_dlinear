@@ -1,0 +1,8 @@
+\section{Kết luận}
+\label{sec:conclusion}
+
+\paragraph{RQ1.} Tại nghiệm tối ưu, DLinear thu về đúng Linear khi không có weight decay, vì hai nhánh xu hướng và mùa vụ cộng lại bằng chính đầu vào. Với weight decay, DLinear là ridge trong metric $N^{-1}$ phụ thuộc kernel, nên tách khỏi Linear, nhưng ở $\lambda^*$ chọn trên val mức tách trên test không quá \nmBThreeDLinMinusLinAllAbsMax. NLinear là Linear có ràng buộc tổng hàng bằng $1$, nên tách ở mọi $\lambda$. Ràng buộc này có lợi rõ trên ETTh2. Lợi thế của DLinear so với Linear trong các bảng công bố không xuất hiện ở nghiệm tối ưu, và khi huấn luyện bằng SGD thì biến mất sau khi tinh chỉnh learning rate.
+
+\paragraph{RQ2.} Trên dữ liệu gốc, huấn luyện bằng MAE cho MSE test thấp hơn huấn luyện bằng MSE ở \nmBThreeMaeBeatsMseTotalCount/\nmBThreeCellCount{} ô. Lợi thế lớn nhất ở ETTh2, nơi các đoạn cảm biến bị kẹt góp khoảng một nửa; NLinear trên ETTh2 là ngoại lệ. Huber với $\delta$ theo thang phần dư đứng giữa MSE và MAE ở phần lớn ô. MAE và Huber bền vững với outlier chỉ nằm ở đích. Khi outlier nằm trong chuỗi, chúng mất lợi thế khi outlier vừa nhiều vừa lớn.
+
+\paragraph{RQ3.} SGD với siêu tham số gốc kém nghiệm tối ưu trên test ở mọi ô của ETTh1 và ETTm1. Tinh chỉnh learning rate trên val không đóng được khoảng cách: SGD vẫn kém ở \nmTunedWorseSigCount/36 ô (có ý nghĩa thống kê). Ngoại lệ là ETTh2 với Linear và DLinear, nơi SGD tốt hơn nghiệm tối ưu trên cả val lẫn test mà chưa rõ cơ chế. Các chênh lệch lớn giữa DLinear và Linear ở $H = 720$ trong bảng công bố nằm trong nhiễu theo seed của SGD.

@@ -1,0 +1,49 @@
+% Tự động sinh bởi scripts/report/make_tables.py từ results/. KHÔNG SỬA TAY.
+{\footnotesize
+\begin{longtable}{@{}lrl l l l l@{}}
+\toprule
+Dataset & $H$ & Mô hình & $\Delta$ test, lr gốc [CI 95\%] & nhãn (lr gốc) & lr & $\Delta$ test, tinh chỉnh [CI 95\%]; nhãn \\
+\midrule
+\endhead
+ETTh1 & 96 & Linear & +{,}083 [{,}033; {,}133] & SGD khớp val quá mức & $\times$4 & +{,}060 [{,}029; {,}091]; SGD khớp val quá mức \\
+ETTh1 & 96 & DLinear & +{,}067 [{,}041; {,}094] & SGD khớp val quá mức & $\times$1 & +{,}067 [{,}034; {,}100]; SGD khớp val quá mức \\
+ETTh1 & 96 & NLinear & +{,}084 [{,}050; {,}118] & val khác test & $\times$4 & +{,}067 [{,}037; {,}097]; SGD khớp val quá mức \\
+ETTh1 & 192 & Linear & +{,}211 [{,}107; {,}315] & SGD khớp val quá mức & $\times$8 & +{,}216 [{,}057; {,}374]; val khác test \\
+ETTh1 & 192 & DLinear & +{,}110 [{,}039; {,}181] & SGD khớp val quá mức & $\times$2 & +{,}075 [{,}038; {,}111]; val khác test \\
+ETTh1 & 192 & NLinear & +{,}078 [{,}028; {,}127] & val khác test & $\times$4 & +{,}084 [$-${,}004; {,}173]; không phân biệt được \\
+ETTh1 & 336 & Linear & +{,}229 [{,}141; {,}318] & SGD khớp val quá mức & $\times$1 & +{,}259 [{,}142; {,}375]; SGD khớp val quá mức \\
+ETTh1 & 336 & DLinear & +{,}256 [{,}105; {,}406] & SGD khớp val quá mức & $\times${,} & +{,}222 [{,}074; {,}371]; SGD khớp val quá mức \\
+ETTh1 & 336 & NLinear & +{,}059 [{,}039; {,}078] & dạng đóng tốt hơn thật & $\times$2 & +{,}039 [{,}024; {,}055]; val khác test \\
+ETTh1 & 720 & Linear & +{,}363 [{,}193; {,}532] & SGD khớp val quá mức & $\times${,} & +{,}290 [{,}178; {,}402]; SGD khớp val quá mức \\
+ETTh1 & 720 & DLinear & +{,}400 [{,}214; {,}585] & val khác test & $\times$8 & +{,}198 [{,}100; {,}296]; val khác test \\
+ETTh1 & 720 & NLinear & +{,}034 [{,}027; {,}041] & dạng đóng tốt hơn thật & $\times$2 & +{,}025 [{,}022; {,}028]; dạng đóng tốt hơn thật \\
+\addlinespace[2pt]
+ETTh2 & 96 & Linear & $-${,}041 [$-${,}130; {,}049] & SGD khớp val quá mức & $\times$1 & $-${,}020 [$-${,}136; {,}095]; không phân biệt được \\
+ETTh2 & 96 & DLinear & $-${,}095 [$-${,}123; $-${,}067] & SGD tốt hơn thật & $\times$1 & $-${,}083 [$-${,}111; $-${,}054]; SGD tốt hơn thật \\
+ETTh2 & 96 & NLinear & +{,}053 [{,}039; {,}067] & dạng đóng tốt hơn thật & $\times${,} & +{,}052 [{,}036; {,}068]; dạng đóng tốt hơn thật \\
+ETTh2 & 192 & Linear & $-${,}005 [$-${,}226; {,}216] & không phân biệt được & $\times$4 & $-${,}025 [$-${,}280; {,}230]; không phân biệt được \\
+ETTh2 & 192 & DLinear & $-${,}159 [$-${,}227; $-${,}091] & SGD tốt hơn thật & $\times${,} & $-${,}220 [$-${,}301; $-${,}138]; SGD tốt hơn thật \\
+ETTh2 & 192 & NLinear & +{,}108 [{,}079; {,}137] & val khác test & $\times${,} & +{,}131 [{,}089; {,}173]; val khác test \\
+ETTh2 & 336 & Linear & $-${,}357 [$-${,}470; $-${,}245] & SGD tốt hơn thật & $\times$1 & $-${,}345 [$-${,}476; $-${,}215]; SGD tốt hơn thật \\
+ETTh2 & 336 & DLinear & $-${,}325 [$-${,}438; $-${,}212] & SGD tốt hơn thật & $\times$1 & $-${,}338 [$-${,}469; $-${,}207]; SGD tốt hơn thật \\
+ETTh2 & 336 & NLinear & +{,}223 [{,}123; {,}322] & val khác test & $\times${,} & +{,}191 [{,}106; {,}275]; val khác test \\
+ETTh2 & 720 & Linear & $-${,}437 [$-${,}663; $-${,}211] & SGD tốt hơn thật & $\times${,} & $-${,}314 [$-${,}750; {,}122]; không phân biệt được \\
+ETTh2 & 720 & DLinear & $-${,}534 [$-${,}811; $-${,}257] & SGD tốt hơn thật & $\times$1 & $-${,}507 [$-${,}805; $-${,}209]; SGD tốt hơn thật \\
+ETTh2 & 720 & NLinear & +{,}134 [{,}047; {,}221] & val khác test & $\times${,} & +{,}159 [{,}086; {,}232]; val khác test \\
+\addlinespace[2pt]
+ETTm1 & 96 & Linear & +{,}065 [{,}056; {,}074] & dạng đóng tốt hơn thật & $\times$8 & +{,}022 [{,}008; {,}036]; SGD khớp val quá mức \\
+ETTm1 & 96 & DLinear & +{,}025 [{,}016; {,}033] & val khác test & $\times$2 & +{,}025 [{,}011; {,}039]; SGD khớp val quá mức \\
+ETTm1 & 96 & NLinear & +{,}086 [{,}067; {,}106] & dạng đóng tốt hơn thật & $\times$8 & +{,}047 [{,}026; {,}068]; SGD khớp val quá mức \\
+ETTm1 & 192 & Linear & +{,}062 [{,}056; {,}067] & dạng đóng tốt hơn thật & $\times$8 & +{,}031 [{,}015; {,}048]; SGD khớp val quá mức \\
+ETTm1 & 192 & DLinear & +{,}030 [{,}022; {,}037] & SGD khớp val quá mức & $\times$2 & +{,}022 [{,}014; {,}029]; SGD khớp val quá mức \\
+ETTm1 & 192 & NLinear & +{,}080 [{,}067; {,}093] & dạng đóng tốt hơn thật & $\times$4 & +{,}063 [{,}037; {,}089]; val khác test \\
+ETTm1 & 336 & Linear & +{,}086 [{,}074; {,}097] & dạng đóng tốt hơn thật & $\times$8 & +{,}084 [{,}039; {,}128]; SGD khớp val quá mức \\
+ETTm1 & 336 & DLinear & +{,}049 [{,}036; {,}061] & SGD khớp val quá mức & $\times$4 & +{,}064 [{,}032; {,}097]; SGD khớp val quá mức \\
+ETTm1 & 336 & NLinear & +{,}076 [{,}066; {,}087] & dạng đóng tốt hơn thật & $\times$4 & +{,}070 [{,}031; {,}109]; val khác test \\
+ETTm1 & 720 & Linear & +{,}104 [{,}085; {,}122] & SGD khớp val quá mức & $\times$2 & +{,}100 [{,}069; {,}131]; SGD khớp val quá mức \\
+ETTm1 & 720 & DLinear & +{,}057 [{,}044; {,}070] & SGD khớp val quá mức & $\times$2 & +{,}080 [{,}056; {,}104]; SGD khớp val quá mức \\
+ETTm1 & 720 & NLinear & +{,}084 [{,}069; {,}098] & dạng đóng tốt hơn thật & $\times$8 & +{,}048 [{,}019; {,}078]; SGD khớp val quá mức \\
+\addlinespace[2pt]
+\bottomrule
+\end{longtable}
+}

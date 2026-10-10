@@ -1,0 +1,15 @@
+\section{Hạn chế và hướng phát triển}
+\label{sec:limitations}
+
+\TODO{Đối chiếu danh sách dưới đây với 8 hạn chế ở kế hoạch 3.5 mục 2. Repo không có file kế hoạch, nên danh sách được lập từ các báo cáo kỹ thuật trong \texttt{docs/reports/} và outline.}
+
+\begin{enumerate}[label=\arabic*.]
+    \item \label{lim:data}\textbf{Dữ liệu.} Chỉ ba dataset ETT, cùng một nguồn và cùng 7 kênh. Phép kiểm qua module LTSF-Linear và phép quét kernel của RQ1 chỉ chạy ở ETTh1, $H = 96$. Dẫn xuất đại số đúng cho mọi ô, nhưng độ lớn của phần tách theo $k$ chưa đo ở ô khác. \emph{Hướng phát triển:} thêm các dataset khác của LTSF-Linear (Electricity, Traffic, Weather) và quét kernel trên toàn ma trận.
+    \item \label{lim:models}\textbf{Mô hình.} Chỉ mô hình tuyến tính, dùng chung trọng số cho mọi kênh, với $L = 336$ cố định và $k = 25$ trong grid. Kết luận không áp dụng trực tiếp cho biến thể \texttt{individual = True} hay cho mô hình phi tuyến.
+    \item \label{lim:outlier}\textbf{Outlier nhân tạo.} Outlier là điểm cộng $\pm k$ độ lệch chuẩn ở vị trí ngẫu nhiên, chỉ trên ETTh1, chỉ với Linear và NLinear. Thí nghiệm độ lớn chỉ có Linear và một seed. Outlier thật (như các đoạn cảm biến bị kẹt của ETTh2) có cấu trúc khác.
+    \item \label{lim:delta}\textbf{Một $\delta$ chung cho cả ô.} $\hat\sigma$ của phần dư theo từng bước $h$ chênh nhau nhiều trong một ô, nên một $\delta$ chung nằm trong vùng bậc hai với các bước gần và gần vùng tuyến tính với các bước xa. Chưa thử $\delta$ theo từng $h$.
+    \item \label{lim:lr}\textbf{Lưới learning rate.} Tinh chỉnh lr chỉ thử $\times 0{,}5$ đến $\times 8$ lr gốc. \nmTunedLrEdgeCount/\nmTunedLrCellCount{} ô chọn mức ở đầu mút, nên lr tối ưu trên val của các ô này có thể nằm ngoài khoảng đã thử. Lựa chọn lr cũng nhiễu (\nmTunedLrNoisyCount/\nmTunedLrCellCount{} ô có khoảng cách tới mức thứ hai dưới một sai số chuẩn). Chỉ lr được tinh chỉnh; batch, số epoch, patience giữ như script gốc. \emph{Hướng phát triển:} mở rộng lưới lr ở các ô đầu mút (kế hoạch 3.5 mục 4.1; không làm trong phiên cuối).
+    \item \label{lim:etth2}\textbf{Cơ chế trên ETTh2 chưa rõ.} SGD tốt hơn nghiệm tối ưu trên cả val và test ở ETTh2 với Linear và DLinear. Các giải thích đã kiểm (co về trọng số khác $0$, đoạn cảm biến bị kẹt, dừng sớm của gradient descent toàn batch) đều không khớp. Giả thuyết nhiễu đầu vào ở \secref{sec:discussion} cũng chưa được kiểm.
+    \item \label{lim:pipeline}\textbf{Pipeline SGD.} SGD của repo khác code gốc của LTSF-Linear ở vài chi tiết (cách tính val, thứ tự lấy số ngẫu nhiên). Tính tương đương với code gốc mới được kiểm ở ETTh2, $H = 720$. Vì vậy chưa quy được các ô B1 có số công bố thấp hơn mọi seed cho may rủi theo seed.
+    \item \label{lim:irls}\textbf{Độ chính xác của IRLS.} IRLS dừng theo ngưỡng giảm tương đối của hàm mục tiêu, nên nghiệm MAE là xấp xỉ. Trên ETTh1 $H = 96$, nghiệm từ ba điểm khởi tạo có cùng hàm mục tiêu tới sai số rất nhỏ, nhưng trọng số còn khác nhau do dừng sớm (Phụ lục~\ref{app:irls}). MAE được tính qua Huber với $\delta = 10^{-6}$, tức một bản làm trơn của MAE.
+\end{enumerate}

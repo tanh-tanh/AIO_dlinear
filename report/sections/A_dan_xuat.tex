@@ -1,0 +1,57 @@
+\section{Dẫn xuất ba dự đoán của RQ1}
+\label{app:derivation}
+
+\paragraph{Ký hiệu.} $X \in \mathbb{R}^{n \times L}$, $Y \in \mathbb{R}^{n \times H}$ là đầu vào và đích train. Bias không bị phạt nên có thể loại bằng cách trừ trung bình: với mọi $\Weff$, bias tối ưu là $b = \bar y - \Weff \bar x$. Vì vậy từ đây giả sử $X$, $Y$ đã được trừ trung bình theo cột, và đặt $A = X^\top X$, $C = X^\top Y$. Giả sử $A \succ 0$ (đúng trên cả ba dataset, vì $n \gg L$). Hàm mục tiêu MSE có phạt của Linear là
+\begin{equation}
+    J(W) = \|Y - X W^\top\|_F^2 + \lambda \operatorname{tr}(W\, \mathrm{Pen}\, W^\top),
+\end{equation}
+với nghiệm $W^\top = (A + \lambda\, \mathrm{Pen})^{-1} C$.
+
+\subsection{Dự đoán 1: DLinear trùng Linear khi \texorpdfstring{$\lambda = 0$}{lambda = 0}}
+
+\textbf{Mệnh đề.} Với mọi kernel $k$, tập các ánh xạ $\{\Weff = W_t P + W_s (I - P)\}$ của DLinear bằng toàn bộ $\mathbb{R}^{H \times L}$. Do đó, khi $\lambda = 0$, cực tiểu của DLinear và của Linear có cùng giá trị hàm mục tiêu và cùng $\Weff$.
+
+\textbf{Chứng minh.} Với mọi $W \in \mathbb{R}^{H \times L}$, chọn $W_t = W_s = W$ thì $\Weff = WP + W(I - P) = W$. Vậy mọi ánh xạ của Linear đều đạt được bằng DLinear; chiều ngược lại hiển nhiên. Khi $\lambda = 0$, hàm mục tiêu chỉ phụ thuộc $(\Weff, b)$. Hai bài toán vì vậy có cùng tập giá trị và cùng cực tiểu. Vì $A \succ 0$, $\Weff$ tối ưu là duy nhất và bằng $W_{\mathrm{OLS}}$. \hfill$\square$
+
+Về mặt đặc trưng, DLinear hồi quy trên $Z = [X P^\top,\ X (I - P)^\top] \in \mathbb{R}^{n \times 2L}$. Vì $z = (Px, (I-P)x)$ xác định được $x = Px + (I-P)x$ và ngược lại, $\operatorname{rank} Z = \operatorname{rank} X = L$. Đây là con số đo được ở \tabref{tab:b2}. Nghiệm $(W_t, W_s)$ vì vậy không duy nhất, nhưng $\Weff$ thì duy nhất.
+
+\subsection{Dự đoán 2: DLinear tách khỏi Linear khi \texorpdfstring{$\lambda > 0$}{lambda > 0}}
+
+Weight decay của DLinear là $\lambda(\|W_t\|_F^2 + \|W_s\|_F^2)$.
+
+\textbf{Mệnh đề.} Đặt $N = P^\top P + (I - P)^\top (I - P)$. Khi đó (i) $N \succeq \tfrac12 I$; (ii) với $\Weff$ cố định,
+\begin{equation}
+    \min_{W_t P + W_s (I-P) = \Weff} \|W_t\|_F^2 + \|W_s\|_F^2 = \operatorname{tr}(\Weff N^{-1} \Weff^\top);
+\end{equation}
+(iii) DLinear có weight decay là ridge với $\mathrm{Pen} = N^{-1}$, tức $\Weff^\top = (A + \lambda N^{-1})^{-1} C$.
+
+\textbf{Chứng minh.} (i) Với mọi $v$, $v^\top N v = \|Pv\|^2 + \|(I-P)v\|^2 \ge \tfrac12 \|Pv + (I-P)v\|^2 = \tfrac12\|v\|^2$, theo bất đẳng thức $a^2 + b^2 \ge \tfrac12 (a+b)^2$ cho chuẩn. Vậy $N$ khả nghịch và $N^{-1} \preceq 2I$.
+
+(ii) Ràng buộc tách theo hàng. Với hàng $h$, gọi $a, c$ là hàng $h$ của $W_t, W_s$ và $w$ là hàng $h$ của $\Weff$. Ràng buộc là $M \begin{bmatrix} a \\ c \end{bmatrix} = w$ với $M = [P^\top,\ (I-P)^\top] \in \mathbb{R}^{L \times 2L}$. Nghiệm chuẩn nhỏ nhất của hệ tuyến tính này có bình phương chuẩn $w^\top (M M^\top)^{-1} w$, và $M M^\top = N$. Cộng theo $h$ được (ii).
+
+(iii) Cực tiểu theo $(W_t, W_s)$ bằng cực tiểu theo $\Weff$ trước rồi theo cách tách: $\min_{\Weff} \|Y - X\Weff^\top\|_F^2 + \lambda \operatorname{tr}(\Weff N^{-1} \Weff^\top)$. Đây là ridge với $\mathrm{Pen} = N^{-1}$. \hfill$\square$
+
+Nghiệm này khác ridge đẳng hướng của Linear ($\mathrm{Pen} = I$) trừ khi $N \propto I$, mà $N$ phụ thuộc $k$ qua $P$. Vậy khi $\lambda > 0$, DLinear tách khỏi Linear, và mức tách phụ thuộc $k$. Phần tách không xóa được bằng cách đổi thang $\lambda$, vì $N^{-1}$ không tỉ lệ với $I$. Theo hướng đơn vị $v$, weight decay của DLinear bằng $v^\top N^{-1} v$ lần ridge đẳng hướng: nhẹ hơn ở các hướng mà $P$ giữ lại gần nguyên vẹn (ví dụ trọng số trên giá trị gần nhất khi $k$ lớn), và nặng hơn tới $2$ lần ở tần số mà bộ lọc trung bình trượt cắt một nửa.
+
+Lưu ý: tương đương (ii) chỉ dùng ràng buộc giữa $(W_t, W_s)$ và $\Weff$, không dùng hàm mất mát. Nó vì vậy đúng với cả MAE và Huber, và bộ giải IRLS dùng $\mathrm{Pen} = N^{-1}$ cho DLinear ở cả ba mục tiêu.
+
+\subsection{Dự đoán 3: NLinear tách khỏi Linear ở mọi \texorpdfstring{$\lambda$}{lambda}}
+
+Theo~\eqref{eq:nlinear}, NLinear là Linear với ràng buộc $\Weff \mathbf{1}_L = \mathbf{1}_H$.
+
+\textbf{Mệnh đề} ($\lambda = 0$). Đặt $r = W_{\mathrm{OLS}} \mathbf{1}_L - \mathbf{1}_H$ (vi phạm tổng hàng của OLS), $u = A^{-1}\mathbf{1}_L$, $s = \mathbf{1}_L^\top u > 0$. Nghiệm NLinear là
+\begin{equation}
+    V = W_{\mathrm{OLS}} - \tfrac{1}{s}\, r\, u^\top,
+\end{equation}
+và (i) $\|V - W_{\mathrm{OLS}}\|_F = \|r\|\,\|u\| / s$; (ii) $\mathrm{SSE}(V) - \mathrm{SSE}(W_{\mathrm{OLS}}) = \|r\|^2 / s$.
+
+\textbf{Chứng minh.} Bài toán tách theo hàng: với hàng $h$, cực tiểu $\|y_h - X v_h\|^2$ với điều kiện $\mathbf{1}^\top v_h = 1$. Điều kiện Lagrange cho $A v_h = c_h - \mu_h \mathbf{1}$, tức $v_h = w_h - \mu_h u$ với $w_h = A^{-1}c_h$. Từ $\mathbf{1}^\top v_h = 1$ suy ra $\mu_h = (\mathbf{1}^\top w_h - 1)/s = r_h / s$. Vậy $V - W_{\mathrm{OLS}} = -\tfrac1s r u^\top$ có hạng $1$, nên chuẩn Frobenius là $\|r\|\,\|u\|/s$. Với (ii), phần dư OLS trực giao với không gian cột của $X$, nên
+\[
+    \mathrm{SSE}(V) - \mathrm{SSE}(W_{\mathrm{OLS}}) = \sum_h (v_h - w_h)^\top A (v_h - w_h) = \sum_h \frac{r_h^2}{s^2}\, u^\top A u = \frac{\|r\|^2}{s}. \qquad \square
+\]
+
+Vậy NLinear trùng Linear khi và chỉ khi $r = 0$, tức nghiệm OLS đã có tổng hàng bằng đúng $1$. Điều này không xảy ra trên dữ liệu: tổng hàng của OLS trên ETTh1 $H = 96$ giảm dần theo $h$, vì Linear kéo dự báo về trung bình train. Khi $\lambda > 0$, ràng buộc vẫn giữ nguyên nên hai nghiệm vẫn khác nhau. Khi $\lambda \to \infty$, Linear co về $\Weff = 0$ (dự báo bằng trung bình train), còn NLinear co về $\Weff = \mathbf{1}_H e_L^\top$ (lặp giá trị cuối). Hai giới hạn khác nhau, nên mức tách tăng theo $\lambda$ (\figref{fig:h1}).
+
+\subsection{Kiểm bằng module của LTSF-Linear}
+
+Notebook \texttt{notebooks/01\_three\_predictions.ipynb} kiểm cả ba mệnh đề trên ETTh1, $H = 96$, bằng ba bước. Thứ nhất, giải nghiệm dạng đóng trong chính tham số hóa của mô hình (DLinear trên $(W_t, W_s)$ với đặc trưng do \texttt{series\_decomp} của repo tạo ra; NLinear trên chuỗi đã trừ giá trị cuối). Thứ hai, nạp nghiệm vào module của repo và tính gradient bằng autograd. Hàm mục tiêu lồi, nên gradient bằng $0$ là chứng nhận cực tiểu toàn cục. Thứ ba, đọc ánh xạ tuyến tính thật của module bằng các vector đơn vị, rồi so với Linear và với công thức ở trên. Kết quả ở \tabref{tab:b2}.

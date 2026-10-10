@@ -1,0 +1,28 @@
+\section{Giới thiệu}
+\label{sec:intro}
+
+\subsection{Bối cảnh}
+
+Bài LTSF-Linear~\cite{zeng2023transformers} cho thấy các mô hình tuyến tính một lớp dự báo chuỗi thời gian dài tốt hơn nhiều mô hình Transformer trên các bộ dữ liệu chuẩn. Bài đề xuất hai biến thể của mô hình tuyến tính thuần (Linear). DLinear tách chuỗi đầu vào thành phần xu hướng (trung bình trượt) và phần mùa vụ, rồi dùng một lớp tuyến tính cho mỗi phần. NLinear trừ giá trị cuối của cửa sổ đầu vào trước khi đưa vào lớp tuyến tính, rồi cộng lại sau. Trong các bảng của bài, DLinear và NLinear thường tốt hơn Linear.
+
+Mọi so sánh trong bài gốc đều qua huấn luyện bằng SGD: Adam theo mini-batch~\cite{kingma2015adam}, dừng sớm theo tập kiểm định (val), mỗi cấu hình một lần chạy. Kết quả vì vậy trộn hai thứ: khả năng biểu diễn của kiến trúc, và những gì quá trình huấn luyện đạt được (learning rate, dừng sớm, seed). Ngoài ra, hàm mục tiêu mặc định là MSE. Chưa có đánh giá hệ thống với MAE và Huber, nhất là khi dữ liệu có outlier.
+
+\subsection{Câu hỏi nghiên cứu}
+
+Ba mô hình đều tuyến tính theo tham số. Với MSE, nghiệm tối ưu có dạng đóng; với MAE và Huber, hàm mục tiêu lồi và giải được tới hội tụ bằng IRLS. Thay SGD bằng nghiệm tối ưu cho phép tách câu hỏi về kiến trúc khỏi câu hỏi về huấn luyện. Chúng tôi đặt ba câu hỏi:
+
+\begin{itemize}
+    \item \RQ{1}: Tại nghiệm tối ưu, khi nào DLinear và NLinear thu về Linear, và khi nào thì không?
+    \item \RQ{2}: Hàm mục tiêu (MSE, MAE, Huber) ảnh hưởng thế nào đến sai số test, và mức bền vững với outlier ra sao?
+    \item \RQ{3}: Mô hình huấn luyện bằng SGD kém nghiệm tối ưu (OLS, ridge ở $\lambda^*$) bao nhiêu, và khoảng cách này thay đổi thế nào theo dataset và horizon?
+\end{itemize}
+
+\subsection{Đóng góp}
+
+\begin{enumerate}
+    \item Dẫn xuất đại số cho cả ba mô hình dưới dạng một ma trận hiệu dụng $\Weff$, và ba dự đoán cho RQ1. Các dự đoán được kiểm bằng chính module DLinear, NLinear của repo LTSF-Linear (\secref{sec:rq1}, Phụ lục~\ref{app:derivation}).
+    \item Bộ giải nghiệm tối ưu cho ba hàm mục tiêu: nghiệm dạng đóng cho MSE, nghiệm có ràng buộc cho NLinear, IRLS trên GPU cho MAE và Huber, kèm các phép kiểm hội tụ (Phụ lục~\ref{app:irls}).
+    \item Ma trận thí nghiệm đầy đủ: 3 mô hình $\times$ 3 mục tiêu $\times$ $\{\lambda = 0, \lambda^*\}$ $\times$ 3 dataset $\times$ 4 horizon, cộng thí nghiệm outlier nhân tạo (\secref{sec:rq2}).
+    \item So sánh SGD (nhiều seed, learning rate gốc và đã tinh chỉnh) với nghiệm tối ưu trên 36 ô, kèm khoảng tin cậy và quy tắc đọc ba trường hợp (\secref{sec:rq3}).
+    \item Repo tái lập được bằng một lệnh (Phụ lục~\ref{app:repro}).
+\end{enumerate}

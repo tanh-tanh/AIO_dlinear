@@ -1,0 +1,40 @@
+\section{IRLS cho MAE và Huber}
+\label{app:irls}
+
+\subsection{Lập luận MM}
+
+Gọi $\tilde X = [X, \mathbf 1] \in \mathbb{R}^{n \times p}$, $p = L + 1$ (cột cuối là bias), và $\tilde w_h \in \mathbb{R}^p$ là hàng $h$ của ma trận hệ số. Hàm mục tiêu
+\begin{equation}
+    F(W) = \sum_{i,h} \rho_\delta(r_{ih})/\delta + \lambda \sum_h w_h^\top \mathrm{Pen}\, w_h, \qquad r_{ih} = y_{ih} - \tilde x_i^\top \tilde w_h,
+\end{equation}
+lồi nhưng không khả vi bậc hai (MAE: không khả vi tại $0$). IRLS là thuật toán majorize--minimize (MM). Tại phần dư hiện tại $r^{(0)}$, đặt trọng số $\omega = \delta / \max(|r^{(0)}|, \delta) \in (0, 1]$. Khi đó
+\begin{equation}
+    \rho_\delta(r) \le \tfrac{\omega}{2}\, r^2 + \text{hằng số}, \quad \text{dấu bằng tại } r = r^{(0)}.
+\end{equation}
+Thật vậy, nếu $|r^{(0)}| \le \delta$ thì $\omega = 1$ và $\rho_\delta(r) \le r^2/2$ với mọi $r$. Nếu $|r^{(0)}| > \delta$ thì $\delta|r| \le \delta\bigl(r^2/(2|r^{(0)}|) + |r^{(0)}|/2\bigr)$ theo bất đẳng thức AM--GM, và vế phải là $\tfrac{\omega}{2} r^2$ cộng hằng số. Cực tiểu hàm chặn trên (nhân $2\delta$) là một bài toán ridge có trọng số cho mỗi $h$:
+\begin{equation}
+    \hat{\tilde w}_h = A_h^{-1} \tilde X^\top \operatorname{diag}(\omega_h)\, y_h, \qquad A_h = \tilde X^\top \operatorname{diag}(\omega_h) \tilde X + 2\lambda\delta\, \widetilde{\mathrm{Pen}},
+\end{equation}
+với $\widetilde{\mathrm{Pen}}$ là $\mathrm{Pen}$ thêm một hàng và một cột $0$ cho bias. Vì mỗi bước cực tiểu một hàm chặn trên tiếp xúc tại điểm hiện tại, $F$ không bao giờ tăng. Bộ giải báo lỗi nếu $F$ tăng quá mức nhiễu làm tròn: điều đó nghĩa là code sai, hoặc $A_h$ quá xấu điều kiện so với kiểu số đang dùng.
+
+\subsection{Các chi tiết cài đặt}
+
+\begin{itemize}
+    \item \textbf{Tách theo $h$.} Phần dư, trọng số và hàm phạt đều tách theo hàng $h$. Mỗi vòng vì vậy giải $H$ hệ $p \times p$ độc lập, lập theo lô (\texttt{chunk} bước $h$ một lần) trên GPU. Thực tế, mỗi vòng giải dạng hiệu chỉnh $\hat{\tilde w}_h = \tilde w_h + A_h^{-1} g_h$, với $g_h = \tilde X^\top \operatorname{diag}(\omega_h) r_h - 2\lambda\delta\, \widetilde{\mathrm{Pen}}\, \tilde w_h$.
+    \item \textbf{Bias.} Cột $\mathbf 1$ trong $\tilde X$; hàng và cột tương ứng của $\widetilde{\mathrm{Pen}}$ bằng $0$, nên bias không bị phạt.
+    \item \textbf{Ràng buộc NLinear.} Với $a = (1, \dots, 1, 0)$ (tổng $L$ hệ số đầu, không tính bias) và $u_h = A_h^{-1} a$, mỗi hàng được chiếu lên ràng buộc $a^\top v_h = 1$: $v_h = \hat{\tilde w}_h - \frac{a^\top \hat{\tilde w}_h - 1}{a^\top u_h} u_h$. Đây là nghiệm Lagrange của bước bình phương tối thiểu có trọng số, như ở Phụ lục~\ref{app:derivation}.
+    \item \textbf{Quy ước $\lambda$.} Huber chia cho $\delta$, nên khi $\delta \to 0$ ta được đúng $\sum |r| + \lambda \|W\|^2$ (MAE dùng $\delta = 10^{-6}$). Khi $\delta$ lớn, $F \approx \|r\|^2/(2\delta) + \lambda\|W\|^2$, tức ridge của MSE với $\lambda_{\mathrm{MSE}} = 2\delta\lambda$. Vì vậy $\lambda^*$ của Huber tăng khi $\delta$ giảm.
+    \item \textbf{Chế độ pha độ chính xác.} Phần tốn nhất là lập $A_h$ (cỡ $H n p^2$ phép tính), nên phần này làm bằng float32. Phần dư, $g_h$, hàm mục tiêu và phép giải làm bằng float64. Điểm dừng $g_h = 0$ tính bằng float64, nên nghiệm đạt độ chính xác float64; $A_h$ lệch chỉ làm chậm hội tụ. Bước $h$ nào làm hàm mục tiêu riêng của nó tăng thì được lập lại $A_h$ bằng float64 và giải lại. Cách này không bao giờ chạy khi mọi bước đều tốt, nên không đổi kết quả trong trường hợp đó. TF32 bị tắt.
+    \item \textbf{Tiêu chí dừng.} Dừng khi $F$ giảm tương đối ít hơn \texttt{tol} sau \texttt{patience} vòng liên tiếp. MAE dùng \texttt{tol} $= 10^{-10}$, \texttt{patience} $= 1$, riêng $\lambda = 0$ dùng \texttt{tol} $= 3 \cdot 10^{-11}$. Huber dùng \texttt{tol} $= 10^{-9}$. Khởi tạo: nghiệm MSE cho $\lambda = 0$; nghiệm của $\lambda$ liền trước khi quét $\lambda$ (warm start).
+\end{itemize}
+
+\subsection{Các phép kiểm}
+
+Chi tiết và số liệu ở \texttt{docs/reports/BAO\_CAO\_TIEU\_CHI\_DUNG.md}, \texttt{BAO\_CAO\_IRLS\_DTYPE.md}, \texttt{BAO\_CAO\_5060TI.md} và \texttt{BAO\_CAO\_NV7.md}.
+\begin{itemize}
+    \item \textbf{Trên dữ liệu giả} (\texttt{tests/test\_irls.py}, \texttt{test\_solvers.py}): Huber với $\delta$ lớn về đúng nghiệm ridge; MAE và NLinear MAE khớp nghiệm của quy hoạch tuyến tính; DLinear với $2L$ tham số khớp cách giải $L$ chiều với $\mathrm{Pen} = N^{-1}$.
+    \item \textbf{Tính duy nhất của MAE} (ETTh1, $H = 96$): ba điểm khởi tạo cho cùng giá trị hàm mục tiêu dưới ngưỡng tương đối $10^{-8}$. Trọng số còn khác nhau một chút, do dừng theo \texttt{tol}.
+    \item \textbf{Tiêu chí dừng}: $\lambda^*$ theo val giống nhau giữa khởi tạo lạnh, warm start, và nghiệm tham chiếu chạy tới hội tụ chặt. Sai số của metric val nhỏ hơn chênh giữa $\lambda^*$ và $\lambda$ tốt thứ hai.
+    \item \textbf{Kiểu số}: float32 thuần không đủ cho MAE ($\delta = 10^{-6}$), vì hàm mục tiêu hết giảm được ở độ phân giải float32. Chế độ pha cho đúng nghiệm float64.
+    \item \textbf{Grid}: mọi dòng của grid, thí nghiệm outlier, độ nhạy $\delta$ và độ lớn outlier đều có \texttt{converged = True}. Không có lần nào hàm mục tiêu tăng. Chạy lại một số đường $\lambda$ bằng code hiện tại cho kết quả trùng từng bit với file kết quả.
+\end{itemize}

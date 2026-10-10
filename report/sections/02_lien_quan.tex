@@ -1,0 +1,12 @@
+\section{Công trình liên quan}
+\label{sec:related}
+
+\paragraph{LTSF-Linear.} Zeng và cộng sự~\cite{zeng2023transformers} đặt câu hỏi Transformer có thật sự hiệu quả cho dự báo chuỗi thời gian dài không, và đề xuất Linear, DLinear, NLinear. Các mô hình này dùng chung trọng số cho mọi kênh (\texttt{individual = False}). Bộ dữ liệu ETT (nhiệt độ dầu và tải của máy biến áp điện) được giới thiệu cùng mô hình Informer~\cite{zhou2021informer}. Chúng tôi dùng đúng cách chia, chuẩn hóa và siêu tham số SGD của repo LTSF-Linear. Số công bố lấy từ Bảng~2 của bài gốc.
+
+\paragraph{Phân tích mô hình tuyến tính cho dự báo chuỗi thời gian.} \TODO{Toner \& Darlow (ICML 2024)~\cite{toner2024analysis}: chưa có PDF trong \texttt{docs/refs/}, nên chưa mô tả nội dung và chưa đối chiếu với RQ1. Bổ sung sau khi đọc bài.}
+
+\paragraph{Hồi quy bền vững và IRLS.} Hàm mất mát Huber~\cite{huber1964robust} bậc hai với phần dư nhỏ và tuyến tính với phần dư lớn, nên ít nhạy với outlier hơn MSE. Hằng số $1{,}345$ cho hiệu quả khoảng $95\%$ dưới nhiễu chuẩn, và $1{,}4826 \cdot \mathrm{MAD}$ là ước lượng bền vững của độ lệch chuẩn~\cite{huber2009robust}. Chúng tôi dùng cả hai để đặt $\delta$ (\secref{sec:method-objectives}). MAE và Huber được cực tiểu bằng bình phương tối thiểu có trọng số lặp lại (IRLS)~\cite{holland1977robust}. Ở đây IRLS được viết dưới dạng thuật toán MM (Phụ lục~\ref{app:irls}).
+
+\paragraph{Dừng sớm và ridge.} Với bình phương tối thiểu, gradient descent toàn batch xuất phát từ $0$ rồi dừng sớm cho nghiệm gần nghiệm ridge ở một $\lambda$ tương ứng với thời điểm dừng~\cite{ali2019continuous}. Kết quả này là lý do chúng tôi so SGD với ridge ở $\lambda^*$ chọn trên val, chứ không chỉ với OLS.
+
+\paragraph{Nhiễu đầu vào và chính quy hóa Tikhonov.} Huấn luyện với nhiễu cộng vào đầu vào tương đương, ở bậc thấp nhất, với thêm một số hạng chính quy hóa Tikhonov~\cite{bishop1995training}. Chúng tôi chỉ dùng kết quả này để nêu một giả thuyết chưa kiểm ở \secref{sec:discussion}.

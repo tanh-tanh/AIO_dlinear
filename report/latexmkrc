@@ -1,0 +1,6 @@
+# Cấu hình latexmk cho báo cáo (template AI VIET NAM dùng pdfLaTeX + gói vietnam).
+$pdf_mode = 1;                       # pdflatex
+$out_dir = 'build';
+$bibtex_use = 2;                     # biblatex với backend=bibtex: latexmk tự chạy bibtex
+ensure_path('TEXINPUTS', './template//');   # vipythonhighlight.sty, tvietlistings.sty, Figures/
+$pdflatex = 'pdflatex -interaction=nonstopmode -halt-on-error -file-line-error %O %S';

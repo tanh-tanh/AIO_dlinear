@@ -1,0 +1,116 @@
+\section{Phương pháp và thiết lập}
+\label{sec:method}
+
+\subsection{Dữ liệu}
+\label{sec:method-data}
+
+Ba dataset ETTh1, ETTh2 (lấy mẫu theo giờ) và ETTm1 (15 phút), mỗi dataset 7 kênh~\cite{zhou2021informer}. Cách chia giống LTSF-Linear: 12 tháng train, 4 tháng val, 4 tháng test, tức 8640 / 2880 / 2880 hàng với dữ liệu theo giờ (nhân 4 với ETTm1). Cửa sổ val và test bắt đầu lùi $L$ hàng vào tập trước, để mọi điểm đích đều có đủ đầu vào. Mỗi kênh được chuẩn hóa bằng trung bình và độ lệch chuẩn của train (ddof $= 0$, như \texttt{StandardScaler}). Mọi MSE, MAE trong báo cáo tính trên dữ liệu đã chuẩn hóa, lấy trung bình trên mọi phần tử (cửa sổ, kênh, bước $h$).
+
+Cửa sổ đầu vào dài $L = 336$, horizon $H \in \{96, 192, 336, 720\}$. Như baseline SGD, ba mô hình dùng chung trọng số cho 7 kênh. Mỗi kênh của mỗi cửa sổ là một mẫu $(x, y)$ với $x \in \mathbb{R}^L$, $y \in \mathbb{R}^H$. Xếp các mẫu train thành $X \in \mathbb{R}^{n \times L}$ và $Y \in \mathbb{R}^{n \times H}$.
+
+\subsection{Ba mô hình dưới dạng ma trận hiệu dụng}
+\label{sec:method-models}
+
+Cả ba mô hình đều là ánh xạ affine $\hat y = \Weff x + b$, chỉ khác cách tham số hóa $\Weff \in \mathbb{R}^{H \times L}$.
+
+\begin{itemize}
+    \item \textbf{Linear:} $\Weff = W$, tham số tự do.
+    \item \textbf{DLinear:} gọi $P \in \mathbb{R}^{L \times L}$ là ma trận trung bình trượt kích thước $k$ của LTSF-Linear (đệm $(k-1)/2$ bản sao giá trị đầu và cuối, rồi lấy trung bình). Phần xu hướng là $Px$, phần mùa vụ là $(I - P)x$, và
+    \begin{equation}
+        \hat y = W_t P x + W_s (I - P) x + b, \qquad \Weff = W_t P + W_s (I - P).
+        \label{eq:dlinear}
+    \end{equation}
+    Mặc định $k = 25$.
+    \item \textbf{NLinear:} trừ giá trị cuối $x_L$ rồi cộng lại,
+    \begin{equation}
+        \hat y = W (x - x_L \mathbf{1}_L) + x_L \mathbf{1}_H + b, \qquad \Weff = W (I - \mathbf{1}_L e_L^\top) + \mathbf{1}_H e_L^\top .
+        \label{eq:nlinear}
+    \end{equation}
+    Vì $(I - \mathbf{1}_L e_L^\top)\mathbf{1}_L = 0$, mọi hàng của $\Weff$ có tổng bằng $1$: $\Weff \mathbf{1}_L = \mathbf{1}_H$. Ngược lại, mọi $\Weff$ thỏa ràng buộc này đều viết được dưới dạng~\eqref{eq:nlinear}. Vì vậy NLinear chính là Linear với ràng buộc tổng hàng bằng $1$.
+\end{itemize}
+
+Phụ lục~\ref{app:derivation} dùng các biểu diễn này để suy ra ba dự đoán của RQ1.
+
+\subsection{Ba hàm mục tiêu và quy ước \texorpdfstring{$\lambda$}{lambda}}
+\label{sec:method-objectives}
+
+Với phần dư $r = y - \hat y$ trên train, ba hàm mục tiêu viết ở dạng tổng (không chia cho $n$):
+\begin{align}
+    \text{MSE:}\quad & \textstyle\sum r^2 + \lambda \sum_h w_h^\top \mathrm{Pen}\, w_h, \\
+    \text{MAE:}\quad & \textstyle\sum |r| + \lambda \sum_h w_h^\top \mathrm{Pen}\, w_h, \\
+    \text{Huber:}\quad & \textstyle\sum \rho_\delta(r)/\delta + \lambda \sum_h w_h^\top \mathrm{Pen}\, w_h, \qquad
+    \rho_\delta(r) = \begin{cases} r^2/2 & |r| \le \delta \\ \delta(|r| - \delta/2) & |r| > \delta \end{cases}
+\end{align}
+với $w_h$ là hàng $h$ của $\Weff$. Bias không bị phạt. Chia Huber cho $\delta$ để khi $\delta \to 0$ ta được đúng MAE. Bộ giải dùng Huber với $\delta = 10^{-6}$ cho MAE. Với MSE, phạt trên tổng tương ứng \texttt{weight\_decay} $\approx 2\lambda/(nH)$ của PyTorch khi loss là MSE trung bình.
+
+\paragraph{Hàm phạt của từng mô hình.} Weight decay của PyTorch phạt các tham số của module, nên hàm phạt tương ứng trên $\Weff$ khác nhau giữa ba mô hình:
+\begin{itemize}
+    \item Linear: $\mathrm{Pen} = I$, tức ridge thường.
+    \item DLinear: weight decay $\|W_t\|^2 + \|W_s\|^2$ trên hai nhánh bằng $\operatorname{tr}(\Weff N^{-1} \Weff^\top)$ tại nghiệm, với $N = P^\top P + (I - P)^\top (I - P)$. Vậy $\mathrm{Pen} = N^{-1}$. Vì $N \succeq \tfrac12 I$ nên $N^{-1} \preceq 2I$ (Phụ lục~\ref{app:derivation}).
+    \item NLinear: phạt $L - 1$ hệ số đầu của $\Weff$, không phạt lag cuối: $\mathrm{Pen} = \operatorname{diag}(1, \dots, 1, 0)$. Với MSE, cách này bằng ridge trên chuỗi đã trừ giá trị cuối.
+\end{itemize}
+
+\paragraph{$\delta$ của Huber.} Với mỗi (dataset, $H$, mô hình, tập train), lấy phần dư train $R$ của nghiệm MSE $\lambda = 0$ của chính mô hình đó, rồi đặt
+\begin{equation}
+    \hat\sigma = 1{,}4826 \cdot \operatorname{median}\bigl(|R - \operatorname{median}(R)|\bigr), \qquad \dmad = 1{,}345\, \hat\sigma .
+\end{equation}
+Trên grid gốc, $\dmad$ nằm trong khoảng \nmDeltaMin--\nmDeltaMax{} (trung vị \nmDeltaMedian), tức nhỏ hơn $\delta = 1$ của các phiên trước \nmDeltaRatioMin--\nmDeltaRatioMax{} lần. Trên các tập train đã chèn outlier, $\dmad$ nằm trong khoảng \nmDeltaOutlierRange. Một $\delta$ chung được dùng cho cả ô, dù $\hat\sigma$ theo từng bước $h$ khác nhau nhiều (hạn chế~\ref{lim:delta}).
+
+\subsection{Bộ giải}
+\label{sec:method-solvers}
+
+\begin{itemize}
+    \item \textbf{MSE:} nghiệm dạng đóng. Với bias, cột $\mathbf 1$ được nối vào $X$ và hàng, cột tương ứng của hàm phạt bằng $0$. NLinear dùng nghiệm có ràng buộc bằng nhân tử Lagrange, áp cho từng hàng $h$.
+    \item \textbf{MAE, Huber:} IRLS trên GPU (PyTorch), khởi tạo từ nghiệm MSE. Mỗi vòng giải $H$ hệ phương trình $p \times p$ ($p = L + 1$) có trọng số. Lập ma trận hệ bằng float32 và mọi phần còn lại bằng float64, nên nghiệm có độ chính xác float64. Tiêu chí dừng: hàm mục tiêu giảm tương đối dưới \texttt{tol} sau một vòng. Khi quét $\lambda$, mỗi $\lambda$ khởi tạo từ nghiệm của $\lambda$ liền trước (warm start). Chi tiết và các phép kiểm ở Phụ lục~\ref{app:irls}.
+\end{itemize}
+
+\subsection{Chọn \texorpdfstring{$\lambda^*$}{lambda*}}
+\label{sec:method-lambda}
+
+Lưới $\lambda$ của MSE gồm $0$ và 141 giá trị cách đều theo log từ $10^{-2}$ đến $10^{5}$. Lưới của MAE, Huber là $\{0, 1, 3, 10, \dots, 10^4\}$, mở rộng thêm ở đầu mút nếu $\lambda^*$ rơi vào đó. $\lambda^*$ chỉ chọn trên val, không bao giờ trên test. MSE test được báo ở $\lambda^*_{\mathrm{MSE}} = \arg\min_\lambda$ MSE val, và MAE test ở $\lambda^*_{\mathrm{MAE}} = \arg\min_\lambda$ MAE val. Quy tắc này áp dụng như nhau cho mọi mô hình và mọi mục tiêu. Metric val không chứa số hạng phạt.
+
+\subsection{SGD}
+\label{sec:method-sgd}
+
+SGD dùng đúng siêu tham số của script chính thức LTSF-Linear. Đó là Adam theo mini-batch, batch 32 (ETTm1: 8), tối đa 10 epoch, dừng sớm theo MSE val với patience 3, và lr giảm một nửa mỗi epoch (\texttt{lradj = type1}). lr ban đầu là $0{,}005$ (ETTh1), $0{,}05$ (ETTh2), $0{,}0001$ (ETTm1); $k = 25$ cho DLinear. Ba mô hình dùng chung script. Mô hình sau huấn luyện được đọc ra dưới dạng $\Weff$ và chấm bằng float64 trên đủ mọi cửa sổ val, test, cùng cách chấm với nghiệm tối ưu.
+
+\begin{itemize}
+    \item \textbf{lr gốc:} 20 seed (2021--2040) cho mỗi (dataset, $H$, mô hình); riêng NLinear trên ETTh2 có 10 seed.
+    \item \textbf{lr tinh chỉnh:} với mỗi ô, thử lr $\in \{0{,}5;\ 1;\ 2;\ 4\} \times$ lr gốc, mỗi mức 5 seed (2021--2025). Chọn mức có trung bình MSE val thấp nhất. Nếu chọn $\times 4$ thì thử thêm $\times 8$ một lần rồi chọn lại. Sau đó chạy 15 seed mới (2026--2040) ở lr đã chọn. Mọi siêu tham số khác giữ như script gốc.
+\end{itemize}
+
+\subsection{Outlier nhân tạo}
+\label{sec:method-outliers}
+
+Thí nghiệm outlier chạy trên ETTh1 với Linear và NLinear. Có hai cách chèn:
+\begin{itemize}
+    \item \textbf{Chèn vào chuỗi:} chọn ngẫu nhiên đúng một tỷ lệ $\{1\%, 5\%, 10\%\}$ điểm (hàng, kênh) của chuỗi train đã chuẩn hóa, cộng $\pm 10$ (dấu ngẫu nhiên), tức $\pm 10$ độ lệch chuẩn của kênh. Scaler không tính lại. Cửa sổ train được cắt từ chuỗi đã chèn, nên một outlier xuất hiện ở nhiều cửa sổ, cả trong đầu vào $x$ lẫn trong đích $y$. $L$ hàng cuối của train không bị chèn, để val và test giữ nguyên từng byte.
+    \item \textbf{Chèn chỉ vào đích:} chọn $1\%$ hoặc $10\%$ phần tử của $Y$ train, cộng $\pm 10$; $X$ giữ nguyên. Đây là trường hợp ``sạch'' của lý thuyết hồi quy bền vững.
+\end{itemize}
+Seed vị trí là 2026; một số ô chạy thêm seed 2027, 2028. Thí nghiệm độ lớn (Linear, $H \in \{96, 720\}$) lặp lại với $\pm 3$ và $\pm 5$ độ lệch chuẩn, ở cùng vị trí outlier. Val và test luôn sạch, và $\lambda^*$ chọn trên val sạch.
+
+\subsection{Thống kê và quy tắc đọc ba trường hợp}
+\label{sec:method-stats}
+
+Với mỗi ô, đặt $\Delta = \text{SGD} - \text{dạng đóng}$, tính trên từng seed, cho cả MSE val và MSE test. Dạng đóng ở đây là nghiệm MSE tại $\lambda^*$. Khoảng tin cậy (CI) $95\%$ của trung bình $\Delta$ tính theo phân phối $t$. Với mỗi tập, SGD \emph{thắng} nếu CI nằm hẳn dưới $0$, \emph{thua} nếu nằm hẳn trên $0$, và \emph{hòa} nếu CI chứa $0$. Ghép kết quả trên val và test cho sáu nhãn (\tabref{tab:rule}):
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+val & test & nhãn \\
+\midrule
+thắng & thắng & SGD tốt hơn thật \\
+thua & thua & dạng đóng tốt hơn thật \\
+hòa & thắng hoặc thua & khác biệt do val khác test \\
+thắng & hòa hoặc thua & SGD có dấu hiệu khớp val quá mức \\
+thua & hòa hoặc thắng & dạng đóng có dấu hiệu khớp val quá mức \\
+hòa & hòa & không phân biệt được \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{captionbelowboxaivn}
+\captab{Quy tắc đọc ba trường hợp: nhãn của một ô theo dấu của CI $95\%$ của $\Delta = $ SGD $-$ dạng đóng trên val và trên test.}\label{tab:rule}
+\end{captionbelowboxaivn}
+
+So sánh DLinear $-$ Linear khi cùng huấn luyện bằng SGD dùng CI $95\%$ Welch, vì hai mô hình chạy trên các seed độc lập. Mọi CI tính trên trung bình theo seed, không phải trên một lần chạy.
