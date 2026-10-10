@@ -1,0 +1,3 @@
+# run_all.sh phải giữ LF để bash chạy được trên Windows (Git Bash) khi core.autocrlf = true
+*.sh text eol=lf
+report/latexmkrc text eol=lf
