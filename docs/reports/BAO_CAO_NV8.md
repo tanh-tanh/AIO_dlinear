@@ -45,7 +45,20 @@ Hình: `make_figures.py` gọi **đúng các hàm vẽ đã sinh PNG trong `resu
 
 ## 4. Kiểm trên môi trường trắng (D.2)
 
-D2_PLACEHOLDER
+Bản clone mới (`git clone --recurse-submodules`, commit `b0028b5`) ở thư mục tạm, venv mới `.venv-run` tạo bằng Python 3.13.5 hệ thống, rồi `./run_all.sh quick`. **Mọi bước đạt, mã thoát 0, tổng 1147 s (19 phút 7 giây).**
+
+| Bước | Kết quả | Thời gian |
+|---|---|---|
+| clone | có submodule LTSF-Linear | 5 s |
+| 1. Môi trường | venv mới; torch 2.14.0+cu130 (từ cache pip), `requirements.txt`; CUDA khả dụng | 205 s |
+| 2. Test | 63 test, OK (1 bỏ qua: `test_val_metrics` vì bản clone không có `results/weights/`) | 30 s |
+| 3. Grid ETTh1 H = 96 chạy lại, so `results/` | **KHỚP**: 488/488 dòng, chênh 0 với MSE, MAE, Huber (ngưỡng 1e-10 / 1e-8) | 885 s |
+| 4. Sinh số, bảng, hình; audit; kiểm tĩnh | đạt; 0 số cần rà; không lỗi tĩnh | 27 s |
+| 5. Biên dịch | bỏ qua: máy không có latexmk/pdflatex | 0 s |
+
+- **Vượt mục tiêu 15 phút**, chủ yếu do bước 3 (mục 6, điểm 11). Không tính bước 3 thì khoảng 4,5 phút; `SKIP_CELL=1` bỏ bước này.
+- Sau khi chạy, `git status` của bản clone chỉ có `report/generated/numbers.tex` đổi, ở đúng macro `\nmReproHead`: lúc đó macro còn là HEAD. Đã sửa ở commit `d08d3ed` (dùng commit cuối đổi `results/`); sinh lại trên repo chính sau sửa không tạo khác biệt.
+- Không thử trên Linux/macOS (không có máy), chỉ Windows + Git Bash.
 
 ## 5. `refs.bib`: mục cần người dùng kiểm metadata
 
