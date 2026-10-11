@@ -1,0 +1,35 @@
+{
+ "hardware": {
+  "gpu": "NVIDIA GeForce RTX 5060 Ti",
+  "gpu_mem_gib": 15.90179443359375,
+  "compute_capability": "12.0",
+  "torch": "2.14.0+cu130",
+  "cuda": "13.0",
+  "cudnn": 92400,
+  "driver": "616.92",
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "3.13.5",
+  "cpu": "Intel64 Family 6 Model 151 Stepping 5, GenuineIntel",
+  "tf32_matmul": false,
+  "tf32_cudnn": false,
+  "float32_matmul_precision": "highest"
+ },
+ "git_commit": "357b4a076ade",
+ "date": "2026-10-11 22:22:25",
+ "wall_seconds": 189.0331802368164,
+ "tol": 1e-09,
+ "cells": [
+  "ETTh2:720:Linear",
+  "ETTh1:96:Linear"
+ ],
+ "deltas": {
+  "ETTh2:720:Linear": {
+   "delta_mad": 0.6095955223888573,
+   "sigma_mad": 0.45323087166457793
+  },
+  "ETTh1:96:Linear": {
+   "delta_mad": 0.5379703458354013,
+   "sigma_mad": 0.39997795229397864
+  }
+ }
+}

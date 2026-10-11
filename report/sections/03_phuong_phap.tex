@@ -4,7 +4,7 @@
 \subsection{Dữ liệu}
 \label{sec:method-data}
 
-Ba dataset ETTh1, ETTh2 (lấy mẫu theo giờ) và ETTm1 (15 phút), mỗi dataset 7 kênh~\cite{zhou2021informer}. Cách chia giống LTSF-Linear: 12 tháng train, 4 tháng val, 4 tháng test, tức 8640 / 2880 / 2880 hàng với dữ liệu theo giờ (nhân 4 với ETTm1). Cửa sổ val và test bắt đầu lùi $L$ hàng vào tập trước, để mọi điểm đích đều có đủ đầu vào. Mỗi kênh được chuẩn hóa bằng trung bình và độ lệch chuẩn của train (ddof $= 0$, như \texttt{StandardScaler}). Mọi MSE, MAE trong báo cáo tính trên dữ liệu đã chuẩn hóa, lấy trung bình trên mọi phần tử (cửa sổ, kênh, bước $h$).
+Ba dataset ETTh1, ETTh2 (lấy mẫu theo giờ) và ETTm1 (15 phút), mỗi dataset 7 kênh~\cite{zhou2021informer}. ETTh1 và ETTm1 đo cùng một máy biến áp, chỉ khác tần suất lấy mẫu; ETTh2 đo một máy biến áp khác. Vì vậy ba dataset chỉ là hai nguồn dữ liệu độc lập (hạn chế~\ref{lim:data}). Cách chia giống LTSF-Linear: 12 tháng train, 4 tháng val, 4 tháng test, tức 8640 / 2880 / 2880 hàng với dữ liệu theo giờ (nhân 4 với ETTm1). Cửa sổ val và test bắt đầu lùi $L$ hàng vào tập trước, để mọi điểm đích đều có đủ đầu vào. Mỗi kênh được chuẩn hóa bằng trung bình và độ lệch chuẩn của train (ddof $= 0$, như \texttt{StandardScaler}). Mọi MSE, MAE trong báo cáo tính trên dữ liệu đã chuẩn hóa, lấy trung bình trên mọi phần tử (cửa sổ, kênh, bước $h$).
 
 Cửa sổ đầu vào dài $L = 336$, horizon $H \in \{96, 192, 336, 720\}$. Như baseline SGD, ba mô hình dùng chung trọng số cho 7 kênh. Mỗi kênh của mỗi cửa sổ là một mẫu $(x, y)$ với $x \in \mathbb{R}^L$, $y \in \mathbb{R}^H$. Xếp các mẫu train thành $X \in \mathbb{R}^{n \times L}$ và $Y \in \mathbb{R}^{n \times H}$.
 
@@ -54,7 +54,7 @@ với $w_h$ là hàng $h$ của $\Weff$. Bias không bị phạt. Chia Huber cho
 \begin{equation}
     \hat\sigma = 1{,}4826 \cdot \operatorname{median}\bigl(|R - \operatorname{median}(R)|\bigr), \qquad \dmad = 1{,}345\, \hat\sigma .
 \end{equation}
-Trên grid gốc, $\dmad$ nằm trong khoảng \nmDeltaMin--\nmDeltaMax{} (trung vị \nmDeltaMedian), tức nhỏ hơn $\delta = 1$ của các phiên trước \nmDeltaRatioMin--\nmDeltaRatioMax{} lần. Trên các tập train đã chèn outlier, $\dmad$ nằm trong khoảng \nmDeltaOutlierRange. Một $\delta$ chung được dùng cho cả ô, dù $\hat\sigma$ theo từng bước $h$ khác nhau nhiều (hạn chế~\ref{lim:delta}).
+Trên grid gốc, $\dmad$ nằm trong khoảng \nmDeltaMin--\nmDeltaMax{} (trung vị \nmDeltaMedian), tức nhỏ hơn $\delta = 1$ (mặc định của \texttt{HuberLoss} trong PyTorch) \nmDeltaRatioMin--\nmDeltaRatioMax{} lần. Trên các tập train đã chèn outlier, $\dmad$ nằm trong khoảng \nmDeltaOutlierRange. Một $\delta$ chung được dùng cho cả ô, dù $\hat\sigma$ theo từng bước $h$ khác nhau nhiều. Một phương án gọn hơn là chuẩn hóa phần dư theo $\hat\sigma_h$ của từng bước rồi dùng một $\delta$ chung trên thang đã chuẩn hóa, tức $\delta_h = 1{,}345\,\hat\sigma_h$. Phương án này được thử như một phép kiểm độ nhạy trên hai ô (\secref{sec:rq2}, hạn chế~\ref{lim:delta}).
 
 \subsection{Bộ giải}
 \label{sec:method-solvers}
@@ -76,7 +76,7 @@ SGD dùng đúng siêu tham số của script chính thức LTSF-Linear. Đó l�
 
 \begin{itemize}
     \item \textbf{lr gốc:} 20 seed (2021--2040) cho mỗi (dataset, $H$, mô hình); riêng NLinear trên ETTh2 có 10 seed.
-    \item \textbf{lr tinh chỉnh:} với mỗi ô, thử lr $\in \{0{,}5;\ 1;\ 2;\ 4\} \times$ lr gốc, mỗi mức 5 seed (2021--2025). Chọn mức có trung bình MSE val thấp nhất. Nếu chọn $\times 4$ thì thử thêm $\times 8$ một lần rồi chọn lại. Sau đó chạy 15 seed mới (2026--2040) ở lr đã chọn. Mọi siêu tham số khác giữ như script gốc.
+    \item \textbf{lr tinh chỉnh:} với mỗi ô, thử lr $\in \{0{,}5;\ 1;\ 2;\ 4\} \times$ lr gốc, mỗi mức 5 seed (2021--2025). Chọn mức có trung bình MSE val thấp nhất. Nếu chọn $\times 4$ thì thử thêm $\times 8$ một lần rồi chọn lại. Ô nào vẫn chọn mức ở đầu mút ($\times 0{,}5$ hoặc $\times 8$) thì thử tiếp mức kế tiếp theo hướng đó ($\times 0{,}25$ rồi $\times 0{,}125$; $\times 16$ rồi $\times 32$), cùng 5 seed. Mức mới được giữ nếu MSE val trung bình thấp hơn, tối đa hai mức mới, dừng ngay khi mức mới không tốt hơn. Lần chạy phân kỳ (MSE val không hữu hạn hoặc vượt $10$ lần mức $\times 1$) tính là thất bại của mức đó. Sau đó chạy 15 seed mới (2026--2040) ở lr đã chọn. Mọi siêu tham số khác giữ như script gốc.
 \end{itemize}
 
 \subsection{Outlier nhân tạo}
@@ -92,25 +92,24 @@ Seed vị trí là 2026; một số ô chạy thêm seed 2027, 2028. Thí nghi�
 \subsection{Thống kê và quy tắc đọc ba trường hợp}
 \label{sec:method-stats}
 
-Với mỗi ô, đặt $\Delta = \text{SGD} - \text{dạng đóng}$, tính trên từng seed, cho cả MSE val và MSE test. Dạng đóng ở đây là nghiệm MSE tại $\lambda^*$. Khoảng tin cậy (CI) $95\%$ của trung bình $\Delta$ tính theo phân phối $t$. Với mỗi tập, SGD \emph{thắng} nếu CI nằm hẳn dưới $0$, \emph{thua} nếu nằm hẳn trên $0$, và \emph{hòa} nếu CI chứa $0$. Ghép kết quả trên val và test cho sáu nhãn (\tabref{tab:rule}):
-
-\begin{center}
-\begin{tabular}{@{}lll@{}}
-\toprule
-val & test & nhãn \\
-\midrule
-thắng & thắng & SGD tốt hơn thật \\
-thua & thua & dạng đóng tốt hơn thật \\
-hòa & thắng hoặc thua & khác biệt do val khác test \\
-thắng & hòa hoặc thua & SGD có dấu hiệu khớp val quá mức \\
-thua & hòa hoặc thắng & dạng đóng có dấu hiệu khớp val quá mức \\
-hòa & hòa & không phân biệt được \\
-\bottomrule
-\end{tabular}
-\end{center}
+Với mỗi ô, đặt $\Delta = \text{SGD} - \text{dạng đóng}$, tính trên từng seed, cho cả MSE val và MSE test. Dạng đóng ở đây là nghiệm MSE tại $\lambda^*$. Khoảng tin cậy (CI) $95\%$ của trung bình $\Delta$ tính theo phân phối $t$. Với mỗi tập, SGD \emph{thắng} nếu CI nằm hẳn dưới $0$, \emph{thua} nếu nằm hẳn trên $0$, và \emph{hòa} nếu CI chứa $0$. Ghép kết quả trên val và test cho sáu nhãn (\tabref{tab:rule}); bảng hẹp ở Phụ lục~\ref{app:tables} dùng mã T1--T6.
 
 \begin{captionbelowboxaivn}
 \captab{Quy tắc đọc ba trường hợp: nhãn của một ô theo dấu của CI $95\%$ của $\Delta = $ SGD $-$ dạng đóng trên val và trên test.}\label{tab:rule}
 \end{captionbelowboxaivn}
+\begin{center}
+\begin{tabular}{@{}llll@{}}
+\toprule
+mã & val & test & nhãn \\
+\midrule
+T1 & thắng & thắng & SGD tốt hơn thật \\
+T2 & thua & thua & dạng đóng tốt hơn thật \\
+T3 & hòa & thắng hoặc thua & khác biệt do val khác test \\
+T4 & thắng & hòa hoặc thua & SGD có dấu hiệu khớp val quá mức \\
+T5 & thua & hòa hoặc thắng & dạng đóng có dấu hiệu khớp val quá mức \\
+T6 & hòa & hòa & không phân biệt được \\
+\bottomrule
+\end{tabular}
+\end{center}
 
 So sánh DLinear $-$ Linear khi cùng huấn luyện bằng SGD dùng CI $95\%$ Welch, vì hai mô hình chạy trên các seed độc lập. Mọi CI tính trên trung bình theo seed, không phải trên một lần chạy.

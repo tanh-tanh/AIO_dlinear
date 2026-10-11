@@ -72,7 +72,7 @@ setup_env() {
 quick() {
     setup_env
 
-    step "2. Test (kỳ vọng 63 test, tất cả đạt; test cần results/weights/ tự bỏ qua nếu thiếu)"
+    step "2. Test (kỳ vọng 66 test, tất cả đạt; test cần results/weights/ tự bỏ qua nếu thiếu)"
     "$PY" -m unittest discover -s tests -t .
     done_step
 
@@ -173,9 +173,24 @@ full() {
     [[ $DRY == 1 ]] && "$PY" scripts/sgd/sgd_lr_tune.py --dry-run --workers 5 --threads 2 | tail -5 || true
     run "$PY" scripts/sgd/sgd_lr_tune.py --workers 5 --threads 2
 
-    say "F. Bảng tổng hợp, báo cáo"
+    say "F. Nhiệm vụ 9: mở rộng lưới lr ở 15 ô biên (CPU, khoảng 0,5 giờ với 5 tiến trình); code gốc với drop_last của
+   test loader ở 9 ô (GPU, khoảng 1,5 giờ: ETTm1 chiếm phần lớn); Huber với δ theo bước h ở 2 ô (GPU, khoảng 5 phút)"
+    run "$PY" scripts/sgd/sgd_lr_extend.py --workers 5 --threads 2
+    [[ $DRY == 1 ]] || [[ -e scratch/ltsf_official/run_longExp.py ]] || "$PY" scripts/sgd/official_ltsf.py --prepare
+    for c in ETTh1:DLinear:192 ETTh1:DLinear:720 ETTm1:DLinear:96 ETTm1:DLinear:192 ETTm1:DLinear:336 \
+             ETTh2:NLinear:336 ETTh2:NLinear:720 ETTm1:NLinear:336 ETTh2:DLinear:720; do
+        IFS=: read -r ds m H <<< "$c"
+        for dl in 1 0; do
+            run "$PY" scripts/sgd/official_ltsf.py --dataset "$ds" --model "$m" --H "$H" --seed 2021 2022 2023 2024 2025 \
+                --test-drop-last $dl --out "official_ltsf_droplast/$ds"
+        done
+    done
+    run "$PY" scripts/checks/huber_delta_h.py
+
+    say "G. Bảng tổng hợp, báo cáo"
     run "$PY" scripts/report/report_sgd_b1_b4.py
     run "$PY" scripts/report/report_nv7.py --part all
+    run "$PY" scripts/report/report_nv9.py
     run "$PY" scripts/report/make_numbers.py
     run "$PY" scripts/report/make_tables.py
     run "$PY" scripts/report/make_figures.py

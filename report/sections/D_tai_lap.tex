@@ -4,9 +4,18 @@
 \subsection{Môi trường và phần cứng}
 
 \begin{itemize}
-    \item Python 3.13.5; numpy 2.3.1, pandas 2.3.1, scipy 1.18.1, matplotlib 3.11.0 (\texttt{requirements.txt}).
+    \item Python 3.13.5. Thư viện (\texttt{requirements.txt}): numpy 2.3.1, pandas 2.3.1, scipy 1.18.1, matplotlib 3.11.0, scikit-learn 1.9.0.
     \item PyTorch 2.14.0. Bản \texttt{+cu130} cho GPU RTX 50xx (Blackwell cần CUDA $\ge$ 12.8); bản CPU nếu không có GPU. Cài torch \emph{trước} \texttt{requirements.txt}, xem \texttt{README.md}.
-    \item GPU (grid, IRLS): NVIDIA RTX 5060 Ti 16 GB, driver 616.92, TF32 tắt. CPU (SGD): Intel 12 luồng. Hệ điều hành Windows 11; lệnh chạy qua Git Bash.
+    \item GPU (grid, IRLS, code gốc LTSF-Linear): NVIDIA RTX 5060 Ti 16 GB, driver 616.92, CUDA 13.0, TF32 tắt. CPU (SGD): Intel 12 luồng. Hệ điều hành Windows 11; lệnh chạy qua Git Bash.
+\end{itemize}
+
+\subsection{Seed}
+
+\begin{itemize}
+    \item SGD với lr gốc: seed 2021--2040 (NLinear trên ETTh2: 2021--2030).
+    \item SGD tinh chỉnh lr: chọn lr bằng seed 2021--2025, chạy cuối bằng seed 2026--2040 (không trùng seed chọn lr).
+    \item Code gốc LTSF-Linear (có và không \texttt{drop\_last}): seed 2021--2025.
+    \item Vị trí outlier: seed 2026; thêm 2027, 2028 ở ETTh1 $H = 96$ Linear.
 \end{itemize}
 
 \subsection{Lệnh}
@@ -19,7 +28,7 @@ git clone --recurse-submodules <repo> && cd dlinear-objective-lab
 \end{python}
 \end{aivncodebox}
 
-Chế độ \texttt{quick} chạy lại toàn bộ grid của ETTh1 $H = 96$ (3 mô hình, 3 mục tiêu) vào một thư mục tạm, rồi so với \texttt{results/lambda\_path.csv} bằng \texttt{scripts/checks/compare\_cell.py}. Ngưỡng là $10^{-10}$ với MSE và $10^{-8}$ với MAE, Huber. Trên máy ở trên, bước này mất khoảng \nmReproCheckCellMinutes{} phút. Chế độ \texttt{full} chạy theo đúng thứ tự các nhiệm vụ: grid, $\lambda^*$, Huber $\dmad$, outlier, SGD, tinh chỉnh lr. Các lệnh chi tiết của từng bước nằm trong mục ``Tái lập'' của từng báo cáo kỹ thuật ở \texttt{docs/reports/}. Đường dẫn cũ trong các báo cáo đó tra ở \texttt{docs/DUONG\_DAN\_CU.md}.
+Chế độ \texttt{quick} chạy lại toàn bộ grid của ETTh1 $H = 96$ (3 mô hình, 3 mục tiêu) vào một thư mục tạm, rồi so với \texttt{results/lambda\_path.csv} bằng \texttt{scripts/checks/compare\_cell.py}. Ngưỡng là $10^{-10}$ với MSE và $10^{-8}$ với MAE, Huber. Trên máy ở trên, bước này mất khoảng \nmReproCheckCellMinutes{} phút. Chế độ \texttt{full} chạy theo thứ tự: grid, $\lambda^*$, Huber $\dmad$, outlier, SGD, tinh chỉnh lr và mở rộng lưới lr, code gốc với \texttt{drop\_last}, Huber với $\delta$ theo bước. Thời gian từng bước, giá trị mong đợi của ô kiểm và lệnh chi tiết nằm trong \texttt{README.md} và mục ``Tái lập'' của từng báo cáo kỹ thuật ở \texttt{docs/reports/}. Đường dẫn cũ trong các báo cáo đó tra ở \texttt{docs/DUONG\_DAN\_CU.md}.
 
 \subsection{Thời gian chạy đã đo}
 
@@ -27,7 +36,9 @@ Chế độ \texttt{quick} chạy lại toàn bộ grid của ETTh1 $H = 96$ (3 
     \item Grid (MSE dạng đóng, MAE và Huber $\delta = 1$ bằng IRLS, GPU): \nmReproGridHours{} giờ, gồm ETTh1 \nmReproGridHoursETThOne, ETTh2 \nmReproGridHoursETThTwo{} và ETTm1 \nmReproGridHoursETTmOne{} giờ. MAE chiếm gần hết thời gian.
     \item Grid Huber $\dmad$ (GPU): \nmReproHuberMadHours{} giờ.
     \item SGD với lr gốc (CPU, tổng thời gian của các lần chạy, 20 seed): \nmReproSgdCpuHours{} giờ.
-    \item Tinh chỉnh lr (CPU, 5 tiến trình song song): \nmReproSgdLrWallHours{} giờ thời gian thực.
+    \item Tinh chỉnh lr (CPU, 5 tiến trình song song): \nmReproSgdLrWallHours{} giờ thời gian thực; mở rộng lưới ở các ô đầu mút: \nmTunedLrExtWallHours{} giờ.
+    \item Code gốc LTSF-Linear với \texttt{drop\_last} bật và tắt (GPU, tổng thời gian của các lần chạy): \nmReproDropGpuHours{} giờ.
+    \item Huber với $\delta$ theo bước, 2 ô (GPU): \nmReproDeltaHMinutes{} phút.
 \end{itemize}
 
 \subsection{Phiên bản}

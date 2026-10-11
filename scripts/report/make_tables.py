@@ -55,6 +55,8 @@ LABEL = {"SGD tốt hơn thật": "SGD tốt hơn thật", "dạng đóng tốt 
          "khác biệt do val khác test": "val khác test", "SGD có dấu hiệu khớp val quá mức": "SGD khớp val quá mức",
          "dạng đóng có dấu hiệu khớp val quá mức": "dạng đóng khớp val quá mức",
          "không phân biệt được": "không phân biệt được"}
+# NHIEM_VU_9 D.1: mã ngắn của nhãn cho bảng hẹp (B4 đầy đủ); thứ tự như bảng quy tắc ở mục III.7
+CODE = {k: f"T{i + 1}" for i, k in enumerate(LABEL)}
 
 
 # ---------------------------------------------------------------------------
@@ -150,11 +152,11 @@ def tab_b1():
 
 
 def tab_b4_counts():
-    T = D.nv7()["D_B4"]["counts"]
+    T = D.nv9()["A_B4"]["counts"]
     rows = [r"\begin{tabular}{@{}lrrr@{}}", r"\toprule",
             r"Nhãn & lr gốc, 20 seed & lr gốc, 15 seed mới & lr tinh chỉnh, 15 seed mới \\", r"\midrule"]
     for k, v in T.items():
-        rows.append(f"{LABEL[k]} & {v[2]} & {v[1]} & {v[0]} \\\\")
+        rows.append(f"{CODE[k]}: {LABEL[k]} & {v[2]} & {v[1]} & {v[0]} \\\\")
     rows += [r"\midrule", f"Tổng & {sum(v[2] for v in T.values())} & {sum(v[1] for v in T.values())} & "
              f"{sum(v[0] for v in T.values())} \\\\", r"\bottomrule", r"\end{tabular}"]
     write("b4_counts", "\n".join(rows) + "\n")
@@ -163,16 +165,18 @@ def tab_b4_counts():
 def tab_b4_full():
     old, tuned = D.b4_rows(), D.b4t_rows()
     lr = D.lr_cells()
-    rows = [r"{\footnotesize", r"\begin{longtable}{@{}lrl l l l l@{}}", r"\toprule",
-            r"Dataset & $H$ & Mô hình & $\Delta$ test, lr gốc [CI 95\%] & nhãn (lr gốc) & lr & $\Delta$ test, tinh chỉnh [CI 95\%]; nhãn \\",
+    rows = [r"{\footnotesize", r"\begin{longtable}{@{}lrl l c r l c@{}}", r"\toprule",
+            r" & & & \multicolumn{2}{c}{lr gốc, 20 seed} & \multicolumn{3}{c}{lr tinh chỉnh, 15 seed} \\",
+            r"\cmidrule(lr){4-5}\cmidrule(l){6-8}",
+            r"Dataset & $H$ & Mô hình & $\Delta$ test [CI 95\%] & nhãn & lr & $\Delta$ test [CI 95\%] & nhãn \\",
             r"\midrule", r"\endhead"]
     for ds in D.DATASETS:
         for H in D.HORIZONS:
             for m in D.MODELS:
                 o, t = old[(ds, H, m)], tuned[(ds, H, m)]
                 mult = f"$\\times${float(lr[(ds, H, m)]['chosen_mult']):g}".replace(".", ",")
-                rows.append(f"{ds} & {H} & {m} & {ci(o['d_test'], o['d_test_ci'])} & {LABEL[o['label']]} & {mult} & "
-                            f"{ci(t['d_test_tuned'], t['d_test_ci_tuned'])}; {LABEL[t['label_tuned']]} \\\\")
+                rows.append(f"{ds} & {H} & {m} & {ci(o['d_test'], o['d_test_ci'])} & {CODE[o['label']]} & {mult} & "
+                            f"{ci(t['d_test_tuned'], t['d_test_ci_tuned'])} & {CODE[t['label_tuned']]} \\\\")
         rows.append(r"\addlinespace[2pt]")
     rows += [r"\bottomrule", r"\end{longtable}", "}"]
     write("b4_full", "\n".join(rows) + "\n")
@@ -180,11 +184,12 @@ def tab_b4_full():
 
 def tab_lr():
     lr = D.lr_cells()
-    mults = ["0.5", "1", "2", "4", "8"]
-    rows = [r"{\footnotesize", r"\begin{longtable}{@{}lrlr rrrrr r@{}}", r"\toprule",
-            r" & & & & \multicolumn{5}{c}{MSE val trung bình (seed 2021--2025), lr $= \times$ lr gốc} & \\",
-            r"\cmidrule(lr){5-9}",
-            r"Dataset & $H$ & Mô hình & lr gốc & $\times 0{,}5$ & $\times 1$ & $\times 2$ & $\times 4$ & $\times 8$ & chọn \\",
+    mults = ["0.125", "0.25", "0.5", "1", "2", "4", "8", "16", "32"]
+    rows = [r"{\scriptsize", r"\setlength{\tabcolsep}{4pt}", r"\begin{longtable}{@{}lrlr rrrrrrrrr r@{}}", r"\toprule",
+            r" & & & & \multicolumn{9}{c}{MSE val trung bình (seed 2021--2025), lr $= \times$ lr gốc} & \\",
+            r"\cmidrule(lr){5-13}",
+            r"Dataset & $H$ & Mô hình & lr gốc & " + " & ".join("$\\times " + k.replace(".", "{,}") + "$" for k in mults)
+            + r" & chọn \\",
             r"\midrule", r"\endhead"]
     for ds in ("ETTh2", "ETTh1", "ETTm1"):
         for m in D.MODELS:
@@ -192,7 +197,7 @@ def tab_lr():
                 c = lr[(ds, H, m)]
                 mv = {k: float(v) for k, v in c["mean_val_by_mult"].items()}
                 ch = f"{float(c['chosen_mult']):g}"
-                vals = [("\\textbf{%s}" % n(mv[k], 5) if k == ch else n(mv[k], 5)) if k in mv else "--" for k in mults]
+                vals = [("\\textbf{%s}" % n(mv[k], 4) if k == ch else n(mv[k], 4)) if k in mv else "--" for k in mults]
                 rows.append(f"{ds} & {H} & {m} & {n(float(c['base_lr']), 4).rstrip('0').rstrip(',')} & " + " & ".join(vals)
                             + f" & $\\times${ch.replace('.', ',')} \\\\")
             rows.append(r"\addlinespace[2pt]")
@@ -264,6 +269,89 @@ def tab_magnitude():
     write("magnitude", "\n".join(rows) + "\n")
 
 
+# ---------------------------------------------------------------------------
+# NHIEM_VU_9: drop_last (B), họ ridge ETTh2 (C1), đoạn hằng (C2), δ theo bước h (C3)
+
+def tab_droplast():
+    B = D.nv9()["B"]
+    rows = [r"\begin{tabular}{@{}l r ll r@{}}", r"\toprule",
+            r" & & \multicolumn{2}{c}{code gốc, 5 seed: TB [min; max]} & \\", r"\cmidrule(lr){3-4}",
+            r"Ô & công bố & \texttt{drop\_last=True} & \texttt{drop\_last=False} & cửa sổ bỏ / tổng \\", r"\midrule"]
+    for r in B["rows"]:
+        def f(p):
+            return f"{n(r[p + '_mean'])} [{n(r[p + '_min'])}; {n(r[p + '_max'])}]"
+        pub = n(r["pub"], 3)
+        if r["pub_in_dl1"]:
+            pub = "\\textbf{" + pub + "}"
+        name = f"{r['dataset']}, {r['H']}, {r['model']}" + ("$^\\ast$" if r["control"] else "")
+        rows.append(f"{name} & {pub} & {f('dl1')} & {f('dl0')} & {r['n_dropped']} / {r['n_test']} " + r"\\")
+    rows += [r"\bottomrule", r"\end{tabular}"]
+    write("droplast", "\n".join(rows) + "\n")
+
+
+def tab_ridge():
+    C = D.nv9()["C1"]["rows"]
+    rows = [r"\begin{tabular}{@{}lr rr rr r rr@{}}", r"\toprule",
+            r" & & \multicolumn{2}{c}{ridge ở $\lambda^*_{\mathrm{MSE}}$ (theo val)} & "
+            r"\multicolumn{2}{c}{ridge tốt nhất theo test$^\dagger$} & $\lambda = 0$ & \multicolumn{2}{c}{SGD, TB theo seed} \\",
+            r"\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(l){8-9}",
+            r"Mô hình & $H$ & $\lambda$ & test & $\lambda$ & test & test & lr gốc & tinh chỉnh \\", r"\midrule"]
+    for r in C:
+        rows.append(f"{r['model']} & {r['H']} & {lam(r['lam_star'])} & {n(r['star_test'])} & {lam(r['lam_best_test'])} & "
+                    f"{n(r['best_test'])} & {n(r['lam0_test'])} & {n(r['sgd_orig_mean'])} & {n(r['sgd_tuned_mean'])} " + r"\\")
+        if r["model"] == "Linear" and r["H"] == 720:
+            rows.append(r"\addlinespace[2pt]")
+    rows += [r"\bottomrule", r"\end{tabular}"]
+    write("ridge", "\n".join(rows) + "\n")
+
+
+def tab_etth2filt():
+    T = D.nv9()["C2"]["table"]
+    rows = [r"\begin{tabular}{@{}lr c c c c@{}}", r"\toprule",
+            r" & & \multicolumn{2}{c}{MSE test, gốc / đã lọc} & \multicolumn{2}{c}{$\lambda = 0$, gốc / đã lọc} \\",
+            r"\cmidrule(lr){3-4}\cmidrule(l){5-6}",
+            r"Mô hình & $H$ & dạng đóng, $\lambda^*$ & SGD, TB theo seed & MSE test của MAE & lợi thế của MAE \\",
+            r"\midrule"]
+    for t in T:
+        sg = f"{n(t['sgd_full'])} / {n(t['sgd_filt'])}" if t["sgd_filt"] is not None else f"{n(t['sgd_full'])} / --"
+        mark = "$^\\ddagger$" if t["dlinear_from_linear"] else ""
+        rows.append(f"{t['model']} & {t['H']} & {n(t['cf_full'])} / {n(t['cf_filt'])} & {sg} & "
+                    f"{n(t['mae0_full'])} / {n(t['mae0_filt'])}{mark} & "
+                    f"{n(t['gain_full'], 4, True)} / {n(t['gain_filt'], 4, True)}{mark} " + r"\\")
+        if t["H"] == 720 and t["model"] != "NLinear":
+            rows.append(r"\addlinespace[2pt]")
+    rows += [r"\bottomrule", r"\end{tabular}"]
+    write("etth2filt", "\n".join(rows) + "\n")
+
+
+def tab_runs():
+    C = D.nv9()["C2"]
+    rows = [r"{\footnotesize", r"\begin{longtable}{@{}l ll r r l@{}}", r"\toprule",
+            r"Kênh & bắt đầu & kết thúc & số giờ & giá trị & thuộc \\", r"\midrule", r"\endhead"]
+    for r in C["runs"]:
+        if r["hours"] >= 96:
+            rows.append(f"{r['channel']} & {r['start'][:13]}h & {r['end'][:13]}h & {r['hours']} & {n(r['value'], 2)} & "
+                        f"{r['split']} " + r"\\")
+    rows += [r"\bottomrule", r"\end{longtable}", "}"]
+    write("runs", "\n".join(rows) + "\n")
+
+
+def tab_deltah():
+    C = D.nv9()["C3"]["rows"]
+    rows = [r"\begin{tabular}{@{}l l rrrr@{}}", r"\toprule",
+            r" & & \multicolumn{4}{c}{mục tiêu huấn luyện} \\", r"\cmidrule(l){3-6}",
+            r"Ô & metric & MSE & MAE & Huber, $\dmad$ & Huber, $\delta_h$ \\", r"\midrule"]
+    for r in C:
+        t = r["test"]
+        for met, lab in (("mse", "MSE test"), ("mae", "MAE test")):
+            v = [t["MSE"][met], t["MAE"][met], t["Huber δ_MAD"][met], t["Huber δ_h"][met]]
+            head = f"{r['dataset']}, $H = {r['H']}$, {r['model']}" if met == "mse" else ""
+            rows.append(f"{head} & {lab} & " + " & ".join(n(x) for x in v) + r" \\")
+        rows.append(r"\addlinespace[2pt]")
+    rows += [r"\bottomrule", r"\end{tabular}"]
+    write("deltah", "\n".join(rows) + "\n")
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     tab_b2()
@@ -276,6 +364,11 @@ def main():
     tab_c3()
     tab_outliers()
     tab_magnitude()
+    tab_droplast()
+    tab_ridge()
+    tab_etth2filt()
+    tab_runs()
+    tab_deltah()
 
 
 if __name__ == "__main__":

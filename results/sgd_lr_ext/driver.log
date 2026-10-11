@@ -1,0 +1,47 @@
+15 ô biên trong results\sgd_lr\selection.json
+[22:10:19] ETTm1 Linear H=96 ×16 (lr 0.0016): 5 seed
+[22:10:19] ETTm1 Linear H=192 ×16 (lr 0.0016): 5 seed
+[22:10:19] ETTm1 NLinear H=96 ×16 (lr 0.0016): 5 seed
+[22:10:19] ETTm1 Linear H=336 ×16 (lr 0.0016): 5 seed
+[22:10:19] ETTm1 NLinear H=720 ×16 (lr 0.0016): 5 seed
+[22:21:36] xong ETTm1 NLinear H=96: ×8 → ×8
+[22:21:36] ETTh1 DLinear H=336 ×0.25 (lr 0.00125): 5 seed
+[22:22:10] ETTm1 Linear H=96 ×32 (lr 0.0032): 5 seed
+[22:23:45] xong ETTh1 DLinear H=336: ×0.5 → ×0.5
+[22:23:45] ETTh1 DLinear H=720 ×16 (lr 0.08): 5 seed
+[22:23:58] xong ETTm1 Linear H=336: ×8 → ×8
+[22:23:58] ETTh1 Linear H=192 ×16 (lr 0.08): 5 seed
+[22:24:09] xong ETTm1 Linear H=192: ×8 → ×8
+[22:24:09] ETTh1 Linear H=720 ×0.25 (lr 0.00125): 5 seed
+[22:24:50] xong ETTh1 Linear H=192: ×8 → ×8
+[22:24:50] ETTh2 DLinear H=192 ×0.25 (lr 0.0125): 5 seed
+[22:25:30] xong ETTh1 Linear H=720: ×0.5 → ×0.5
+[22:25:30] ETTh2 Linear H=720 ×0.25 (lr 0.0125): 5 seed
+[22:26:18] xong ETTh2 DLinear H=192: ×0.5 → ×0.5
+[22:26:18] ETTh2 NLinear H=96 ×0.25 (lr 0.0125): 5 seed
+[22:27:06] xong ETTh2 Linear H=720: ×0.5 → ×0.5
+[22:27:06] ETTh2 NLinear H=192 ×0.25 (lr 0.0125): 5 seed
+[22:27:25] xong ETTh2 NLinear H=96: ×0.5 → ×0.5
+[22:27:25] ETTh2 NLinear H=336 ×0.25 (lr 0.0125): 5 seed
+[22:27:29] xong ETTh1 DLinear H=720: ×8 → ×8
+[22:27:29] ETTh2 NLinear H=720 ×0.25 (lr 0.0125): 5 seed
+[22:28:41] ETTm1 Linear H=96 ×32 (lr 0.0032): 15 seed
+[22:28:42] ETTh2 NLinear H=192 ×0.125 (lr 0.00625): 5 seed
+[22:29:05] xong ETTh2 NLinear H=336: ×0.5 → ×0.5
+[22:29:58] ETTh2 NLinear H=192 ×0.25 (lr 0.0125): 15 seed
+[22:30:20] ETTh2 NLinear H=720 ×0.125 (lr 0.00625): 5 seed
+[22:32:06] ETTh2 NLinear H=720 ×0.125 (lr 0.00625): 15 seed
+[22:33:32] xong ETTh2 NLinear H=192: ×0.5 → ×0.25
+[22:33:50] ETTm1 NLinear H=720 ×32 (lr 0.0032): 5 seed
+[22:36:16] xong ETTh2 NLinear H=720: ×0.5 → ×0.125 (còn ở biên)
+[22:44:23] xong ETTm1 Linear H=96: ×8 → ×32 (còn ở biên)
+[22:45:22] ETTm1 NLinear H=720 ×16 (lr 0.0016): 15 seed
+[22:59:52] xong ETTm1 NLinear H=720: ×8 → ×16
+→ C:\Users\Admin\Documents\AIO_dlinear\results\sgd_lr_ext\selection.json (0.83 giờ)
+15 ô biên trong results\sgd_lr\selection.json
+[23:02:51] ETTh1 DLinear H=720 ×16 (lr 0.08): 1 seed
+[23:02:51] xong ETTh1 DLinear H=336: ×0.5 → ×0.5
+[23:02:51] xong ETTh1 Linear H=192: ×8 → ×8
+[23:02:51] xong ETTh1 Linear H=720: ×0.5 → ×0.5
+[23:03:10] xong ETTh1 DLinear H=720: ×8 → ×8
+→ C:\Users\Admin\Documents\AIO_dlinear\results\sgd_lr_ext\selection.json (0.01 giờ)

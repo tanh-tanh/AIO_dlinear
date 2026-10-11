@@ -1,0 +1,21 @@
+→ results\official_ltsf_droplast\ETTm1\NLinear_H336_seed2021_dl1.json
+  NLinear H=336 seed 2021: code gốc test MSE 0.3754 MAE 0.3884, chấm lại 0.3754 / 0.3884, epoch tốt nhất 8/10, 269 s
+→ results\official_ltsf_droplast\ETTm1\NLinear_H336_seed2022_dl1.json
+  NLinear H=336 seed 2022: code gốc test MSE 0.3866 MAE 0.3964, chấm lại 0.3866 / 0.3964, epoch tốt nhất 2/5, 145 s
+→ results\official_ltsf_droplast\ETTm1\NLinear_H336_seed2023_dl1.json
+  NLinear H=336 seed 2023: code gốc test MSE 0.3762 MAE 0.3891, chấm lại 0.3762 / 0.3891, epoch tốt nhất 4/7, 176 s
+→ results\official_ltsf_droplast\ETTm1\NLinear_H336_seed2024_dl1.json
+  NLinear H=336 seed 2024: code gốc test MSE 0.3796 MAE 0.3918, chấm lại 0.3796 / 0.3918, epoch tốt nhất 3/6, 141 s
+→ results\official_ltsf_droplast\ETTm1\NLinear_H336_seed2025_dl1.json
+  NLinear H=336 seed 2025: code gốc test MSE 0.3758 MAE 0.3889, chấm lại 0.3758 / 0.3889, epoch tốt nhất 5/8, 181 s
+→ results\official_ltsf_droplast\ETTm1\NLinear_H336_seed2021_dl0.json
+  NLinear H=336 seed 2021: code gốc test MSE 0.3754 MAE 0.3884, chấm lại 0.3754 / 0.3884, epoch tốt nhất 8/10, 210 s
+→ results\official_ltsf_droplast\ETTm1\NLinear_H336_seed2022_dl0.json
+  NLinear H=336 seed 2022: code gốc test MSE 0.3866 MAE 0.3964, chấm lại 0.3866 / 0.3964, epoch tốt nhất 2/5, 137 s
+→ results\official_ltsf_droplast\ETTm1\NLinear_H336_seed2023_dl0.json
+  NLinear H=336 seed 2023: code gốc test MSE 0.3762 MAE 0.3891, chấm lại 0.3762 / 0.3891, epoch tốt nhất 4/7, 191 s
+→ results\official_ltsf_droplast\ETTm1\NLinear_H336_seed2024_dl0.json
+  NLinear H=336 seed 2024: code gốc test MSE 0.3796 MAE 0.3918, chấm lại 0.3796 / 0.3918, epoch tốt nhất 3/6, 141 s
+→ results\official_ltsf_droplast\ETTm1\NLinear_H336_seed2025_dl0.json
+  NLinear H=336 seed 2025: code gốc test MSE 0.3758 MAE 0.3889, chấm lại 0.3758 / 0.3889, epoch tốt nhất 5/8, 134 s
+XONG

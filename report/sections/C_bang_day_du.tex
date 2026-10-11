@@ -3,37 +3,70 @@
 
 Mọi bảng trong phụ lục này sinh tự động bởi \texttt{scripts/report/make\_tables.py} từ các file trong \texttt{results/} (xem \texttt{results/README.md}).
 
-\subsection{B3 đầy đủ}
+\subsection{Nghiệm tối ưu, đủ mọi tổ hợp}
 
-\tabref{tab:b3full} là bảng B3 đầy đủ, 216 ô: 3 mô hình $\times$ 3 mục tiêu $\times$ $\{\lambda = 0, \lambda^*\}$ $\times$ 3 dataset $\times$ 4 horizon, mỗi ô có cả MSE và MAE test.
+\tabref{tab:b3full} là bản đủ của \tabref{tab:b3}, 216 ô: 3 mô hình $\times$ 3 mục tiêu $\times$ $\{\lambda = 0, \lambda^*\}$ $\times$ 3 dataset $\times$ 4 horizon, mỗi ô có cả MSE và MAE test.
 
-\input{generated/tab_b3_full.tex}
 \begin{captionbelowboxaivn}
-\captab{B3 đầy đủ. Cột $\lambda = 0$: MSE / MAE test của nghiệm không phạt. MSE test ở $\lambda^*_{\mathrm{MSE}}$, MAE test ở $\lambda^*_{\mathrm{MAE}}$. Cột $\delta$: $\dmad$ của Huber; MAE là Huber với $\delta = 10^{-6}$. \textbf{Đậm}: thấp nhất giữa ba mục tiêu trong cùng (dataset, $H$, mô hình).}\label{tab:b3full}
+\captab{Nghiệm tối ưu, đủ mọi tổ hợp. Cột $\lambda = 0$: MSE / MAE test của nghiệm không phạt. MSE test ở $\lambda^*_{\mathrm{MSE}}$, MAE test ở $\lambda^*_{\mathrm{MAE}}$. Cột $\delta$: $\dmad$ của Huber; MAE là Huber với $\delta = 10^{-6}$. \textbf{Đậm}: thấp nhất giữa ba mục tiêu trong cùng (dataset, $H$, mô hình).}\label{tab:b3full}
 \end{captionbelowboxaivn}
+\input{generated/tab_b3_full.tex}
 
-\subsection{B4 đầy đủ}
+\subsection{SGD so với nghiệm dạng đóng, từng ô}
 
 \tabref{tab:b4full} cho $\Delta$ test và nhãn của từng ô, với lr gốc (20 seed) và lr đã tinh chỉnh (15 seed mới). \tabref{tab:lr} cho MSE val của từng mức lr đã thử.
 
+\begin{captionbelowboxaivn}
+\captab{$\Delta = $ TB SGD $-$ dạng đóng MSE ở $\lambda^*$, MSE test, CI $95\%$ theo $t$. Nhãn theo mã của \tabref{tab:rule}: T1 SGD tốt hơn thật; T2 dạng đóng tốt hơn thật; T3 khác biệt do val khác test; T4 SGD có dấu hiệu khớp val quá mức; T5 dạng đóng có dấu hiệu khớp val quá mức; T6 không phân biệt được. Cột lr: mức được chọn, bội của lr gốc.}\label{tab:b4full}
+\end{captionbelowboxaivn}
 \input{generated/tab_b4_full.tex}
-\begin{captionbelowboxaivn}
-\captab{B4 đầy đủ: $\Delta = $ TB SGD $-$ dạng đóng MSE ở $\lambda^*$, MSE test, CI $95\%$ theo $t$; nhãn theo \tabref{tab:rule}. Cột lr: mức được chọn, bội của lr gốc.}\label{tab:b4full}
-\end{captionbelowboxaivn}
 
-\input{generated/tab_lr.tex}
 \begin{captionbelowboxaivn}
-\captab{Tinh chỉnh learning rate: MSE val trung bình trên 5 seed (2021--2025) cho từng mức lr. \textbf{Đậm}: mức được chọn. ``--'': không thử ($\times 8$ chỉ thử khi $\times 4$ được chọn trước).}\label{tab:lr}
+\captab{Tinh chỉnh learning rate: MSE val trung bình trên 5 seed (2021--2025) cho từng mức lr. \textbf{Đậm}: mức được chọn. ``--'': không thử ($\times 8$ chỉ thử khi $\times 4$ được chọn; $\times 0{,}25$, $\times 0{,}125$, $\times 16$, $\times 32$ chỉ thử ở ô chọn mức đầu mút, theo quy tắc ở \secref{sec:method-sgd}).}\label{tab:lr}
 \end{captionbelowboxaivn}
+\input{generated/tab_lr.tex}
+
+\subsection{Họ ridge trên ETTh2}
+
+\tabref{tab:ridge} so họ ridge (mục tiêu MSE, đủ 142 giá trị $\lambda$) với SGD trên ETTh2 (\secref{sec:rq3}).
+
+\begin{captionbelowboxaivn}
+\captab{Họ ridge so với SGD trên ETTh2, MSE test. $^\dagger$Ridge tốt nhất theo test: MSE test nhỏ nhất trên toàn lưới $\lambda$, tức chọn $\lambda$ bằng tập test. Đây là \emph{mức tham chiếu không hợp lệ để chọn mô hình}, chỉ dùng để chỉ ra giới hạn dưới của cả họ ridge. SGD: lr gốc 20 seed, lr tinh chỉnh 15 seed.}\label{tab:ridge}
+\end{captionbelowboxaivn}
+\begin{center}
+\small
+\input{generated/tab_ridge.tex}
+\end{center}
+
+\subsection{Vị trí các đoạn hằng của ETTh2}
+
+\tabref{tab:runs} liệt kê các đoạn hằng dài ít nhất 96 giờ của ETTh2 (\secref{sec:etth2}).
+
+\begin{captionbelowboxaivn}
+\captab{Các đoạn của ETTh2 mà một kênh giữ nguyên giá trị gốc ít nhất 96 giờ liên tiếp (đủ dài để tạo cửa sổ đích hằng ở $H = 96$). Giá trị theo đơn vị gốc. Cột ``thuộc'': train, val hay test theo cách chia ở \secref{sec:method-data}.}\label{tab:runs}
+\end{captionbelowboxaivn}
+\input{generated/tab_runs.tex}
+
+\subsection{Huber với \texorpdfstring{$\delta$}{delta} theo từng bước \texorpdfstring{$h$}{h}}
+
+\tabref{tab:deltah} so Huber với $\delta_h = 1{,}345\,\hat\sigma_h$ theo từng bước và Huber với $\dmad$ chung (\secref{sec:rq2}).
+
+\begin{captionbelowboxaivn}
+\captab{Huber với $\delta$ chung ($\dmad$) và $\delta$ theo bước ($\delta_h = 1{,}345\,\hat\sigma_h$, $\hat\sigma_h = 1{,}4826 \cdot \mathrm{MAD}$ của phần dư train ở bước $h$ của nghiệm MSE $\lambda = 0$), đặt cạnh mục tiêu MSE và MAE của cùng ô. MSE test ở $\lambda^*_{\mathrm{MSE}}$, MAE test ở $\lambda^*_{\mathrm{MAE}}$ của từng đường $\lambda$. Đường $\lambda$ đầy đủ như grid, \texttt{tol} $= 10^{-9}$.}\label{tab:deltah}
+\end{captionbelowboxaivn}
+\begin{center}
+\footnotesize
+\input{generated/tab_deltah.tex}
+\end{center}
 
 \subsection{Thí nghiệm outlier}
 
 \tabref{tab:outliers} cho bảng đầy đủ của thí nghiệm outlier ($\pm 10$ độ lệch chuẩn, seed 2026), và \figref{fig:h2mae} là bản theo MAE test của \figref{fig:h2}. \tabref{tab:magnitude} cho thí nghiệm độ lớn.
 
-\input{generated/tab_outliers.tex}
 \begin{captionbelowboxaivn}
 \captab{Outlier trên ETTh1, $\pm 10$ độ lệch chuẩn, seed 2026. ``chuỗi'': chèn vào chuỗi train; ``đích'': chèn chỉ vào đích. Huber dùng $\dmad$ của chính tập train đã chèn. \textbf{Đậm}: thấp nhất giữa ba mục tiêu.}\label{tab:outliers}
 \end{captionbelowboxaivn}
+\input{generated/tab_outliers.tex}
 
 \begin{figure}[H]
 \centering
@@ -43,10 +76,10 @@ Mọi bảng trong phụ lục này sinh tự động bởi \texttt{scripts/repo
 \end{figurecardcaptionaivn}
 \end{figure}
 
+\begin{captionbelowboxaivn}
+\captab{Độ lớn outlier: Linear, ETTh1, seed 2026, cùng vị trí outlier ở mọi độ lớn. \textbf{Đậm}: thấp nhất giữa ba mục tiêu.}\label{tab:magnitude}
+\end{captionbelowboxaivn}
 \begin{center}
 \small
 \input{generated/tab_magnitude.tex}
 \end{center}
-\begin{captionbelowboxaivn}
-\captab{Độ lớn outlier: Linear, ETTh1, seed 2026, cùng vị trí outlier ở mọi độ lớn. \textbf{Đậm}: thấp nhất giữa ba mục tiêu.}\label{tab:magnitude}
-\end{captionbelowboxaivn}

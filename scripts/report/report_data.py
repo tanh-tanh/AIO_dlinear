@@ -8,8 +8,10 @@ Nguồn:
 - B3: results/huber_mad/results_v2.csv (MSE, MAE từ grid; Huber δ_MAD), results/results_v2.csv (Huber δ = 1).
   Tiêu chí chọn λ* (BAO_CAO_NV7 B.1): MSE test ở λ*_MSE (selection = val_mse), MAE test ở λ*_MAE (val_mae).
 - B1, B4 (lr gốc), C.3: results/sgd_b1_b4/summary.json.
-- B4-tinh chỉnh, C.3-tinh chỉnh, A (δ_MAD), C (độ lớn outlier): results/nv7/summary.json; lr đã chọn:
-  results/sgd_lr/selection.json.
+- A (δ_MAD), C (độ lớn outlier): results/nv7/summary.json.
+- B4-tinh chỉnh, C.3-tinh chỉnh (lưới lr đã mở rộng, NHIEM_VU_9 A), drop_last (B), họ ridge ETTh2 (C1), đoạn hằng (C2),
+  δ theo bước h (C3): results/nv9/summary.json; lr đã chọn: results/sgd_lr/selection.json gộp với
+  results/sgd_lr_ext/selection.json (report_nv9.merged_selection). Bản trước mở rộng (nv7) vẫn đọc được qua nv7().
 - Outlier: results/outliers/results_v2.csv (MSE, MAE), results/huber_mad/outliers/results_v2.csv (Huber δ_MAD).
 - ETTh2: results/etth2_report_2/summary.json, results/constant_windows/summary.json.
 """
@@ -172,6 +174,10 @@ def nv7():
     return read_json("nv7/summary.json")
 
 
+def nv9():
+    return read_json("nv9/summary.json")
+
+
 def b1_rows():
     return {(r["dataset"], r["H"], r["model"]): r for r in sgd_summary()["B1"]["rows"]}
 
@@ -181,7 +187,7 @@ def b4_rows():
 
 
 def b4t_rows():
-    return {(r["dataset"], r["H"], r["model"]): r for r in nv7()["D_B4"]["rows"]}
+    return {(r["dataset"], r["H"], r["model"]): r for r in nv9()["A_B4"]["rows"]}
 
 
 def c3_rows():
@@ -189,11 +195,20 @@ def c3_rows():
 
 
 def c3t_rows():
-    return {(r["dataset"], r["H"]): r for r in nv7()["D_C3"]["rows"]}
+    return {(r["dataset"], r["H"]): r for r in nv9()["A_C3"]["rows"]}
+
+
+@lru_cache(None)
+def _merged_sel():
+    import sys
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from report_nv9 import merged_selection
+    return merged_selection()[0]
 
 
 def lr_cells():
-    return {(c["dataset"], int(c["H"]), c["model"]): c for c in read_json("sgd_lr/selection.json")["cells"].values()}
+    """lr đã chọn sau khi mở rộng lưới (NHIEM_VU_9 A); mean_val_by_mult, sel_files gồm cả các mức mới."""
+    return {(c["dataset"], int(c["H"]), c["model"]): c for c in _merged_sel().values()}
 
 
 def lr_noisy_count():

@@ -13,6 +13,7 @@ results/outliers/d2_lr/**/*.npy
 results/huber_mad/**/weights/
 results/outliers_mag/**/weights/
 results/sgd_lr/**/*.npy
+results/sgd_lr_ext/**/*.npy
 
 # Nhiệm vụ 8 (A.4)
 .venv*/

@@ -1,0 +1,11 @@
+C:\Users\Admin\Documents\AIO_dlinear\.venv-gpu\Scripts\python.exe C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py --step run --dataset ETTm1 --model Linear --H 336 --lr 0.0016 --threads 2 --out sgd_lr_ext/ETTm1/x16 --seed 2021 2022 2023 2024 2025
+→ results\sgd_lr_ext\ETTm1\x16\Linear_H336_seed2021.json
+  Linear H=336 seed 2021: epoch tốt nhất 1/4, val MSE 0.622011, test MSE 0.400923 MAE 0.418038, 46 s
+→ results\sgd_lr_ext\ETTm1\x16\Linear_H336_seed2022.json
+  Linear H=336 seed 2022: epoch tốt nhất 8/10, val MSE 0.608461, test MSE 0.371516 MAE 0.389348, 207 s
+→ results\sgd_lr_ext\ETTm1\x16\Linear_H336_seed2023.json
+  Linear H=336 seed 2023: epoch tốt nhất 7/10, val MSE 0.613674, test MSE 0.369586 MAE 0.386579, 338 s
+→ results\sgd_lr_ext\ETTm1\x16\Linear_H336_seed2024.json
+  Linear H=336 seed 2024: epoch tốt nhất 3/6, val MSE 0.620426, test MSE 0.392081 MAE 0.406786, 143 s
+→ results\sgd_lr_ext\ETTm1\x16\Linear_H336_seed2025.json
+  Linear H=336 seed 2025: epoch tốt nhất 2/5, val MSE 0.617132, test MSE 0.394275 MAE 0.412748, 51 s

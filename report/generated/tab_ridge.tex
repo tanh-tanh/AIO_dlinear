@@ -1,0 +1,18 @@
+% Tự động sinh bởi scripts/report/make_tables.py từ results/. KHÔNG SỬA TAY.
+\begin{tabular}{@{}lr rr rr r rr@{}}
+\toprule
+ & & \multicolumn{2}{c}{ridge ở $\lambda^*_{\mathrm{MSE}}$ (theo val)} & \multicolumn{2}{c}{ridge tốt nhất theo test$^\dagger$} & $\lambda = 0$ & \multicolumn{2}{c}{SGD, TB theo seed} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(l){8-9}
+Mô hình & $H$ & $\lambda$ & test & $\lambda$ & test & test & lr gốc & tinh chỉnh \\
+\midrule
+Linear & 96 & 1585 & 0{,}3009 & 1995 & 0{,}3009 & 0{,}3019 & 0{,}2968 & 0{,}2989 \\
+Linear & 192 & 1122 & 0{,}3966 & 1585 & 0{,}3966 & 0{,}3972 & 0{,}3961 & 0{,}3941 \\
+Linear & 336 & 1000 & 0{,}4853 & 1585 & 0{,}4853 & 0{,}4858 & 0{,}4496 & 0{,}4508 \\
+Linear & 720 & 1000 & 0{,}7404 & 1000 & 0{,}7404 & 0{,}7407 & 0{,}6967 & 0{,}7089 \\
+\addlinespace[2pt]
+DLinear & 96 & 1995 & 0{,}3008 & 2818 & 0{,}3007 & 0{,}3019 & 0{,}2913 & 0{,}2925 \\
+DLinear & 192 & 1259 & 0{,}3966 & 1995 & 0{,}3965 & 0{,}3972 & 0{,}3807 & 0{,}3746 \\
+DLinear & 336 & 1122 & 0{,}4853 & 1778 & 0{,}4853 & 0{,}4858 & 0{,}4529 & 0{,}4515 \\
+DLinear & 720 & 1122 & 0{,}7403 & 1122 & 0{,}7403 & 0{,}7407 & 0{,}6869 & 0{,}6897 \\
+\bottomrule
+\end{tabular}

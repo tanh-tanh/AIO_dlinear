@@ -1,0 +1,1249 @@
+{
+ "hardware": {
+  "cpu": "Intel64 Family 6 Model 151 Stepping 5, GenuineIntel",
+  "torch": "2.14.0+cu130",
+  "os": "Windows-11-10.0.26100-SP0"
+ },
+ "git_commit": "4cc00546efb9-dirty",
+ "date": "2026-10-11 23:03:11",
+ "workers": 5,
+ "threads": 2,
+ "n_edge_cells": 15,
+ "wall_seconds_last_call": 19.256410837173462,
+ "cells": {
+  "ETTm1 Linear H=96": {
+   "dataset": "ETTm1",
+   "model": "Linear",
+   "H": 96,
+   "base_lr": 0.0001,
+   "edge": "trên",
+   "old_chosen_mult": 8.0,
+   "old_mean_val_by_mult": {
+    "0.5": 0.3922439247410002,
+    "1": 0.38793902448809814,
+    "2": 0.38459449334738127,
+    "4": 0.3820192540115068,
+    "8": 0.3815266628647434
+   },
+   "new_levels": {
+    "16": {
+     "mean_val": 0.3813268342323094,
+     "vals": [
+      0.3822747003323744,
+      0.3814257136940463,
+      0.3802389135033026,
+      0.38093945977278687,
+      0.38175538385903696
+     ],
+     "failed": []
+    },
+    "32": {
+     "mean_val": 0.3812291523454473,
+     "vals": [
+      0.383123039620045,
+      0.38193823267528465,
+      0.37926150832825795,
+      0.38103883683053996,
+      0.3807841442731089
+     ],
+     "failed": []
+    }
+   },
+   "sel_files": {
+    "16": [
+     "results\\sgd_lr_ext\\ETTm1\\x16\\Linear_H96_seed2021.json",
+     "results\\sgd_lr_ext\\ETTm1\\x16\\Linear_H96_seed2022.json",
+     "results\\sgd_lr_ext\\ETTm1\\x16\\Linear_H96_seed2023.json",
+     "results\\sgd_lr_ext\\ETTm1\\x16\\Linear_H96_seed2024.json",
+     "results\\sgd_lr_ext\\ETTm1\\x16\\Linear_H96_seed2025.json"
+    ],
+    "32": [
+     "results\\sgd_lr_ext\\ETTm1\\x32\\Linear_H96_seed2021.json",
+     "results\\sgd_lr_ext\\ETTm1\\x32\\Linear_H96_seed2022.json",
+     "results\\sgd_lr_ext\\ETTm1\\x32\\Linear_H96_seed2023.json",
+     "results\\sgd_lr_ext\\ETTm1\\x32\\Linear_H96_seed2024.json",
+     "results\\sgd_lr_ext\\ETTm1\\x32\\Linear_H96_seed2025.json"
+    ]
+   },
+   "max_new_levels": 2,
+   "chosen_mult": 32.0,
+   "chosen_lr": 0.0032,
+   "changed": true,
+   "still_at_edge": true,
+   "at_edge_budget_cut": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr_ext\\ETTm1\\x32\\Linear_H96_seed2026.json",
+    "results\\sgd_lr_ext\\ETTm1\\x32\\Linear_H96_seed2027.json",
+    "results\\sgd_lr_ext\\ETTm1\\x32\\Linear_H96_seed2028.json",
+    "results\\sgd_lr_ext\\ETTm1\\x32\\Linear_H96_seed2029.json",
+    "results\\sgd_lr_ext\\ETTm1\\x32\\Linear_H96_seed2030.json",
+    "results\\sgd_lr_ext\\ETTm1\\x32\\Linear_H96_seed2031.json",
+    "results\\sgd_lr_ext\\ETTm1\\x32\\Linear_H96_seed2032.json",
+    "results\\sgd_lr_ext\\ETTm1\\x32\\Linear_H96_seed2033.json",
+    "results\\sgd_lr_ext\\ETTm1\\x32\\Linear_H96_seed2034.json",
+    "results\\sgd_lr_ext\\ETTm1\\x32\\Linear_H96_seed2035.json",
+    "results\\sgd_lr_ext\\ETTm1\\x32\\Linear_H96_seed2036.json",
+    "results\\sgd_lr_ext\\ETTm1\\x32\\Linear_H96_seed2037.json",
+    "results\\sgd_lr_ext\\ETTm1\\x32\\Linear_H96_seed2038.json",
+    "results\\sgd_lr_ext\\ETTm1\\x32\\Linear_H96_seed2039.json",
+    "results\\sgd_lr_ext\\ETTm1\\x32\\Linear_H96_seed2040.json"
+   ],
+   "final_mean_val": 0.3811129058544489
+  },
+  "ETTm1 Linear H=192": {
+   "dataset": "ETTm1",
+   "model": "Linear",
+   "H": 192,
+   "base_lr": 0.0001,
+   "edge": "trên",
+   "old_chosen_mult": 8.0,
+   "old_mean_val_by_mult": {
+    "0.5": 0.49933134856343686,
+    "1": 0.49452837343452555,
+    "2": 0.49141102446269225,
+    "4": 0.49126968293042406,
+    "8": 0.4887977041205052
+   },
+   "new_levels": {
+    "16": {
+     "mean_val": 0.488981178500605,
+     "vals": [
+      0.4877553211300055,
+      0.4881091107015043,
+      0.4894777157926927,
+      0.48923743041448736,
+      0.4903263144643353
+     ],
+     "failed": []
+    }
+   },
+   "sel_files": {
+    "16": [
+     "results\\sgd_lr_ext\\ETTm1\\x16\\Linear_H192_seed2021.json",
+     "results\\sgd_lr_ext\\ETTm1\\x16\\Linear_H192_seed2022.json",
+     "results\\sgd_lr_ext\\ETTm1\\x16\\Linear_H192_seed2023.json",
+     "results\\sgd_lr_ext\\ETTm1\\x16\\Linear_H192_seed2024.json",
+     "results\\sgd_lr_ext\\ETTm1\\x16\\Linear_H192_seed2025.json"
+    ]
+   },
+   "max_new_levels": 2,
+   "chosen_mult": 8.0,
+   "chosen_lr": 0.0008,
+   "changed": false,
+   "still_at_edge": false,
+   "at_edge_budget_cut": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2026.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2027.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2028.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2029.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2030.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2031.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2032.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2033.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2034.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2035.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2036.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2037.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2038.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2039.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H192_seed2040.json"
+   ],
+   "final_mean_val": 0.4882534149470807
+  },
+  "ETTm1 Linear H=336": {
+   "dataset": "ETTm1",
+   "model": "Linear",
+   "H": 336,
+   "base_lr": 0.0001,
+   "edge": "trên",
+   "old_chosen_mult": 8.0,
+   "old_mean_val_by_mult": {
+    "0.5": 0.6250760463888577,
+    "1": 0.6198280490159471,
+    "2": 0.616403152416502,
+    "4": 0.6118309833705219,
+    "8": 0.6106387008252498
+   },
+   "new_levels": {
+    "16": {
+     "mean_val": 0.6163408787175618,
+     "vals": [
+      0.6220109754919444,
+      0.6084613283655561,
+      0.6136735095512409,
+      0.6204263991659603,
+      0.6171321810131075
+     ],
+     "failed": []
+    }
+   },
+   "sel_files": {
+    "16": [
+     "results\\sgd_lr_ext\\ETTm1\\x16\\Linear_H336_seed2021.json",
+     "results\\sgd_lr_ext\\ETTm1\\x16\\Linear_H336_seed2022.json",
+     "results\\sgd_lr_ext\\ETTm1\\x16\\Linear_H336_seed2023.json",
+     "results\\sgd_lr_ext\\ETTm1\\x16\\Linear_H336_seed2024.json",
+     "results\\sgd_lr_ext\\ETTm1\\x16\\Linear_H336_seed2025.json"
+    ]
+   },
+   "max_new_levels": 2,
+   "chosen_mult": 8.0,
+   "chosen_lr": 0.0008,
+   "changed": false,
+   "still_at_edge": false,
+   "at_edge_budget_cut": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2026.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2027.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2028.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2029.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2030.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2031.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2032.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2033.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2034.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2035.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2036.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2037.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2038.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2039.json",
+    "results\\sgd_lr\\ETTm1\\x8\\Linear_H336_seed2040.json"
+   ],
+   "final_mean_val": 0.6148783573012871
+  },
+  "ETTm1 NLinear H=96": {
+   "dataset": "ETTm1",
+   "model": "NLinear",
+   "H": 96,
+   "base_lr": 0.0001,
+   "edge": "trên",
+   "old_chosen_mult": 8.0,
+   "old_mean_val_by_mult": {
+    "0.5": 0.3958273366118401,
+    "1": 0.39279808559131213,
+    "2": 0.3903255846367656,
+    "4": 0.3877101524610791,
+    "8": 0.3844686518150936
+   },
+   "new_levels": {
+    "16": {
+     "mean_val": 0.38728555791102776,
+     "vals": [
+      0.3885755773387841,
+      0.38453163015192315,
+      0.3867774930272429,
+      0.38584303991131946,
+      0.3907000491258689
+     ],
+     "failed": []
+    }
+   },
+   "sel_files": {
+    "16": [
+     "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H96_seed2021.json",
+     "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H96_seed2022.json",
+     "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H96_seed2023.json",
+     "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H96_seed2024.json",
+     "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H96_seed2025.json"
+    ]
+   },
+   "max_new_levels": 2,
+   "chosen_mult": 8.0,
+   "chosen_lr": 0.0008,
+   "changed": false,
+   "still_at_edge": false,
+   "at_edge_budget_cut": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2026.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2027.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2028.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2029.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2030.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2031.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2032.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2033.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2034.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2035.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2036.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2037.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2038.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2039.json",
+    "results\\sgd_lr\\ETTm1\\x8\\NLinear_H96_seed2040.json"
+   ],
+   "final_mean_val": 0.3878994122786981
+  },
+  "ETTm1 NLinear H=720": {
+   "dataset": "ETTm1",
+   "model": "NLinear",
+   "H": 720,
+   "base_lr": 0.0001,
+   "edge": "trên",
+   "old_chosen_mult": 8.0,
+   "old_mean_val_by_mult": {
+    "0.5": 0.9677534587119782,
+    "1": 0.9648758193446099,
+    "2": 0.962472665838078,
+    "4": 0.9614207683141412,
+    "8": 0.9607291061931983
+   },
+   "new_levels": {
+    "16": {
+     "mean_val": 0.9582316809574399,
+     "vals": [
+      0.9559568163295531,
+      0.9587339949125568,
+      0.9600526907339729,
+      0.9589335119334789,
+      0.9574813908776378
+     ],
+     "failed": []
+    },
+    "32": {
+     "mean_val": 0.9585459491009043,
+     "vals": [
+      0.9562888141559829,
+      0.9581318017239208,
+      0.9599717202840093,
+      0.959921999363933,
+      0.9584154099766757
+     ],
+     "failed": []
+    }
+   },
+   "sel_files": {
+    "16": [
+     "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H720_seed2021.json",
+     "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H720_seed2022.json",
+     "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H720_seed2023.json",
+     "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H720_seed2024.json",
+     "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H720_seed2025.json"
+    ],
+    "32": [
+     "results\\sgd_lr_ext\\ETTm1\\x32\\NLinear_H720_seed2021.json",
+     "results\\sgd_lr_ext\\ETTm1\\x32\\NLinear_H720_seed2022.json",
+     "results\\sgd_lr_ext\\ETTm1\\x32\\NLinear_H720_seed2023.json",
+     "results\\sgd_lr_ext\\ETTm1\\x32\\NLinear_H720_seed2024.json",
+     "results\\sgd_lr_ext\\ETTm1\\x32\\NLinear_H720_seed2025.json"
+    ]
+   },
+   "max_new_levels": 2,
+   "chosen_mult": 16.0,
+   "chosen_lr": 0.0016,
+   "changed": true,
+   "still_at_edge": false,
+   "at_edge_budget_cut": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H720_seed2026.json",
+    "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H720_seed2027.json",
+    "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H720_seed2028.json",
+    "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H720_seed2029.json",
+    "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H720_seed2030.json",
+    "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H720_seed2031.json",
+    "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H720_seed2032.json",
+    "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H720_seed2033.json",
+    "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H720_seed2034.json",
+    "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H720_seed2035.json",
+    "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H720_seed2036.json",
+    "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H720_seed2037.json",
+    "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H720_seed2038.json",
+    "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H720_seed2039.json",
+    "results\\sgd_lr_ext\\ETTm1\\x16\\NLinear_H720_seed2040.json"
+   ],
+   "final_mean_val": 0.958789694089549
+  },
+  "ETTh1 DLinear H=336": {
+   "dataset": "ETTh1",
+   "model": "DLinear",
+   "H": 336,
+   "base_lr": 0.005,
+   "edge": "dưới",
+   "old_chosen_mult": 0.5,
+   "old_mean_val_by_mult": {
+    "0.5": 1.0450179665534236,
+    "1": 1.0525126793767865,
+    "2": 1.0493211918224206,
+    "4": 1.072834664746102
+   },
+   "new_levels": {
+    "0.25": {
+     "mean_val": 1.0510610909312719,
+     "vals": [
+      1.0611961149670481,
+      1.0434373797600154,
+      1.044985652532588,
+      1.0455378935708826,
+      1.060148413825826
+     ],
+     "failed": []
+    }
+   },
+   "sel_files": {
+    "0.25": [
+     "results\\sgd_lr_ext\\ETTh1\\x0.25\\DLinear_H336_seed2021.json",
+     "results\\sgd_lr_ext\\ETTh1\\x0.25\\DLinear_H336_seed2022.json",
+     "results\\sgd_lr_ext\\ETTh1\\x0.25\\DLinear_H336_seed2023.json",
+     "results\\sgd_lr_ext\\ETTh1\\x0.25\\DLinear_H336_seed2024.json",
+     "results\\sgd_lr_ext\\ETTh1\\x0.25\\DLinear_H336_seed2025.json"
+    ]
+   },
+   "max_new_levels": 2,
+   "chosen_mult": 0.5,
+   "chosen_lr": 0.0025,
+   "changed": false,
+   "still_at_edge": false,
+   "at_edge_budget_cut": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2026.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2027.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2028.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2029.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2030.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2031.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2032.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2033.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2034.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2035.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2036.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2037.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2038.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2039.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\DLinear_H336_seed2040.json"
+   ],
+   "final_mean_val": 1.0494883315791572
+  },
+  "ETTh1 DLinear H=720": {
+   "dataset": "ETTh1",
+   "model": "DLinear",
+   "H": 720,
+   "base_lr": 0.005,
+   "edge": "trên",
+   "old_chosen_mult": 8.0,
+   "old_mean_val_by_mult": {
+    "0.5": 1.213278745268968,
+    "1": 1.2222551519917133,
+    "2": 1.2398948436719237,
+    "4": 1.2032435694018146,
+    "8": 1.2029952028432096
+   },
+   "new_levels": {
+    "16": {
+     "mean_val": 1.2065322728219696,
+     "vals": [
+      1.195835299580382,
+      1.2179390345120344,
+      1.2046982215532784,
+      1.2056481399790913,
+      1.208540668485062
+     ],
+     "failed": []
+    }
+   },
+   "sel_files": {
+    "16": [
+     "results\\sgd_lr_ext\\ETTh1\\x16\\DLinear_H720_seed2021.json",
+     "results\\sgd_lr_ext\\ETTh1\\x16\\DLinear_H720_seed2022.json",
+     "results\\sgd_lr_ext\\ETTh1\\x16\\DLinear_H720_seed2023.json",
+     "results\\sgd_lr_ext\\ETTh1\\x16\\DLinear_H720_seed2024.json",
+     "results\\sgd_lr_ext\\ETTh1\\x16\\DLinear_H720_seed2025.json"
+    ]
+   },
+   "max_new_levels": 2,
+   "chosen_mult": 8.0,
+   "chosen_lr": 0.04,
+   "changed": false,
+   "still_at_edge": false,
+   "at_edge_budget_cut": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2026.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2027.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2028.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2029.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2030.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2031.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2032.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2033.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2034.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2035.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2036.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2037.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2038.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2039.json",
+    "results\\sgd_lr\\ETTh1\\x8\\DLinear_H720_seed2040.json"
+   ],
+   "final_mean_val": 1.2118807681569197
+  },
+  "ETTh1 Linear H=192": {
+   "dataset": "ETTh1",
+   "model": "Linear",
+   "H": 192,
+   "base_lr": 0.005,
+   "edge": "trên",
+   "old_chosen_mult": 8.0,
+   "old_mean_val_by_mult": {
+    "0.5": 0.8654637369430367,
+    "1": 0.8660730175098046,
+    "2": 0.8645228604536106,
+    "4": 0.8593079980381921,
+    "8": 0.8562951292002001
+   },
+   "new_levels": {
+    "16": {
+     "mean_val": 0.8569354179087358,
+     "vals": [
+      0.852504075817346,
+      0.8551557048720535,
+      0.8616631857885166,
+      0.8520922199214541,
+      0.8632619031443094
+     ],
+     "failed": []
+    }
+   },
+   "sel_files": {
+    "16": [
+     "results\\sgd_lr_ext\\ETTh1\\x16\\Linear_H192_seed2021.json",
+     "results\\sgd_lr_ext\\ETTh1\\x16\\Linear_H192_seed2022.json",
+     "results\\sgd_lr_ext\\ETTh1\\x16\\Linear_H192_seed2023.json",
+     "results\\sgd_lr_ext\\ETTh1\\x16\\Linear_H192_seed2024.json",
+     "results\\sgd_lr_ext\\ETTh1\\x16\\Linear_H192_seed2025.json"
+    ]
+   },
+   "max_new_levels": 2,
+   "chosen_mult": 8.0,
+   "chosen_lr": 0.04,
+   "changed": false,
+   "still_at_edge": false,
+   "at_edge_budget_cut": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2026.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2027.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2028.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2029.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2030.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2031.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2032.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2033.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2034.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2035.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2036.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2037.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2038.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2039.json",
+    "results\\sgd_lr\\ETTh1\\x8\\Linear_H192_seed2040.json"
+   ],
+   "final_mean_val": 0.8739014676392594
+  },
+  "ETTh1 Linear H=720": {
+   "dataset": "ETTh1",
+   "model": "Linear",
+   "H": 720,
+   "base_lr": 0.005,
+   "edge": "dưới",
+   "old_chosen_mult": 0.5,
+   "old_mean_val_by_mult": {
+    "0.5": 1.196025223139316,
+    "1": 1.2074552223811303,
+    "2": 1.2131366121861633,
+    "4": 1.200102856234985
+   },
+   "new_levels": {
+    "0.25": {
+     "mean_val": 1.2081070270974341,
+     "vals": [
+      1.2206212335690394,
+      1.2166935799317964,
+      1.1713753838794834,
+      1.2263138182462472,
+      1.2055311198606036
+     ],
+     "failed": []
+    }
+   },
+   "sel_files": {
+    "0.25": [
+     "results\\sgd_lr_ext\\ETTh1\\x0.25\\Linear_H720_seed2021.json",
+     "results\\sgd_lr_ext\\ETTh1\\x0.25\\Linear_H720_seed2022.json",
+     "results\\sgd_lr_ext\\ETTh1\\x0.25\\Linear_H720_seed2023.json",
+     "results\\sgd_lr_ext\\ETTh1\\x0.25\\Linear_H720_seed2024.json",
+     "results\\sgd_lr_ext\\ETTh1\\x0.25\\Linear_H720_seed2025.json"
+    ]
+   },
+   "max_new_levels": 2,
+   "chosen_mult": 0.5,
+   "chosen_lr": 0.0025,
+   "changed": false,
+   "still_at_edge": false,
+   "at_edge_budget_cut": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2026.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2027.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2028.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2029.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2030.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2031.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2032.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2033.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2034.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2035.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2036.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2037.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2038.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2039.json",
+    "results\\sgd_lr\\ETTh1\\x0.5\\Linear_H720_seed2040.json"
+   ],
+   "final_mean_val": 1.2067314970524528
+  },
+  "ETTh2 DLinear H=192": {
+   "dataset": "ETTh2",
+   "model": "DLinear",
+   "H": 192,
+   "base_lr": 0.05,
+   "edge": "dưới",
+   "old_chosen_mult": 0.5,
+   "old_mean_val_by_mult": {
+    "0.5": 0.29583733002164164,
+    "1": 0.2979829002876916,
+    "2": 0.30045530438353374,
+    "4": 0.3016633601733959
+   },
+   "new_levels": {
+    "0.25": {
+     "mean_val": 0.2963074430064014,
+     "vals": [
+      0.3091473253460238,
+      0.29059800283299486,
+      0.29271812560003524,
+      0.2901566910187909,
+      0.2989170702341622
+     ],
+     "failed": []
+    }
+   },
+   "sel_files": {
+    "0.25": [
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\DLinear_H192_seed2021.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\DLinear_H192_seed2022.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\DLinear_H192_seed2023.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\DLinear_H192_seed2024.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\DLinear_H192_seed2025.json"
+    ]
+   },
+   "max_new_levels": 2,
+   "chosen_mult": 0.5,
+   "chosen_lr": 0.025,
+   "changed": false,
+   "still_at_edge": false,
+   "at_edge_budget_cut": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2026.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2027.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2028.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2029.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2030.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2031.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2032.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2033.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2034.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2035.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2036.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2037.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2038.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2039.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\DLinear_H192_seed2040.json"
+   ],
+   "final_mean_val": 0.2961633101553515
+  },
+  "ETTh2 Linear H=720": {
+   "dataset": "ETTh2",
+   "model": "Linear",
+   "H": 720,
+   "base_lr": 0.05,
+   "edge": "dưới",
+   "old_chosen_mult": 0.5,
+   "old_mean_val_by_mult": {
+    "0.5": 0.6530538024549786,
+    "1": 0.6556983805710577,
+    "2": 0.6549254115735238,
+    "4": 0.6558308124477773
+   },
+   "new_levels": {
+    "0.25": {
+     "mean_val": 0.6559154323857574,
+     "vals": [
+      0.6484800704482694,
+      0.6513436002578123,
+      0.6625942854248401,
+      0.6618993514946722,
+      0.655259854303193
+     ],
+     "failed": []
+    }
+   },
+   "sel_files": {
+    "0.25": [
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\Linear_H720_seed2021.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\Linear_H720_seed2022.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\Linear_H720_seed2023.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\Linear_H720_seed2024.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\Linear_H720_seed2025.json"
+    ]
+   },
+   "max_new_levels": 2,
+   "chosen_mult": 0.5,
+   "chosen_lr": 0.025,
+   "changed": false,
+   "still_at_edge": false,
+   "at_edge_budget_cut": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2026.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2027.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2028.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2029.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2030.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2031.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2032.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2033.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2034.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2035.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2036.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2037.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2038.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2039.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\Linear_H720_seed2040.json"
+   ],
+   "final_mean_val": 0.6632355476214442
+  },
+  "ETTh2 NLinear H=96": {
+   "dataset": "ETTh2",
+   "model": "NLinear",
+   "H": 96,
+   "base_lr": 0.05,
+   "edge": "dưới",
+   "old_chosen_mult": 0.5,
+   "old_mean_val_by_mult": {
+    "0.5": 0.20546168056554617,
+    "1": 0.20596053303847942,
+    "2": 0.20804912689672378,
+    "4": 0.21471661578896367
+   },
+   "new_levels": {
+    "0.25": {
+     "mean_val": 0.2055275038675898,
+     "vals": [
+      0.20537139124692583,
+      0.20575878401107653,
+      0.20499520477586453,
+      0.20617191726527243,
+      0.20534022203880983
+     ],
+     "failed": []
+    }
+   },
+   "sel_files": {
+    "0.25": [
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H96_seed2021.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H96_seed2022.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H96_seed2023.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H96_seed2024.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H96_seed2025.json"
+    ]
+   },
+   "max_new_levels": 2,
+   "chosen_mult": 0.5,
+   "chosen_lr": 0.025,
+   "changed": false,
+   "still_at_edge": false,
+   "at_edge_budget_cut": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2026.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2027.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2028.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2029.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2030.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2031.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2032.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2033.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2034.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2035.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2036.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2037.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2038.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2039.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H96_seed2040.json"
+   ],
+   "final_mean_val": 0.20630056988888593
+  },
+  "ETTh2 NLinear H=192": {
+   "dataset": "ETTh2",
+   "model": "NLinear",
+   "H": 192,
+   "base_lr": 0.05,
+   "edge": "dưới",
+   "old_chosen_mult": 0.5,
+   "old_mean_val_by_mult": {
+    "0.5": 0.27078223727786055,
+    "1": 0.2720466304687552,
+    "2": 0.27723057744152646,
+    "4": 0.29756102247178967
+   },
+   "new_levels": {
+    "0.25": {
+     "mean_val": 0.2701586323565044,
+     "vals": [
+      0.27100974560239477,
+      0.2697791587455105,
+      0.2720083131864768,
+      0.2700345812831046,
+      0.26796136296503514
+     ],
+     "failed": []
+    },
+    "0.125": {
+     "mean_val": 0.2710646522666656,
+     "vals": [
+      0.26981006081415354,
+      0.2707872034568423,
+      0.27456933469484107,
+      0.27198349034384567,
+      0.26817317202364527
+     ],
+     "failed": []
+    }
+   },
+   "sel_files": {
+    "0.25": [
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H192_seed2021.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H192_seed2022.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H192_seed2023.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H192_seed2024.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H192_seed2025.json"
+    ],
+    "0.125": [
+     "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H192_seed2021.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H192_seed2022.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H192_seed2023.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H192_seed2024.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H192_seed2025.json"
+    ]
+   },
+   "max_new_levels": 2,
+   "chosen_mult": 0.25,
+   "chosen_lr": 0.0125,
+   "changed": true,
+   "still_at_edge": false,
+   "at_edge_budget_cut": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H192_seed2026.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H192_seed2027.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H192_seed2028.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H192_seed2029.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H192_seed2030.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H192_seed2031.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H192_seed2032.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H192_seed2033.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H192_seed2034.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H192_seed2035.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H192_seed2036.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H192_seed2037.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H192_seed2038.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H192_seed2039.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H192_seed2040.json"
+   ],
+   "final_mean_val": 0.26982392287714035
+  },
+  "ETTh2 NLinear H=336": {
+   "dataset": "ETTh2",
+   "model": "NLinear",
+   "H": 336,
+   "base_lr": 0.05,
+   "edge": "dưới",
+   "old_chosen_mult": 0.5,
+   "old_mean_val_by_mult": {
+    "0.5": 0.3585596145392044,
+    "1": 0.36058149800151357,
+    "2": 0.36376665845904466,
+    "4": 0.3702773596341823
+   },
+   "new_levels": {
+    "0.25": {
+     "mean_val": 0.3601851733712077,
+     "vals": [
+      0.3641933402474756,
+      0.3606621713994971,
+      0.35948230433533745,
+      0.35820160101982934,
+      0.358386449853899
+     ],
+     "failed": []
+    }
+   },
+   "sel_files": {
+    "0.25": [
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H336_seed2021.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H336_seed2022.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H336_seed2023.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H336_seed2024.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H336_seed2025.json"
+    ]
+   },
+   "max_new_levels": 2,
+   "chosen_mult": 0.5,
+   "chosen_lr": 0.025,
+   "changed": false,
+   "still_at_edge": false,
+   "at_edge_budget_cut": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2026.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2027.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2028.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2029.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2030.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2031.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2032.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2033.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2034.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2035.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2036.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2037.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2038.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2039.json",
+    "results\\sgd_lr\\ETTh2\\x0.5\\NLinear_H336_seed2040.json"
+   ],
+   "final_mean_val": 0.36167202029842455
+  },
+  "ETTh2 NLinear H=720": {
+   "dataset": "ETTh2",
+   "model": "NLinear",
+   "H": 720,
+   "base_lr": 0.05,
+   "edge": "dưới",
+   "old_chosen_mult": 0.5,
+   "old_mean_val_by_mult": {
+    "0.5": 0.6037177671560501,
+    "1": 0.6098794221594919,
+    "2": 0.6073112666098662,
+    "4": 0.6150000007341223
+   },
+   "new_levels": {
+    "0.25": {
+     "mean_val": 0.6035980012009062,
+     "vals": [
+      0.6054312305667209,
+      0.5977206290397956,
+      0.6024286024380806,
+      0.6128731422708825,
+      0.5995364016890514
+     ],
+     "failed": []
+    },
+    "0.125": {
+     "mean_val": 0.6012765195151002,
+     "vals": [
+      0.6105840623086377,
+      0.5996044074009701,
+      0.5992379408504892,
+      0.5942311251455384,
+      0.6027250618698656
+     ],
+     "failed": []
+    }
+   },
+   "sel_files": {
+    "0.25": [
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H720_seed2021.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H720_seed2022.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H720_seed2023.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H720_seed2024.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.25\\NLinear_H720_seed2025.json"
+    ],
+    "0.125": [
+     "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H720_seed2021.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H720_seed2022.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H720_seed2023.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H720_seed2024.json",
+     "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H720_seed2025.json"
+    ]
+   },
+   "max_new_levels": 2,
+   "chosen_mult": 0.125,
+   "chosen_lr": 0.00625,
+   "changed": true,
+   "still_at_edge": true,
+   "at_edge_budget_cut": false,
+   "final_seeds": [
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040
+   ],
+   "final_files": [
+    "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H720_seed2026.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H720_seed2027.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H720_seed2028.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H720_seed2029.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H720_seed2030.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H720_seed2031.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H720_seed2032.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H720_seed2033.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H720_seed2034.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H720_seed2035.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H720_seed2036.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H720_seed2037.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H720_seed2038.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H720_seed2039.json",
+    "results\\sgd_lr_ext\\ETTh2\\x0.125\\NLinear_H720_seed2040.json"
+   ],
+   "final_mean_val": 0.6016825238852348
+  }
+ }
+}

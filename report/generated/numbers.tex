@@ -5,7 +5,8 @@
 %   - dataset: ETThOne, ETThTwo, ETTmOne; horizon: H + số (HNineSix); mô hình: Linear, DLinear, NLinear;
 %   - mục tiêu: MSE, MAE, Huber; metric báo cáo: Mse (MSE test ở λ*_MSE), Mae (MAE test ở λ*_MAE);
 %   - nhóm: BTwo (RQ1, bảng B2), BThree (B3, nghiệm tối ưu), Out (outlier), Mag (độ lớn outlier), Delta (δ của Huber),
-%     BOne, BFour, CThree (SGD với lr gốc), Tuned (SGD đã tinh chỉnh lr), EThTwo (đoạn cảm biến bị kẹt);
+%     BOne, BFour, CThree (SGD với lr gốc), Tuned (SGD đã tinh chỉnh lr, lưới đã mở rộng), EThTwo (đoạn cảm biến bị kẹt),
+%     Drop (code gốc với drop_last), Ridge (họ ridge trên ETTh2), Stuck (vị trí đoạn hằng), DeltaH (δ theo bước h);
 %   - hậu tố Min/Max/Range/Count/Pct là khoảng hoặc số đếm; số đếm không có đơn vị.
 % Số thập phân dùng dấu phẩy, bọc trong \ensuremath nên dùng được cả trong văn bản lẫn công thức.
 
@@ -17,7 +18,7 @@
 \newcommand{\nmReproHuberMadHours}{\ensuremath{0{,}6}}
 \newcommand{\nmReproSgdCpuHours}{\ensuremath{5{,}5}}
 \newcommand{\nmReproSgdLrWallHours}{\ensuremath{2{,}3}}
-\newcommand{\nmReproHead}{\texttt{f23b77b}}
+\newcommand{\nmReproHead}{\texttt{d3c31e2}}
 \newcommand{\nmBTwoRankZ}{336}
 \newcommand{\nmBTwoNcolZ}{672}
 \newcommand{\nmBTwoDLinZeroRelDWMax}{\ensuremath{5\cdot 10^{-13}}}
@@ -580,9 +581,9 @@
 \newcommand{\nmTunedSgdBetterXOneCount}{6}
 \newcommand{\nmTunedCfBetterCount}{2}
 \newcommand{\nmTunedCfBetterXOneCount}{10}
-\newcommand{\nmTunedValTestCount}{9}
+\newcommand{\nmTunedValTestCount}{8}
 \newcommand{\nmTunedValTestXOneCount}{7}
-\newcommand{\nmTunedSgdOverfitCount}{16}
+\newcommand{\nmTunedSgdOverfitCount}{17}
 \newcommand{\nmTunedSgdOverfitXOneCount}{11}
 \newcommand{\nmTunedCfOverfitCount}{0}
 \newcommand{\nmTunedCfOverfitXOneCount}{0}
@@ -590,23 +591,34 @@
 \newcommand{\nmTunedTieXOneCount}{2}
 \newcommand{\nmTunedWorseSigCount}{27}
 \newcommand{\nmTunedWorseMeanCount}{28}
-\newcommand{\nmTunedChangedCount}{15}
-\newcommand{\nmTunedChangedByLrCount}{13}
+\newcommand{\nmTunedChangedCount}{16}
+\newcommand{\nmTunedChangedByLrCount}{14}
 \newcommand{\nmTunedChosenOneCount}{7}
 \newcommand{\nmTunedChosenFourCount}{7}
-\newcommand{\nmTunedChosenZeroPointFiveCount}{8}
-\newcommand{\nmTunedChosenEightCount}{7}
+\newcommand{\nmTunedChosenZeroPointFiveCount}{6}
+\newcommand{\nmTunedChosenZeroPointTwoFiveCount}{1}
+\newcommand{\nmTunedChosenZeroPointOneTwoFiveCount}{1}
+\newcommand{\nmTunedChosenEightCount}{5}
 \newcommand{\nmTunedChosenTwoCount}{7}
+\newcommand{\nmTunedChosenThreeTwoCount}{1}
+\newcommand{\nmTunedChosenOneSixCount}{1}
 \newcommand{\nmTunedHMOneWorseSigCount}{23}
 \newcommand{\nmTunedHMOneWorseMeanCount}{24}
 \newcommand{\nmTunedHMOneCellCount}{24}
-\newcommand{\nmTunedHMOneDTestRange}{\ensuremath{+0{,}0022}--\ensuremath{+0{,}0290}}
-\newcommand{\nmTunedLrEdgeCount}{15}
-\newcommand{\nmTunedLrNoisyCount}{26}
-\newcommand{\nmTunedLrNoisyMedianRatio}{\ensuremath{0{,}56}}
+\newcommand{\nmTunedHMOneDTestRange}{\ensuremath{+0{,}0020}--\ensuremath{+0{,}0290}}
+\newcommand{\nmTunedLrEdgeOldCount}{15}
+\newcommand{\nmTunedLrEdgeCount}{2}
+\newcommand{\nmTunedLrExtChangedCount}{4}
+\newcommand{\nmTunedLrExtWallHours}{\ensuremath{0{,}8}}
+\newcommand{\nmTunedLrChosenList}{$\times 0{,}125$: 1 ô; $\times 0{,}25$: 1; $\times 0{,}5$: 6; $\times 1$: 7; $\times 2$: 7; $\times 4$: 7; $\times 8$: 5; $\times 16$: 1; $\times 32$: 1}
+\newcommand{\nmTunedLrStillEdgeList}{ETTm1 Linear $H = 96$ ở $\times 32$; ETTh2 NLinear $H = 720$ ở $\times 0{,}125$}
+\newcommand{\nmTunedLrNoisyCount}{31}
+\newcommand{\nmTunedLrNoisyMedianRatio}{\ensuremath{0{,}37}}
 \newcommand{\nmTunedLrCellCount}{36}
-\newcommand{\nmTunedETTmOneLinearChoseEightCount}{3}
-\newcommand{\nmTunedETTmOneDLinearChoseTwoCount}{3}
+\newcommand{\nmTunedETTmOneLinearChoseGeEightCount}{3}
+\newcommand{\nmTunedETTmOneLinearChoseLeTwoCount}{1}
+\newcommand{\nmTunedETTmOneDLinearChoseGeEightCount}{0}
+\newcommand{\nmTunedETTmOneDLinearChoseLeTwoCount}{3}
 \newcommand{\nmCThreeDLinBetterBothCount}{4}
 \newcommand{\nmCThreeLinBetterTestCount}{0}
 \newcommand{\nmCThreeSigDTestRange}{\ensuremath{-0{,}0032}--\ensuremath{-0{,}0047}}
@@ -620,7 +632,7 @@
 \newcommand{\nmCThreeETThTwoHSevenTwoZeroPubD}{\ensuremath{-0{,}093}}
 \newcommand{\nmTunedCThreeDLinBetterCount}{0}
 \newcommand{\nmTunedCThreeXOneETTmOneTestCount}{4}
-\newcommand{\nmTunedCThreeETTmOneDTestRange}{\ensuremath{-0{,}0020}--\ensuremath{0{,}0002}}
+\newcommand{\nmTunedCThreeETTmOneDTestRange}{\ensuremath{-0{,}0020}--\ensuremath{0{,}0004}}
 \newcommand{\nmTunedCThreeETTmOneCIHalfMax}{\ensuremath{0{,}0073}}
 \newcommand{\nmEThTwoCfFullHSevenTwoZero}{\ensuremath{0{,}740}}
 \newcommand{\nmEThTwoCfFiltHSevenTwoZero}{\ensuremath{0{,}646}}
@@ -632,3 +644,46 @@
 \newcommand{\nmEThTwoMaeGainRemainPctHSevenTwoZero}{60}
 \newcommand{\nmEThTwoConstTrainPctRange}{\ensuremath{2{,}5}--\ensuremath{6{,}3}}
 \newcommand{\nmEThTwoSgdStillBetterCount}{3}
+\newcommand{\nmDropPubInTrueCount}{1}
+\newcommand{\nmDropPubInFalseCount}{0}
+\newcommand{\nmDropCellCount}{8}
+\newcommand{\nmDropDiffAbsMax}{\ensuremath{5\cdot 10^{-3}}}
+\newcommand{\nmDropDroppedRange}{1--17}
+\newcommand{\nmDropDroppedPctMax}{\ensuremath{0{,}79}}
+\newcommand{\nmDropPubBelowTrueCount}{7}
+\newcommand{\nmDropPubGapRange}{\ensuremath{0{,}0004}--\ensuremath{0{,}0189}}
+\newcommand{\nmDropSeedCount}{5}
+\newcommand{\nmOffETTmOneHNineSixMean}{\ensuremath{0{,}3018}}
+\newcommand{\nmOffETTmOneHNineSixSd}{\ensuremath{0{,}0010}}
+\newcommand{\nmOffETTmOneHNineSixN}{5}
+\newcommand{\nmRidgeBestWorseOrigCount}{8}
+\newcommand{\nmRidgeBestWorseTunedCount}{8}
+\newcommand{\nmRidgeCellCount}{8}
+\newcommand{\nmRidgeGapOrigRange}{\ensuremath{0{,}0005}--\ensuremath{0{,}0534}}
+\newcommand{\nmRidgeGapTunedRange}{\ensuremath{0{,}0020}--\ensuremath{0{,}0507}}
+\newcommand{\nmRidgeStarMinusBestMax}{\ensuremath{0{,}0001}}
+\newcommand{\nmStuckRunCount}{163}
+\newcommand{\nmStuckRunLongCount}{19}
+\newcommand{\nmStuckDayThirtyOneCount}{63}
+\newcommand{\nmStuckRunMaxHours}{1025}
+\newcommand{\nmStuckRunLongTrainCount}{10}
+\newcommand{\nmStuckRunLongValCount}{1}
+\newcommand{\nmStuckRunLongTestCount}{8}
+\newcommand{\nmDeltaHRankChangedCount}{0}
+\newcommand{\nmDeltaHCellCount}{2}
+\newcommand{\nmDeltaHETThOneHNineSixLinearMin}{\ensuremath{0{,}243}}
+\newcommand{\nmDeltaHETThOneHNineSixLinearMax}{\ensuremath{0{,}595}}
+\newcommand{\nmDeltaHETThOneHNineSixLinearMad}{\ensuremath{0{,}538}}
+\newcommand{\nmDeltaHETThOneHNineSixLinearHubMadMse}{\ensuremath{0{,}3658}}
+\newcommand{\nmDeltaHETThOneHNineSixLinearHubMadMae}{\ensuremath{0{,}3852}}
+\newcommand{\nmDeltaHETThOneHNineSixLinearHubHMse}{\ensuremath{0{,}3656}}
+\newcommand{\nmDeltaHETThOneHNineSixLinearHubHMae}{\ensuremath{0{,}3851}}
+\newcommand{\nmDeltaHETThTwoHSevenTwoZeroLinearMin}{\ensuremath{0{,}174}}
+\newcommand{\nmDeltaHETThTwoHSevenTwoZeroLinearMax}{\ensuremath{0{,}801}}
+\newcommand{\nmDeltaHETThTwoHSevenTwoZeroLinearMad}{\ensuremath{0{,}610}}
+\newcommand{\nmDeltaHETThTwoHSevenTwoZeroLinearHubMadMse}{\ensuremath{0{,}6277}}
+\newcommand{\nmDeltaHETThTwoHSevenTwoZeroLinearHubMadMae}{\ensuremath{0{,}5541}}
+\newcommand{\nmDeltaHETThTwoHSevenTwoZeroLinearHubHMse}{\ensuremath{0{,}6357}}
+\newcommand{\nmDeltaHETThTwoHSevenTwoZeroLinearHubHMae}{\ensuremath{0{,}5566}}
+\newcommand{\nmReproDeltaHMinutes}{3}
+\newcommand{\nmReproDropGpuHours}{\ensuremath{2{,}6}}

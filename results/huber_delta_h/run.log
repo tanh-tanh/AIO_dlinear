@@ -1,0 +1,23 @@
+[ETTh2 H=720 Linear] δ_MAD = 0.60960; δ_h từ 0.17433 đến 0.80105 (trung bình 0.61336)
+  λ = 0: 12 vòng, 21.6 s, val MSE 0.654211 MAE 0.553351, test MSE 0.635933 MAE 0.556717
+  λ = 1: 2 vòng, 3.0 s, val MSE 0.654207 MAE 0.553348, test MSE 0.635929 MAE 0.556715
+  λ = 3: 2 vòng, 3.0 s, val MSE 0.654203 MAE 0.553346, test MSE 0.635926 MAE 0.556714
+  λ = 10: 3 vòng, 4.4 s, val MSE 0.654192 MAE 0.553340, test MSE 0.635914 MAE 0.556708
+  λ = 30: 4 vòng, 6.1 s, val MSE 0.654162 MAE 0.553323, test MSE 0.635883 MAE 0.556692
+  λ = 100: 5 vòng, 8.5 s, val MSE 0.654076 MAE 0.553276, test MSE 0.635794 MAE 0.556647
+  λ = 300: 6 vòng, 13.9 s, val MSE 0.653943 MAE 0.553202, test MSE 0.635651 MAE 0.556579
+  λ = 1000: 8 vòng, 19.1 s, val MSE 0.653995 MAE 0.553232, test MSE 0.635670 MAE 0.556622
+  λ = 3000: 9 vòng, 21.0 s, val MSE 0.655034 MAE 0.553835, test MSE 0.636670 MAE 0.557252
+  λ = 10000: 10 vòng, 21.7 s, val MSE 0.659084 MAE 0.556153, test MSE 0.641016 MAE 0.559790
+[ETTh1 H=96 Linear] δ_MAD = 0.53797; δ_h từ 0.24262 đến 0.59519 (trung bình 0.54152)
+  λ = 0: 10 vòng, 1.9 s, val MSE 0.658718 MAE 0.539342, test MSE 0.365592 MAE 0.385091
+  λ = 1: 2 vòng, 0.4 s, val MSE 0.658717 MAE 0.539342, test MSE 0.365590 MAE 0.385090
+  λ = 3: 2 vòng, 0.4 s, val MSE 0.658717 MAE 0.539342, test MSE 0.365586 MAE 0.385088
+  λ = 10: 3 vòng, 0.6 s, val MSE 0.658718 MAE 0.539342, test MSE 0.365571 MAE 0.385081
+  λ = 30: 4 vòng, 0.8 s, val MSE 0.658723 MAE 0.539346, test MSE 0.365528 MAE 0.385062
+  λ = 100: 5 vòng, 0.9 s, val MSE 0.658748 MAE 0.539362, test MSE 0.365389 MAE 0.385005
+  λ = 300: 6 vòng, 1.1 s, val MSE 0.658877 MAE 0.539450, test MSE 0.365064 MAE 0.384896
+  λ = 1000: 7 vòng, 1.3 s, val MSE 0.659634 MAE 0.539976, test MSE 0.364409 MAE 0.384858
+  λ = 3000: 8 vòng, 1.5 s, val MSE 0.662354 MAE 0.541884, test MSE 0.364009 MAE 0.385611
+  λ = 10000: 8 vòng, 1.5 s, val MSE 0.671432 MAE 0.548015, test MSE 0.365843 MAE 0.389141
+→ C:\Users\Admin\Documents\AIO_dlinear\results\huber_delta_h (3.2 phút)

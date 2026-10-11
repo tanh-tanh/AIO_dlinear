@@ -21,6 +21,7 @@ SECTIONS = ROOT / "report" / "sections"
 NUM = re.compile(r"(?<![\w\\{])(\d+(?:\{,\}|,|\.)\d+)")
 DESIGN = {
     "1{,}345": "hằng số Huber (hiệu quả 95%)", "1{,}4826": "hằng số MAD", "0{,}5": "bội lr / hệ số 1/2",
+    "0{,}25": "bội lr (lưới mở rộng)", "0{,}125": "bội lr (lưới mở rộng)",
     "0{,}005": "lr gốc ETTh1", "0{,}05": "lr gốc ETTh2", "0{,}0001": "lr gốc ETTm1",
 }
 VERSION = re.compile(r"(Python|numpy|pandas|scipy|matplotlib|PyTorch|driver|CUDA|torch)[^.\n]{0,12}$")

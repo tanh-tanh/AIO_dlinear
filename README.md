@@ -21,11 +21,12 @@ Số lấy từ `report/generated/numbers.tex` (sinh tự động từ `results/
 ```
 ├── README.md, run_all.sh, requirements.txt, .gitignore
 ├── src/                 thư viện: data, operators, solvers (OLS, ridge, NLinear, IRLS), models, sgd, metrics, outliers
-├── tests/               63 test (dữ liệu giả, kiểm hồi quy số của notebook, metric val không chứa phạt)
+├── tests/               66 test (dữ liệu giả, kiểm hồi quy số của notebook, metric val không chứa phạt, δ theo bước h)
 ├── scripts/
 │   ├── grid/            runner.py (grid), select_lambda.py (λ*), huber_deltas.py (δ_MAD)
-│   ├── sgd/             sgd_etth2.py (SGD như LTSF-Linear, mọi dataset), sgd_lr_tune.py, optim_etth2.py, official_ltsf.py
-│   ├── checks/          đo đạc và các phép kiểm của từng nhiệm vụ (bench, stopping, checks_mae, irls_dtype, compare_cell, …)
+│   ├── sgd/             sgd_etth2.py (SGD như LTSF-Linear, mọi dataset), sgd_lr_tune.py, sgd_lr_extend.py, optim_etth2.py,
+│   │                    official_ltsf.py (code gốc LTSF-Linear, có tùy chọn drop_last của test loader)
+│   ├── checks/          đo đạc và các phép kiểm (bench, stopping, checks_mae, irls_dtype, compare_cell, huber_delta_h, …)
 │   └── report/          report_*.py (bảng của từng nhiệm vụ); make_numbers/make_tables/make_figures (báo cáo LaTeX);
 │                        audit_numbers.py, check_latex.py, run_notebooks.py; report_data.py (đọc results/)
 ├── notebooks/           00_* (baseline, solver dạng đóng), 01_three_predictions (RQ1), 02_loss_comparison (RQ2),
@@ -57,12 +58,71 @@ Grid (`scripts/grid/runner.py`) cần GPU CUDA. SGD chạy trên CPU. Test, note
 ## Tái lập
 
 ```bash
-./run_all.sh quick     # venv, 63 test, chạy lại grid ETTh1 H = 96 và so với results/, sinh lại số/bảng/hình, biên dịch báo cáo
-./run_all.sh full      # chạy lại toàn bộ thí nghiệm theo thứ tự (khoảng 15 giờ GPU cho grid, thêm vài giờ GPU, vài giờ CPU)
+./run_all.sh quick     # venv, 66 test, chạy lại grid ETTh1 H = 96 và so với results/, sinh lại số/bảng/hình, biên dịch báo cáo
+./run_all.sh full      # chạy lại toàn bộ thí nghiệm theo thứ tự (xem bảng thời gian bên dưới)
 ./run_all.sh full --dry-run   # chỉ in các lệnh
 ```
 
 `VENV=.venv-gpu ./run_all.sh` dùng một venv có sẵn; `TORCH_INDEX=…/whl/cpu` cài torch bản CPU. Chạy được trên Linux, macOS và Windows qua Git Bash. Trên Windows, bước 3 của `quick` cần GPU NVIDIA; không có GPU thì bước này tự bỏ qua. Bước 5 cần `latexmk` và `pdflatex`; không có thì bỏ qua.
+
+### Môi trường đã dùng để sinh mọi kết quả
+
+| Thành phần | Phiên bản |
+|---|---|
+| Python | 3.13.5 |
+| torch | 2.14.0+cu130 (CUDA 13.0, cuDNN 92400): grid, IRLS, code gốc LTSF-Linear trên GPU; SGD chạy trên CPU bằng chính bản này. Bản 2.14.0+cpu (`TORCH_INDEX=…/whl/cpu`) cho máy không có GPU; chưa dùng để sinh kết quả trong `results/` |
+| numpy, scipy, pandas, matplotlib, scikit-learn | 2.3.1, 1.18.1, 2.3.1, 3.11.0, 1.9.0 (`requirements.txt`) |
+| GPU | NVIDIA GeForce RTX 5060 Ti 16 GB, driver 616.92; TF32 tắt tường minh |
+| CPU | Intel 12 luồng (Family 6 Model 151) |
+| Hệ điều hành | Windows 11 (10.0.26100), lệnh chạy qua Git Bash |
+| TeX | TinyTeX: pdfLaTeX, latexmk, biblatex 3.22a (backend bibtex) |
+
+Mỗi JSON và mỗi dòng `lambda_path.csv` ghi phần cứng và commit đã sinh ra nó.
+
+### Seed
+
+| Thí nghiệm | Seed |
+|---|---|
+| SGD, lr gốc | 2021–2040 (NLinear trên ETTh2: 2021–2030) |
+| SGD tinh chỉnh lr: chọn lr | 2021–2025 (mỗi mức lr) |
+| SGD tinh chỉnh lr: chạy cuối | 2026–2040 (15 seed, không trùng seed chọn lr) |
+| Code gốc LTSF-Linear (`official_ltsf.py`) | 2021–2025 |
+| Vị trí outlier nhân tạo | 2026; thêm 2027, 2028 ở ETTh1 H = 96 Linear |
+
+Grid (dạng đóng, IRLS) tất định, không có seed.
+
+### Thời gian chạy dự kiến (đo trên máy ở trên)
+
+`quick` (đo trên bản clone mới với venv mới, `docs/reports/BAO_CAO_NV8.md` mục 4; bước 5 đo lại khi có TeX, `docs/reports/BAO_CAO_NV9.md`):
+
+| Bước | Thời gian |
+|---|---|
+| 1. Môi trường (venv mới, torch từ cache pip) | khoảng 3,5 phút (lần đầu tải torch thì lâu hơn) |
+| 2. Test (66) | khoảng 1–1,5 phút |
+| 3. Chạy lại grid ETTh1 H = 96 (488 dòng, GPU) | khoảng 15 phút (MAE khoảng 13 phút); `SKIP_CELL=1` để bỏ |
+| 4. Sinh số, bảng, hình; audit; kiểm tĩnh | khoảng 0,5 phút |
+| 5. Biên dịch báo cáo (latexmk, 3–4 lượt pdfLaTeX + bibtex) | QUICK_COMPILE |
+| **Tổng** | khoảng 20 phút; khoảng 5 phút với `SKIP_CELL=1` |
+
+`full` (tổng thời gian các lần chạy; các bước SGD chạy song song nên thời gian thực ngắn hơn):
+
+| Bước | Phần cứng | Thời gian |
+|---|---|---|
+| A. Grid: 3 dataset × 4 H × 3 mô hình × 3 mục tiêu | GPU | FULL_GRID giờ (MAE chiếm gần hết) |
+| B. Huber δ_MAD (grid, độ nhạy) | GPU | FULL_HUBER giờ, cộng khoảng 10 phút CPU |
+| C. Outlier nhân tạo | GPU | khoảng 8 giờ (độ lớn 3σ, 5σ chiếm gần 6 giờ) |
+| D. SGD lr gốc, 20 seed | CPU | FULL_SGD giờ CPU |
+| E. SGD tinh chỉnh lr (5 tiến trình × 2 luồng) | CPU | FULL_LR giờ thời gian thực |
+| F. Mở rộng lưới lr ở 15 ô biên; code gốc với `drop_last`; Huber δ theo bước h | CPU; GPU; GPU | FULL_EXT giờ thực; FULL_DROP giờ; FULL_DH phút |
+| G. Bảng, số, hình | CPU | dưới 5 phút |
+
+### Kết quả mong đợi của ô kiểm (`quick`, bước 3)
+
+`scripts/checks/compare_cell.py` so **mọi dòng** của grid ETTh1 H = 96 chạy lại (488 dòng: 142 λ của MSE, 10–12 λ của MAE và Huber δ = 1, cho 3 mô hình) với `results/lambda_path.csv`, trên các cột `train_obj`, `val_mse`, `val_mae`, `val_huber`, `test_mse`, `test_mae`. Ngưỡng chênh tuyệt đối: **1e-10** với mục tiêu MSE, **1e-8** với MAE và Huber; mọi dòng của ô phải có ở cả hai phía. Trên máy ở trên, chênh đo được là 0 ở mọi dòng. Một vài giá trị để đối chiếu nhanh (làm tròn 4 chữ số; λ\*_MSE = argmin MSE val, λ\*_MAE = argmin MAE val; Huber ở đây là δ = 1 của grid):
+
+| Mô hình | Mục tiêu | λ = 0: MSE / MAE test | λ\*_MSE: MSE test | λ\*_MAE: MAE test |
+|---|---|---|---|---|
+QUICK_TABLE
 
 - Chỉ mục mọi bảng, hình, thư mục kết quả và script sinh ra chúng: [results/README.md](results/README.md).
 - Các báo cáo kỹ thuật cũ dùng đường dẫn trước khi dọn repo; tra [docs/DUONG_DAN_CU.md](docs/DUONG_DAN_CU.md).

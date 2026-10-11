@@ -16,6 +16,7 @@ Không ghi gì vào các thư mục kết quả khác.
 import argparse
 import csv
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -63,9 +64,11 @@ def merged_selection():
         c = dict(c, mean_val_by_mult=dict(c["mean_val_by_mult"]))
         if k in ext:
             e = ext[k]
+            c["sel_files"] = dict(c["sel_files"])
             for m, lv in e["new_levels"].items():
                 if lv["mean_val"] is not None:
                     c["mean_val_by_mult"][m] = lv["mean_val"]
+                    c["sel_files"][m] = e["sel_files"][m]
             c.update(chosen_mult=e["chosen_mult"], chosen_lr=e["chosen_lr"], final_files=e["final_files"],
                      final_mean_val=e["final_mean_val"], ext=e)
         sel[k] = c
@@ -123,7 +126,9 @@ def part_a(summ):
                  "worse_sig_old": old["D_B4"]["worse_test_sig"], "worse_sig_new": tmp["D_B4"]["worse_test_sig"],
                  "worse_mean_old": old["D_B4"]["worse_test_mean"], "worse_mean_new": tmp["D_B4"]["worse_test_mean"],
                  "n_changed": sum(c["changed"] for c in changes), "n_still_edge": sum(c["still_at_edge"] for c in changes),
-                 "wall_hours": jload(RES / "sgd_lr_ext" / "selection.json")["wall_seconds_last_call"] / 3600}
+                 # cộng mọi lần gọi sgd_lr_extend.py (dòng "→ … (x giờ)" của driver.log), không chỉ lần cuối
+                 "wall_hours": sum(float(x) for x in re.findall(r"\(([\d.]+) giờ\)", (RES / "sgd_lr_ext" / "driver.log")
+                                                                 .read_text(encoding="utf-8")))}
     g = lambda x: f"{x:g}".replace(".", ",")                                            # noqa: E731
     md = ["# Phần A: mở rộng lưới lr ở 15 ô biên", "",
           "| Ô | biên | mức mới: val MSE TB (5 seed) | lr cũ → mới | Δ test cũ → mới [CI] | nhãn cũ → mới | còn ở biên |",

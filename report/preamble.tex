@@ -55,6 +55,7 @@
 % NV9: biblatex không có vietnamese.lbx; babel đặt ngôn ngữ chính là vietnamese nên các chuỗi (andothers, in,
 % jourvol, number, pages, ...) hiện nguyên tên khóa. Ánh xạ vietnamese sang english.lbx để mọi chuỗi có bản dịch.
 \DeclareLanguageMapping{vietnamese}{english}
+\appto{\bibsetup}{\sloppy}  % NV9: tiêu đề dài trong danh mục không tràn lề
 % NV9: với backend=bibtex, biblatex 3.22a không nạp lại danh sách trích dẫn của lần chạy trước (blx@lastcites rỗng),
 % nên phép so thứ tự trích dẫn ở cuối tài liệu (cần cho biber với sorting=none) luôn khác, báo "There were undefined
 % references" và đòi chạy lại BibTeX mãi. latexmk tự chạy lại bibtex khi các dòng \citation trong .aux đổi, nên tắt

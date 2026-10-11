@@ -1,0 +1,74 @@
+Args in experiment:
+Namespace(is_training=1, train_only=False, model_id='ETTh1_336_720', model='DLinear', data='ETTh1', root_path='./dataset/', data_path='ETTh1.csv', features='M', target='OT', freq='h', checkpoints='./checkpoints/', seq_len=336, label_len=48, pred_len=720, individual=False, embed_type=0, enc_in=7, dec_in=7, c_out=7, d_model=512, n_heads=8, e_layers=2, d_layers=1, d_ff=2048, moving_avg=25, factor=1, distil=True, dropout=0.05, embed='timeF', activation='gelu', output_attention=False, do_predict=False, num_workers=0, itr=1, train_epochs=10, batch_size=32, patience=3, learning_rate=0.005, des='Exp', loss='mse', lradj='type1', use_amp=False, use_gpu=True, gpu=0, use_multi_gpu=False, devices='0,1,2,3', test_flop=False, seed=2022, test_drop_last=0)
+Use GPU: cuda:0
+>>>>>>>start training : ETTh1_336_720_DLinear_ETTh1_ftM_sl336_ll48_pl720_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0>>>>>>>>>>>>>>>>>>>>>>>>>>
+train 7585
+val 2161
+test 2161
+	iters: 100, epoch: 1 | loss: 0.6051230
+	speed: 0.0601s/iter; left time: 136.5058s
+	iters: 200, epoch: 1 | loss: 0.5764850
+	speed: 0.0108s/iter; left time: 23.4061s
+Epoch: 1 cost time: 4.010908842086792
+Epoch: 1, Steps: 237 | Train Loss: 0.5912053 Vali Loss: 1.3186592 Test Loss: 0.5068601
+Validation loss decreased (inf --> 1.318659).  Saving model ...
+Updating learning rate to 0.005
+	iters: 100, epoch: 2 | loss: 0.5887040
+	speed: 0.0329s/iter; left time: 66.9272s
+	iters: 200, epoch: 2 | loss: 0.5222526
+	speed: 0.0141s/iter; left time: 27.2525s
+Epoch: 2 cost time: 3.262909173965454
+Epoch: 2, Steps: 237 | Train Loss: 0.5725268 Vali Loss: 1.2890149 Test Loss: 0.5306840
+Validation loss decreased (1.318659 --> 1.289015).  Saving model ...
+Updating learning rate to 0.0025
+	iters: 100, epoch: 3 | loss: 0.5270758
+	speed: 0.0306s/iter; left time: 54.9843s
+	iters: 200, epoch: 3 | loss: 0.5626628
+	speed: 0.0089s/iter; left time: 15.1052s
+Epoch: 3 cost time: 2.0741097927093506
+Epoch: 3, Steps: 237 | Train Loss: 0.5417826 Vali Loss: 1.1911134 Test Loss: 0.5516429
+Validation loss decreased (1.289015 --> 1.191113).  Saving model ...
+Updating learning rate to 0.00125
+	iters: 100, epoch: 4 | loss: 0.5065930
+	speed: 0.0238s/iter; left time: 37.1150s
+	iters: 200, epoch: 4 | loss: 0.5129678
+	speed: 0.0115s/iter; left time: 16.7315s
+Epoch: 4 cost time: 2.3753743171691895
+Epoch: 4, Steps: 237 | Train Loss: 0.5272603 Vali Loss: 1.2442716 Test Loss: 0.4810798
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 0.000625
+	iters: 100, epoch: 5 | loss: 0.5361856
+	speed: 0.0391s/iter; left time: 51.7889s
+	iters: 200, epoch: 5 | loss: 0.4315931
+	speed: 0.0103s/iter; left time: 12.6226s
+Epoch: 5 cost time: 2.546111583709717
+Epoch: 5, Steps: 237 | Train Loss: 0.5186059 Vali Loss: 1.1745756 Test Loss: 0.5101071
+Validation loss decreased (1.191113 --> 1.174576).  Saving model ...
+Updating learning rate to 0.0003125
+	iters: 100, epoch: 6 | loss: 0.5036653
+	speed: 0.0314s/iter; left time: 34.0648s
+	iters: 200, epoch: 6 | loss: 0.5027229
+	speed: 0.0090s/iter; left time: 8.9093s
+Epoch: 6 cost time: 2.19356632232666
+Epoch: 6, Steps: 237 | Train Loss: 0.5150513 Vali Loss: 1.2422500 Test Loss: 0.4687192
+EarlyStopping counter: 1 out of 3
+Updating learning rate to 0.00015625
+	iters: 100, epoch: 7 | loss: 0.4975790
+	speed: 0.0368s/iter; left time: 31.2836s
+	iters: 200, epoch: 7 | loss: 0.5043997
+	speed: 0.0102s/iter; left time: 7.6036s
+Epoch: 7 cost time: 2.7765376567840576
+Epoch: 7, Steps: 237 | Train Loss: 0.5127779 Vali Loss: 1.2107235 Test Loss: 0.4812815
+EarlyStopping counter: 2 out of 3
+Updating learning rate to 7.8125e-05
+	iters: 100, epoch: 8 | loss: 0.5379900
+	speed: 0.0308s/iter; left time: 18.8519s
+	iters: 200, epoch: 8 | loss: 0.4862218
+	speed: 0.0103s/iter; left time: 5.2943s
+Epoch: 8 cost time: 2.6067628860473633
+Epoch: 8, Steps: 237 | Train Loss: 0.5115422 Vali Loss: 1.2192280 Test Loss: 0.4736832
+EarlyStopping counter: 3 out of 3
+Early stopping
+>>>>>>>testing : ETTh1_336_720_DLinear_ETTh1_ftM_sl336_ll48_pl720_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+test 2161
+mse:0.5093616843223572, mae:0.5161578059196472

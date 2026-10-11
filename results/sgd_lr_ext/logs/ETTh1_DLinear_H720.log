@@ -1,0 +1,74 @@
+C:\Users\Admin\Documents\AIO_dlinear\.venv-gpu\Scripts\python.exe C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py --step run --dataset ETTh1 --model DLinear --H 720 --lr 0.08 --threads 2 --out sgd_lr_ext/ETTh1/x16 --seed 2021 2022 2023 2024 2025
+→ results\sgd_lr_ext\ETTh1\x16\DLinear_H720_seed2021.json
+  DLinear H=720 seed 2021: epoch tốt nhất 7/10, val MSE 1.195835, test MSE 0.509914 MAE 0.516819, 34 s
+Traceback (most recent call last):
+  File "C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py", line 183, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py", line 178, in main
+    step_run(args.model, args.H, args.seed, args.force, args.filtered)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py", line 152, in step_run
+    run_one(name, H, seed, cell, splits, filtered)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py", line 115, in run_one
+    hist = train_sgd(model, trl, val, ckpt, lr=HP["lr"], epochs=HP["epochs"], patience=HP["patience"],
+                     lradj=HP["lradj"])
+  File "C:\Users\Admin\Documents\AIO_dlinear\src\sgd.py", line 108, in train_sgd
+    torch.save(model.state_dict(), ckpt_path)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\Documents\AIO_dlinear\.venv-gpu\Lib\site-packages\torch\serialization.py", line 1002, in save
+    with _open_zipfile_writer(f) as opened_zipfile:
+         ~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Users\Admin\Documents\AIO_dlinear\.venv-gpu\Lib\site-packages\torch\serialization.py", line 864, in _open_zipfile_writer
+    return container(name_or_buffer)  # type: ignore[arg-type]
+  File "C:\Users\Admin\Documents\AIO_dlinear\.venv-gpu\Lib\site-packages\torch\serialization.py", line 828, in __init__
+    torch._C.PyTorchFileWriter(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.name, get_crc32_options(), _get_storage_alignment()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+RuntimeError: [enforce fail at inline_container.cc:745] . open file failed with error code: 1224
+C:\Users\Admin\Documents\AIO_dlinear\.venv-gpu\Scripts\python.exe C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py --step run --dataset ETTh1 --model DLinear --H 720 --lr 0.08 --threads 2 --out sgd_lr_ext/ETTh1/x16 --seed 2022
+Traceback (most recent call last):
+  File "C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py", line 183, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py", line 178, in main
+    step_run(args.model, args.H, args.seed, args.force, args.filtered)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py", line 152, in step_run
+    run_one(name, H, seed, cell, splits, filtered)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py", line 115, in run_one
+    hist = train_sgd(model, trl, val, ckpt, lr=HP["lr"], epochs=HP["epochs"], patience=HP["patience"],
+                     lradj=HP["lradj"])
+  File "C:\Users\Admin\Documents\AIO_dlinear\src\sgd.py", line 108, in train_sgd
+    torch.save(model.state_dict(), ckpt_path)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\Documents\AIO_dlinear\.venv-gpu\Lib\site-packages\torch\serialization.py", line 1002, in save
+    with _open_zipfile_writer(f) as opened_zipfile:
+         ~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Users\Admin\Documents\AIO_dlinear\.venv-gpu\Lib\site-packages\torch\serialization.py", line 864, in _open_zipfile_writer
+    return container(name_or_buffer)  # type: ignore[arg-type]
+  File "C:\Users\Admin\Documents\AIO_dlinear\.venv-gpu\Lib\site-packages\torch\serialization.py", line 828, in __init__
+    torch._C.PyTorchFileWriter(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.name, get_crc32_options(), _get_storage_alignment()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+RuntimeError: [enforce fail at inline_container.cc:745] . open file failed with error code: 1224
+C:\Users\Admin\Documents\AIO_dlinear\.venv-gpu\Scripts\python.exe C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py --step run --dataset ETTh1 --model DLinear --H 720 --lr 0.08 --threads 2 --out sgd_lr_ext/ETTh1/x16 --seed 2023
+→ results\sgd_lr_ext\ETTh1\x16\DLinear_H720_seed2023.json
+  DLinear H=720 seed 2023: epoch tốt nhất 9/10, val MSE 1.204698, test MSE 0.484798 MAE 0.498935, 33 s
+C:\Users\Admin\Documents\AIO_dlinear\.venv-gpu\Scripts\python.exe C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py --step run --dataset ETTh1 --model DLinear --H 720 --lr 0.08 --threads 2 --out sgd_lr_ext/ETTh1/x16 --seed 2024
+→ results\sgd_lr_ext\ETTh1\x16\DLinear_H720_seed2024.json
+  DLinear H=720 seed 2024: epoch tốt nhất 6/9, val MSE 1.205648, test MSE 0.520991 MAE 0.525252, 33 s
+C:\Users\Admin\Documents\AIO_dlinear\.venv-gpu\Scripts\python.exe C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py --step run --dataset ETTh1 --model DLinear --H 720 --lr 0.08 --threads 2 --out sgd_lr_ext/ETTh1/x16 --seed 2025
+→ results\sgd_lr_ext\ETTh1\x16\DLinear_H720_seed2025.json
+  DLinear H=720 seed 2025: epoch tốt nhất 8/10, val MSE 1.208541, test MSE 0.491236 MAE 0.502133, 45 s
+C:\Users\Admin\Documents\AIO_dlinear\.venv-gpu\Scripts\python.exe C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py --step run --dataset ETTh1 --model DLinear --H 720 --lr 0.08 --threads 2 --out sgd_lr_ext/ETTh1/x16 --seed 2022
+→ results\sgd_lr_ext\ETTh1\x16\DLinear_H720_seed2022.json
+  DLinear H=720 seed 2022: epoch tốt nhất 10/10, val MSE 1.217939, test MSE 0.476219 MAE 0.491684, 15 s

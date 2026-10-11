@@ -1,0 +1,4 @@
+→ results\official_ltsf_droplast\ETTm1\DLinear_H96_seed2021_dl1.json
+  DLinear H=96 seed 2021: code gốc test MSE 0.3012 MAE 0.3446, chấm lại 0.3012 / 0.3446, epoch tốt nhất 4/7, 281 s
+→ results\official_ltsf_droplast\ETTm1\DLinear_H96_seed2022_dl1.json
+  DLinear H=96 seed 2022: code gốc test MSE 0.3031 MAE 0.3465, chấm lại 0.3031 / 0.3464, epoch tốt nhất 2/5, 311 s

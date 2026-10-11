@@ -493,3 +493,28 @@ Báo cáo: [reports/BAO_CAO_NV8.md](reports/BAO_CAO_NV8.md). Không đổi toán
 
 - **`run_all.sh` (mới):** `quick` (venv, torch đúng bản CUDA qua `TORCH_INDEX`, test, chạy lại grid ETTh1 H = 96 vào thư mục tạm và `compare_cell.py`, sinh số/bảng/hình, biên dịch nếu có latexmk); `full` (thứ tự các nhiệm vụ, có `--dry-run`).
 - **`README.md`:** viết lại theo NHIEM_VU_8 D.3.
+
+# Nhật ký thay đổi code: nhiệm vụ 9, góp ý Tuần 3 của TA (11/10/2026)
+
+Báo cáo: [reports/BAO_CAO_NV9.md](reports/BAO_CAO_NV9.md). Không sửa file nào đã có trong `results/`; kết quả mới ở `results/sgd_lr_ext/`, `results/official_ltsf_droplast/`, `results/huber_delta_h/`, `results/nv9/` (và `results/official_ltsf/patch_droplast.diff`).
+
+## 14.1. `src/solvers.py`: `irls` nhận δ theo từng bước h (commit `6159f06`)
+
+- `delta` là số thực (như cũ) hoặc vectơ độ dài H. Hàm mục tiêu với vectơ: Σ_h Σ_i ρ_{δ_h}(r_ih)/δ_h + λ Σ_h w_hᵀ Pen w_h; trong IRLS, phạt của hàng h thành 2λδ_h·Pen (A_h, g_h, J_h), J = Σ_h δ_h F_h/(n·H). δ vô hướng đi đúng đường code cũ (`pen_A`, `pen_W` trả `A + Pen`, `W @ Pen` y như trước).
+- Trọng số IRLS ở nhánh vectơ tính bằng `reciprocal(max(|r|, δ)) · δ`: torch tính `số / tensor` theo cách này, nên vectơ có mọi δ_h bằng nhau cho đúng trọng số của δ vô hướng (chia tensor/tensor lệch 1 ulp; với MAE trên dữ liệu xấu điều kiện, chênh này thành 4e-10 trên W và lệch 3 vòng).
+- **Test mới** (`tests/test_irls.py`, `TestDeltaPerH`; 66 test): δ vô hướng trùng từng bit với bản chép `tests/solvers_before_nv9.py` ở 6 trường hợp (Huber, MAE, λ có Pen, NLinear, chế độ pha có fallback); vectơ đều = vô hướng tới 1e-12 (đo: 0 ở 5/6, 6e-17 ở trường hợp có Pen); δ_h lớn ở mọi h = ridge MSE với λ_h = 2δ_hλ của từng h (có và không ràng buộc NLinear).
+
+## 14.2. Script mới
+
+- **`scripts/sgd/sgd_lr_extend.py`:** Phần A. Đọc 15 ô biên từ `results/sgd_lr/selection.json`, chạy mức kế tiếp (×16, ×32 hoặc ×0,25, ×0,125) bằng `sgd_etth2.py --lr`, tối đa 2 mức, dừng khi mức mới không tốt hơn trên val; lần chạy lỗi (NaN) ghi `*.failed.json`, val > 10 × mức ×1 coi là thất bại; lr đổi thì chạy 15 seed cuối. → `results/sgd_lr_ext/`.
+- **`scripts/checks/huber_delta_h.py`:** C.3. Đường λ của Huber với δ_h = 1,345·σ̂_h (`Cell.huber_delta(residual_stats=True)`), như grid (IRLS_LAMS, warm start, pha, tol 1e-9, mở rộng đầu mút) → `results/huber_delta_h/`.
+- **`scripts/report/report_nv9.py`:** Phần A (gọi `report_nv7.part_d` với lựa chọn lr đã gộp), B, C.1, C.2 (đoạn hằng ≥ 24 giờ theo kênh), C.3 → `results/nv9/summary.json`, `tables_*.md`.
+
+## 14.3. Script đã có
+
+- **`scripts/sgd/official_ltsf.py`:** `--test-drop-last {0,1}` truyền `--test_drop_last` cho code gốc (patch mới `results/official_ltsf/patch_droplast.diff`, áp sau `patch.diff`; `--prepare` áp cả hai); hậu tố `_dl0/_dl1` cho JSON, log, checkpoint; JSON ghi số cửa sổ test và số cửa sổ bị bỏ. Thêm `--dataset ETTh1`, `--model NLinear`. Không đặt cờ mới thì chạy y như trước. Bản chép `scratch/ltsf_official/` đã áp patch mới.
+- **`scripts/report/report_nv7.py`:** `part_d(summ, sel=None, find=None, out=None, mult_cols=…)`; mặc định cho kết quả trùng tuyệt đối với `results/nv7/` (đã kiểm: `D_B4`, `D_C3`, `tables_D.md`).
+- **`scripts/report/report_data.py`:** B4, C.3 tinh chỉnh và lr đã chọn đọc từ `results/nv9/` và lựa chọn đã gộp (`report_nv9.merged_selection`); thêm `nv9()`.
+- **`make_numbers.py`:** nhóm macro mới `Drop`, `Off`, `Ridge`, `Stuck`, `DeltaH`; `Tuned` đọc nv9; thời gian chạy mới. **`make_tables.py`:** mã nhãn T1–T6 (bảng B4 đầy đủ), cột lr ×0,125 … ×32, năm bảng mới (`tab_droplast`, `tab_ridge`, `tab_etth2filt`, `tab_runs`, `tab_deltah`). **`make_figures.py`:** dấu phẩy thập phân trên trục (chặn `ScalarFormatter`), hình mới H6 (đoạn hằng của ETTh2).
+- **`report/preamble.tex`:** `\DeclareLanguageMapping{vietnamese}{english}` (chuỗi biblatex); tắt phép so thứ tự trích dẫn của biber (backend bibtex luôn báo "undefined references"); `\thesection` không kèm dấu chấm (tiêu đề và mục lục thêm dấu chấm), hết "IV.3..".
+- **`run_all.sh`:** kỳ vọng 66 test; `full` thêm bước F (Phần A, B, C.3) và `report_nv9.py`.

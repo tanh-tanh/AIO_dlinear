@@ -22,7 +22,8 @@ HEADER = r"""% Tự động sinh bởi scripts/report/make_numbers.py từ resul
 %   - dataset: ETThOne, ETThTwo, ETTmOne; horizon: H + số (HNineSix); mô hình: Linear, DLinear, NLinear;
 %   - mục tiêu: MSE, MAE, Huber; metric báo cáo: Mse (MSE test ở λ*_MSE), Mae (MAE test ở λ*_MAE);
 %   - nhóm: BTwo (RQ1, bảng B2), BThree (B3, nghiệm tối ưu), Out (outlier), Mag (độ lớn outlier), Delta (δ của Huber),
-%     BOne, BFour, CThree (SGD với lr gốc), Tuned (SGD đã tinh chỉnh lr), EThTwo (đoạn cảm biến bị kẹt);
+%     BOne, BFour, CThree (SGD với lr gốc), Tuned (SGD đã tinh chỉnh lr, lưới đã mở rộng), EThTwo (đoạn cảm biến bị kẹt),
+%     Drop (code gốc với drop_last), Ridge (họ ridge trên ETTh2), Stuck (vị trí đoạn hằng), DeltaH (δ theo bước h);
 %   - hậu tố Min/Max/Range/Count/Pct là khoảng hoặc số đếm; số đếm không có đơn vị.
 % Số thập phân dùng dấu phẩy, bọc trong \ensuremath nên dùng được cả trong văn bản lẫn công thức.
 """
@@ -275,8 +276,8 @@ def sgd(M):
         d = [r["d_test"] for k, r in b4.items() if k[0] == ds]
         M.put(name("BFour", ds, "DTest", "Range"), frange(min(d), max(d), 4, sign=True))
         M.put(name("BFour", ds, "Worse", "Count"), str(sum(x > 0 for x in d)))
-    # B4 tinh chỉnh
-    T = D.nv7()["D_B4"]
+    # B4 tinh chỉnh (lưới lr đã mở rộng, NHIEM_VU_9 A)
+    T = D.nv9()["A_B4"]
     for k, v in T["counts"].items():
         M.put(name("Tuned", lab[k], "Count"), str(v[0]))
         M.put(name("Tuned", lab[k], "XOne", "Count"), str(v[1]))
@@ -295,15 +296,29 @@ def sgd(M):
     d = [r["d_test_tuned"] for r in hm]
     M.put(name("Tuned", "HMOne", "DTest", "Range"), frange(min(d), max(d), 4, sign=True))
     lr = D.lr_cells()
-    edge = sum(c["at_lower_edge"] in (True, "True") or float(c["chosen_mult"]) == 8 for c in lr.values())
-    M.put(name("Tuned", "LrEdge", "Count"), str(edge))
+    A = D.nv9()["A"]
+    M.put(name("Tuned", "LrEdgeOld", "Count"), str(len(A["changes"])))
+    M.put(name("Tuned", "LrEdge", "Count"), str(A["n_still_edge"]))
+    M.put(name("Tuned", "LrExtChanged", "Count"), str(A["n_changed"]))
+    M.put(name("Tuned", "LrExtWallHours"), fnum(A["wall_hours"], 1))
+    # danh sách (văn bản do dữ liệu sinh ra): số ô theo mức chọn; các ô còn ở biên sau khi mở rộng
+    g = lambda x: f"{float(x):g}".replace(".", "{,}")                     # noqa: E731
+    cc = sorted(T["chosen_counts"].items(), key=lambda kv: float(kv[0]))
+    M.put(name("Tuned", "LrChosenList"),
+          "; ".join(rf"$\times {g(k)}$: {v} ô" if i == 0 else rf"$\times {g(k)}$: {v}" for i, (k, v) in enumerate(cc)))
+    edge = [c for c in A["changes"] if c["still_at_edge"]]
+    M.put(name("Tuned", "LrStillEdgeList"),
+          "; ".join(rf"{c['cell'].split()[0]} {c['cell'].split()[1]} $H = {c['cell'].split('=')[1]}$ ở $\times {g(c['new_mult'])}$"
+                    for c in edge) or "không có")
     n, med = D.lr_noisy_count()
     M.put(name("Tuned", "LrNoisy", "Count"), str(n))
     M.put(name("Tuned", "LrNoisyMedianRatio"), fnum(med, 2))
     M.put(name("Tuned", "LrCell", "Count"), str(len(lr)))
-    for m, mult in (("Linear", 8.0), ("DLinear", 2.0)):
-        M.put(name("Tuned", "ETTmOne", m, "Chose", spell(int(mult)), "Count"),
-              str(sum(float(c["chosen_mult"]) == mult for k, c in lr.items() if k[0] == "ETTm1" and k[2] == m)))
+    for m in ("Linear", "DLinear"):
+        M.put(name("Tuned", "ETTmOne", m, "ChoseGeEight", "Count"),
+              str(sum(float(c["chosen_mult"]) >= 8 for k, c in lr.items() if k[0] == "ETTm1" and k[2] == m)))
+        M.put(name("Tuned", "ETTmOne", m, "ChoseLeTwo", "Count"),
+              str(sum(float(c["chosen_mult"]) <= 2 for k, c in lr.items() if k[0] == "ETTm1" and k[2] == m)))
     # C.3
     c3 = S["C3"]
     M.put(name("CThree", "DLinBetterBoth", "Count"), str(c3["n_both"]))
@@ -319,7 +334,7 @@ def sgd(M):
             pub = D.b1_rows()
             M.put(name("CThree", ds, "HSevenTwoZero", "PubD"),
                   fnum(pub[(ds, 720, "DLinear")]["pub"] - pub[(ds, 720, "Linear")]["pub"], 3))
-    t = D.nv7()["D_C3"]
+    t = D.nv9()["A_C3"]
     M.put(name("Tuned", "CThreeDLinBetter", "Count"), str(t["n_dlinear_better"]))
     tr = D.c3t_rows()
     x1 = sum(r["x1_dlinear_better_test"] for k, r in tr.items() if k[0] == "ETTm1")
@@ -380,6 +395,70 @@ def repro(M):
     M.put(name("Repro", "Head"), rf"\texttt{{{head}}}")
 
 
+def nv9(M):
+    """NHIEM_VU_9: code gốc với drop_last (B), họ ridge ETTh2 (C1), vị trí đoạn hằng (C2), δ theo bước h (C3)."""
+    import json
+    N = D.nv9()
+    B = N["B"]
+    M.put(name("Drop", "PubInTrue", "Count"), str(B["n_pub_in_dl1"]))
+    M.put(name("Drop", "PubInFalse", "Count"), str(B["n_pub_in_dl0"]))
+    M.put(name("Drop", "Cell", "Count"), str(B["n_cells"]))
+    M.put(name("Drop", "DiffAbsMax"), fsci(B["max_abs_diff"]))
+    main = [r for r in B["rows"] if not r["control"]]
+    M.put(name("Drop", "Dropped", "Range"), f"{min(r['n_dropped'] for r in main)}--{max(r['n_dropped'] for r in main)}")
+    M.put(name("Drop", "DroppedPctMax"), fnum(100 * max(r["n_dropped"] / r["n_test"] for r in main), 2))
+    below = [r for r in main if r["pub"] < r["dl1_min"]]
+    M.put(name("Drop", "PubBelowTrue", "Count"), str(len(below)))
+    gap = [r["dl1_min"] - r["pub"] for r in below]
+    if gap:
+        M.put(name("Drop", "PubGap", "Range"), frange(min(gap), max(gap), 4))
+    M.put(name("Drop", "Seed", "Count"), str(len(main[0]["dl1"])))
+    # code gốc DLinear ETTm1 H = 96 trên CPU (NHIEM_VU_6 D.1)
+    d1 = [json.loads(f.read_text(encoding="utf-8"))["official_test_mse"]
+          for f in sorted((D.RES / "outliers" / "d1_official").glob("DLinear_H96_seed*.json"))]
+    M.put(name("Off", "ETTmOneHNineSix", "Mean"), fnum(float(np.mean(d1))))
+    M.put(name("Off", "ETTmOneHNineSix", "Sd"), fnum(float(np.std(d1, ddof=1))))
+    M.put(name("Off", "ETTmOneHNineSix", "N"), str(len(d1)))
+    # C1
+    C1 = N["C1"]
+    M.put(name("Ridge", "BestWorseOrig", "Count"), str(C1["n_ridge_best_worse_than_sgd_orig"]))
+    M.put(name("Ridge", "BestWorseTuned", "Count"), str(C1["n_ridge_best_worse_than_sgd_tuned"]))
+    M.put(name("Ridge", "Cell", "Count"), str(C1["n_cells"]))
+    g = [r["best_minus_sgd_orig"] for r in C1["rows"]]
+    M.put(name("Ridge", "GapOrig", "Range"), frange(min(g), max(g), 4))
+    g = [r["best_minus_sgd_tuned"] for r in C1["rows"]]
+    M.put(name("Ridge", "GapTuned", "Range"), frange(min(g), max(g), 4))
+    g = [r["star_test"] - r["best_test"] for r in C1["rows"]]
+    M.put(name("Ridge", "StarMinusBest", "Max"), fnum(max(g), 4))
+    # C2
+    C2 = N["C2"]
+    runs = C2["runs"]
+    M.put(name("Stuck", "Run", "Count"), str(len(runs)))
+    M.put(name("Stuck", "RunLong", "Count"), str(sum(r["hours"] >= 96 for r in runs)))
+    M.put(name("Stuck", "DayThirtyOne", "Count"),
+          str(sum(r["hours"] == 24 and r["start"][8:13] == "31 00" for r in runs)))
+    M.put(name("Stuck", "RunMaxHours"), str(max(r["hours"] for r in runs)))
+    for sp in ("train", "val", "test"):
+        M.put(name("Stuck", "RunLong", sp.capitalize(), "Count"),
+              str(sum(r["hours"] >= 96 and sp in r["split"].split("/") for r in runs)))
+    # C3
+    C3 = N["C3"]
+    M.put(name("DeltaH", "RankChanged", "Count"), str(C3["n_rank_changed"]))
+    M.put(name("DeltaH", "Cell", "Count"), str(len(C3["rows"])))
+    for r in C3["rows"]:
+        k = (r["dataset"], "H", r["H"], r["model"])
+        M.put(name("DeltaH", *k, "Min"), fnum(r["delta_h_min"], 3))
+        M.put(name("DeltaH", *k, "Max"), fnum(r["delta_h_max"], 3))
+        M.put(name("DeltaH", *k, "Mad"), fnum(r["delta_mad"], 3))
+        for hub, tag in (("Huber δ_MAD", "HubMad"), ("Huber δ_h", "HubH")):
+            for met in D.METRICS:
+                M.put(name("DeltaH", *k, tag, met.capitalize()), fnum(r["test"][hub][met]))
+    M.put(name("Repro", "DeltaHMinutes"), f"{C3['meta']['wall_seconds'] / 60:.0f}")
+    sec = sum(json.loads(f.read_text(encoding="utf-8"))["seconds"]
+              for f in (D.RES / "official_ltsf_droplast").glob("*/*_dl[01].json"))
+    M.put(name("Repro", "DropGpuHours"), fnum(sec / 3600, 1))
+
+
 def main():
     M = Macros()
     repro(M)
@@ -389,6 +468,7 @@ def main():
     outliers(M)
     sgd(M)
     etth2(M)
+    nv9(M)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(M.tex(), encoding="utf-8")
     print(f"→ {OUT.relative_to(D.ROOT).as_posix()} ({len(M.d)} macro)")

@@ -1,0 +1,19 @@
+  bỏ qua DLinear H=96 seed 2021 (đã có)
+  bỏ qua DLinear H=96 seed 2022 (đã có)
+→ results\official_ltsf_droplast\ETTm1\DLinear_H96_seed2023_dl1.json
+  DLinear H=96 seed 2023: code gốc test MSE 0.3008 MAE 0.3449, chấm lại 0.3008 / 0.3449, epoch tốt nhất 5/8, 257 s
+→ results\official_ltsf_droplast\ETTm1\DLinear_H96_seed2024_dl1.json
+  DLinear H=96 seed 2024: code gốc test MSE 0.3016 MAE 0.3456, chấm lại 0.3016 / 0.3456, epoch tốt nhất 3/6, 188 s
+→ results\official_ltsf_droplast\ETTm1\DLinear_H96_seed2025_dl1.json
+  DLinear H=96 seed 2025: code gốc test MSE 0.3025 MAE 0.3486, chấm lại 0.3025 / 0.3486, epoch tốt nhất 2/5, 152 s
+→ results\official_ltsf_droplast\ETTm1\DLinear_H96_seed2021_dl0.json
+  DLinear H=96 seed 2021: code gốc test MSE 0.3012 MAE 0.3446, chấm lại 0.3012 / 0.3446, epoch tốt nhất 4/7, 188 s
+→ results\official_ltsf_droplast\ETTm1\DLinear_H96_seed2022_dl0.json
+  DLinear H=96 seed 2022: code gốc test MSE 0.3031 MAE 0.3464, chấm lại 0.3031 / 0.3464, epoch tốt nhất 2/5, 145 s
+→ results\official_ltsf_droplast\ETTm1\DLinear_H96_seed2023_dl0.json
+  DLinear H=96 seed 2023: code gốc test MSE 0.3008 MAE 0.3449, chấm lại 0.3008 / 0.3449, epoch tốt nhất 5/8, 203 s
+→ results\official_ltsf_droplast\ETTm1\DLinear_H96_seed2024_dl0.json
+  DLinear H=96 seed 2024: code gốc test MSE 0.3016 MAE 0.3456, chấm lại 0.3016 / 0.3456, epoch tốt nhất 3/6, 181 s
+→ results\official_ltsf_droplast\ETTm1\DLinear_H96_seed2025_dl0.json
+  DLinear H=96 seed 2025: code gốc test MSE 0.3025 MAE 0.3486, chấm lại 0.3025 / 0.3486, epoch tốt nhất 2/5, 167 s
+XONG

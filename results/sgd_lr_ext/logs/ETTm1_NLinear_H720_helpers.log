@@ -1,0 +1,3 @@
+→ results\sgd_lr_ext\ETTm1\x16\NLinear_H720_seed2040.json
+  NLinear H=720 seed 2040: epoch tốt nhất 8/10, val MSE 0.958894, test MSE 0.427627 MAE 0.416199, 237 s�→ results\sgd_lr_ext\ETTm1\x16\NLinear_H720_seed2039.json
+  NLinear H=720 seed 2039: epoch tốt nhất 7/10, val MSE 0.957676, test MSE 0.430860 MAE 0.418106, 159 s

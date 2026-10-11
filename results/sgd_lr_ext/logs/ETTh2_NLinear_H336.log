@@ -1,0 +1,11 @@
+C:\Users\Admin\Documents\AIO_dlinear\.venv-gpu\Scripts\python.exe C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py --step run --dataset ETTh2 --model NLinear --H 336 --lr 0.0125 --threads 2 --out sgd_lr_ext/ETTh2/x0.25 --seed 2021 2022 2023 2024 2025
+→ results\sgd_lr_ext\ETTh2\x0.25\NLinear_H336_seed2021.json
+  NLinear H=336 seed 2021: epoch tốt nhất 5/8, val MSE 0.364193, test MSE 0.366911 MAE 0.407192, 18 s
+→ results\sgd_lr_ext\ETTh2\x0.25\NLinear_H336_seed2022.json
+  NLinear H=336 seed 2022: epoch tốt nhất 6/9, val MSE 0.360662, test MSE 0.369036 MAE 0.406066, 18 s
+→ results\sgd_lr_ext\ETTh2\x0.25\NLinear_H336_seed2023.json
+  NLinear H=336 seed 2023: epoch tốt nhất 6/9, val MSE 0.359482, test MSE 0.375109 MAE 0.408694, 17 s
+→ results\sgd_lr_ext\ETTh2\x0.25\NLinear_H336_seed2024.json
+  NLinear H=336 seed 2024: epoch tốt nhất 7/10, val MSE 0.358202, test MSE 0.369762 MAE 0.406157, 17 s
+→ results\sgd_lr_ext\ETTh2\x0.25\NLinear_H336_seed2025.json
+  NLinear H=336 seed 2025: epoch tốt nhất 9/10, val MSE 0.358386, test MSE 0.366304 MAE 0.404424, 18 s

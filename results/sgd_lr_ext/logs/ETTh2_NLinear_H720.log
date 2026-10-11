@@ -1,0 +1,86 @@
+C:\Users\Admin\Documents\AIO_dlinear\.venv-gpu\Scripts\python.exe C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py --step run --dataset ETTh2 --model NLinear --H 720 --lr 0.0125 --threads 2 --out sgd_lr_ext/ETTh2/x0.25 --seed 2021 2022 2023 2024 2025
+→ results\sgd_lr_ext\ETTh2\x0.25\NLinear_H720_seed2021.json
+  NLinear H=720 seed 2021: epoch tốt nhất 9/10, val MSE 0.605431, test MSE 0.395058 MAE 0.436033, 27 s
+Traceback (most recent call last):
+  File "C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py", line 183, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py", line 178, in main
+    step_run(args.model, args.H, args.seed, args.force, args.filtered)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py", line 152, in step_run
+    run_one(name, H, seed, cell, splits, filtered)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py", line 115, in run_one
+    hist = train_sgd(model, trl, val, ckpt, lr=HP["lr"], epochs=HP["epochs"], patience=HP["patience"],
+                     lradj=HP["lradj"])
+  File "C:\Users\Admin\Documents\AIO_dlinear\src\sgd.py", line 108, in train_sgd
+    torch.save(model.state_dict(), ckpt_path)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\Documents\AIO_dlinear\.venv-gpu\Lib\site-packages\torch\serialization.py", line 1002, in save
+    with _open_zipfile_writer(f) as opened_zipfile:
+         ~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Users\Admin\Documents\AIO_dlinear\.venv-gpu\Lib\site-packages\torch\serialization.py", line 864, in _open_zipfile_writer
+    return container(name_or_buffer)  # type: ignore[arg-type]
+  File "C:\Users\Admin\Documents\AIO_dlinear\.venv-gpu\Lib\site-packages\torch\serialization.py", line 828, in __init__
+    torch._C.PyTorchFileWriter(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.name, get_crc32_options(), _get_storage_alignment()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+RuntimeError: [enforce fail at inline_container.cc:745] . open file failed with error code: 1224
+C:\Users\Admin\Documents\AIO_dlinear\.venv-gpu\Scripts\python.exe C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py --step run --dataset ETTh2 --model NLinear --H 720 --lr 0.0125 --threads 2 --out sgd_lr_ext/ETTh2/x0.25 --seed 2022
+→ results\sgd_lr_ext\ETTh2\x0.25\NLinear_H720_seed2022.json
+  NLinear H=720 seed 2022: epoch tốt nhất 7/10, val MSE 0.597721, test MSE 0.399030 MAE 0.437403, 27 s
+C:\Users\Admin\Documents\AIO_dlinear\.venv-gpu\Scripts\python.exe C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py --step run --dataset ETTh2 --model NLinear --H 720 --lr 0.0125 --threads 2 --out sgd_lr_ext/ETTh2/x0.25 --seed 2023
+→ results\sgd_lr_ext\ETTh2\x0.25\NLinear_H720_seed2023.json
+  NLinear H=720 seed 2023: epoch tốt nhất 9/10, val MSE 0.602429, test MSE 0.395222 MAE 0.435595, 27 s
+C:\Users\Admin\Documents\AIO_dlinear\.venv-gpu\Scripts\python.exe C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py --step run --dataset ETTh2 --model NLinear --H 720 --lr 0.0125 --threads 2 --out sgd_lr_ext/ETTh2/x0.25 --seed 2024
+→ results\sgd_lr_ext\ETTh2\x0.25\NLinear_H720_seed2024.json
+  NLinear H=720 seed 2024: epoch tốt nhất 1/4, val MSE 0.612873, test MSE 0.437256 MAE 0.460985, 11 s
+C:\Users\Admin\Documents\AIO_dlinear\.venv-gpu\Scripts\python.exe C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py --step run --dataset ETTh2 --model NLinear --H 720 --lr 0.0125 --threads 2 --out sgd_lr_ext/ETTh2/x0.25 --seed 2025
+→ results\sgd_lr_ext\ETTh2\x0.25\NLinear_H720_seed2025.json
+  NLinear H=720 seed 2025: epoch tốt nhất 7/10, val MSE 0.599536, test MSE 0.399747 MAE 0.437865, 24 s
+C:\Users\Admin\Documents\AIO_dlinear\.venv-gpu\Scripts\python.exe C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py --step run --dataset ETTh2 --model NLinear --H 720 --lr 0.00625 --threads 2 --out sgd_lr_ext/ETTh2/x0.125 --seed 2021 2022 2023 2024 2025
+→ results\sgd_lr_ext\ETTh2\x0.125\NLinear_H720_seed2021.json
+  NLinear H=720 seed 2021: epoch tốt nhất 4/7, val MSE 0.610584, test MSE 0.396899 MAE 0.438913, 19 s
+→ results\sgd_lr_ext\ETTh2\x0.125\NLinear_H720_seed2022.json
+  NLinear H=720 seed 2022: epoch tốt nhất 7/10, val MSE 0.599604, test MSE 0.398231 MAE 0.437268, 21 s
+→ results\sgd_lr_ext\ETTh2\x0.125\NLinear_H720_seed2023.json
+  NLinear H=720 seed 2023: epoch tốt nhất 5/8, val MSE 0.599238, test MSE 0.401136 MAE 0.437894, 18 s
+→ results\sgd_lr_ext\ETTh2\x0.125\NLinear_H720_seed2024.json
+  NLinear H=720 seed 2024: epoch tốt nhất 5/8, val MSE 0.594231, test MSE 0.405741 MAE 0.440335, 17 s
+→ results\sgd_lr_ext\ETTh2\x0.125\NLinear_H720_seed2025.json
+  NLinear H=720 seed 2025: epoch tốt nhất 4/7, val MSE 0.602725, test MSE 0.414422 MAE 0.445949, 16 s
+C:\Users\Admin\Documents\AIO_dlinear\.venv-gpu\Scripts\python.exe C:\Users\Admin\Documents\AIO_dlinear\scripts\sgd\sgd_etth2.py --step run --dataset ETTh2 --model NLinear --H 720 --lr 0.00625 --threads 2 --out sgd_lr_ext/ETTh2/x0.125 --seed 2026 2027 2028 2029 2030 2031 2032 2033 2034 2035 2036 2037 2038 2039 2040
+→ results\sgd_lr_ext\ETTh2\x0.125\NLinear_H720_seed2026.json
+  NLinear H=720 seed 2026: epoch tốt nhất 4/7, val MSE 0.603788, test MSE 0.410218 MAE 0.444908, 18 s
+→ results\sgd_lr_ext\ETTh2\x0.125\NLinear_H720_seed2027.json
+  NLinear H=720 seed 2027: epoch tốt nhất 5/8, val MSE 0.599078, test MSE 0.405754 MAE 0.441481, 17 s
+→ results\sgd_lr_ext\ETTh2\x0.125\NLinear_H720_seed2028.json
+  NLinear H=720 seed 2028: epoch tốt nhất 6/9, val MSE 0.602725, test MSE 0.399434 MAE 0.438214, 19 s
+→ results\sgd_lr_ext\ETTh2\x0.125\NLinear_H720_seed2029.json
+  NLinear H=720 seed 2029: epoch tốt nhất 4/7, val MSE 0.597231, test MSE 0.410124 MAE 0.441912, 14 s
+→ results\sgd_lr_ext\ETTh2\x0.125\NLinear_H720_seed2030.json
+  NLinear H=720 seed 2030: epoch tốt nhất 3/6, val MSE 0.600244, test MSE 0.415249 MAE 0.446120, 13 s
+→ results\sgd_lr_ext\ETTh2\x0.125\NLinear_H720_seed2031.json
+  NLinear H=720 seed 2031: epoch tốt nhất 7/10, val MSE 0.598941, test MSE 0.400682 MAE 0.438609, 18 s
+→ results\sgd_lr_ext\ETTh2\x0.125\NLinear_H720_seed2032.json
+  NLinear H=720 seed 2032: epoch tốt nhất 8/10, val MSE 0.599792, test MSE 0.398914 MAE 0.437514, 18 s
+→ results\sgd_lr_ext\ETTh2\x0.125\NLinear_H720_seed2033.json
+  NLinear H=720 seed 2033: epoch tốt nhất 6/9, val MSE 0.600017, test MSE 0.399195 MAE 0.438009, 16 s
+→ results\sgd_lr_ext\ETTh2\x0.125\NLinear_H720_seed2034.json
+  NLinear H=720 seed 2034: epoch tốt nhất 4/7, val MSE 0.597823, test MSE 0.403168 MAE 0.440127, 11 s
+→ results\sgd_lr_ext\ETTh2\x0.125\NLinear_H720_seed2035.json
+  NLinear H=720 seed 2035: epoch tốt nhất 4/7, val MSE 0.601430, test MSE 0.419014 MAE 0.447425, 14 s
+→ results\sgd_lr_ext\ETTh2\x0.125\NLinear_H720_seed2036.json
+  NLinear H=720 seed 2036: epoch tốt nhất 3/6, val MSE 0.605206, test MSE 0.407065 MAE 0.442710, 11 s
+→ results\sgd_lr_ext\ETTh2\x0.125\NLinear_H720_seed2037.json
+  NLinear H=720 seed 2037: epoch tốt nhất 5/8, val MSE 0.597042, test MSE 0.406536 MAE 0.440457, 14 s
+→ results\sgd_lr_ext\ETTh2\x0.125\NLinear_H720_seed2038.json
+  NLinear H=720 seed 2038: epoch tốt nhất 4/7, val MSE 0.603897, test MSE 0.402043 MAE 0.439786, 14 s
+→ results\sgd_lr_ext\ETTh2\x0.125\NLinear_H720_seed2039.json
+  NLinear H=720 seed 2039: epoch tốt nhất 5/8, val MSE 0.601217, test MSE 0.401938 MAE 0.439138, 14 s
+→ results\sgd_lr_ext\ETTh2\x0.125\NLinear_H720_seed2040.json
+  NLinear H=720 seed 2040: epoch tốt nhất 1/4, val MSE 0.616810, test MSE 0.432758 MAE 0.455410, 7 s
