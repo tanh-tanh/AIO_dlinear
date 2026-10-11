@@ -470,5 +470,90 @@ class TestNLinearMAE(unittest.TestCase):
         self.assertGreater((W_free[:, :-1].sum(dim=1) - 1).abs().max().item(), 1e-3)
 
 
+class TestDeltaPerH(unittest.TestCase):
+    """δ theo từng bước h (NHIEM_VU_9 C.3): irls nhận delta là vectơ [H].
+
+    1. δ vô hướng trùng từng bit với irls trước khi sửa (bản chép tests/solvers_before_nv9.py), ở mọi
+       nhánh: Huber, MAE, λ > 0 có Pen, NLinear ràng buộc, chế độ pha có fallback.
+    2. Vectơ có mọi phần tử bằng nhau trùng δ vô hướng tới 1e-12 (đo: 0 ở 5/6 trường hợp, 6e-17 ở trường hợp có Pen).
+    3. δ_h lớn ở mọi h (khác nhau theo h): về đúng ridge MSE với λ_h = 2δ_hλ của từng h (đo: ~1e-15).
+    """
+
+    def cases(self):
+        torch.manual_seed(0)                             # nhiễu Laplace của make_data lấy từ RNG toàn cục
+        Xt, Y = make_data()
+        Xi, Yi = TestGramFallback().ill_data()
+        H, p = Y.shape[1], Xt.shape[1]
+        g = torch.Generator().manual_seed(1)
+        M = torch.randn(p - 1, p - 1, generator=g, dtype=DT)
+        pen = (M @ M.T / p).numpy()
+        W0 = torch.zeros(H, p, dtype=DT)
+        return [
+            ("Huber", Xt, Y, 0.7, dict(W0=W0)),
+            ("Huber λ, pen", Xt, Y, 0.7, dict(W0=W0, lam=3.0, pen=pen)),
+            ("MAE λ", Xt, Y, MAE_DELTA, dict(W0=W0, lam=1.0, tol=1e-12)),
+            ("Huber NLinear λ", Xt, Y, 1.3, dict(W0=W0, lam=2.0, constrained=True)),
+            ("MAE pha, fallback", Xi, Yi, MAE_DELTA,
+             dict(W0=torch.zeros(Yi.shape[1], Xi.shape[1], dtype=DT), tol=1e-12, gram_dtype=torch.float32)),
+            ("Huber pha λ", Xi, Yi, 0.5,
+             dict(W0=torch.zeros(Yi.shape[1], Xi.shape[1], dtype=DT), lam=0.5, gram_dtype=torch.float32)),
+        ]
+
+    def test_scalar_bitwise_unchanged(self):
+        from tests.solvers_before_nv9 import irls as irls_old
+        for name, Xt, Y, d, kw in self.cases():
+            with self.subTest(name), warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                W_new, n_new = irls(Xt, Y, d, **kw)
+                fb_new = irls.last_fallbacks
+                W_old, n_old = irls_old(Xt, Y, d, **kw)
+                self.assertEqual(n_new, n_old)
+                self.assertEqual(fb_new, irls_old.last_fallbacks)
+                self.assertTrue(torch.equal(W_new, W_old))
+
+    def test_equal_vector_matches_scalar(self):
+        for name, Xt, Y, d, kw in self.cases():
+            with self.subTest(name), warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                W_s, n_s = irls(Xt, Y, d, **kw)
+                W_v, n_v = irls(Xt, Y, np.full(Y.shape[1], d), **kw)
+                self.assertEqual(n_s, n_v)
+                err = (W_v - W_s).abs().max().item()
+                self.assertLessEqual(err, 1e-12, msg=f"{name}: lệch {err:.2e}")
+
+    def test_large_delta_per_h_is_ridge_per_h(self):
+        torch.manual_seed(0)
+        Xt, Y = make_data()
+        H, p = Y.shape[1], Xt.shape[1]
+        deltas = np.array([1e6, 3e6, 1e7])[:H]
+        lam = 1e-6                                       # λ_h = 2δ_hλ = 2, 6, 20
+        for constrained in (False, True):
+            with self.subTest(constrained=constrained):
+                W, n_iter = irls(Xt, Y, deltas, torch.zeros(H, p, dtype=DT), lam=lam, constrained=constrained,
+                                 tol=1e-12)
+                self.assertEqual(n_iter, 2)
+                G, C = Xt.T @ Xt, Xt.T @ Y
+                Pen = torch.eye(p, dtype=DT)
+                Pen[-1, -1] = 0                           # không phạt bias
+                a = torch.ones(p, dtype=DT)
+                a[-1] = 0
+                rows = []
+                for h in range(H):
+                    A = G + 2 * deltas[h] * lam * Pen
+                    if not constrained:
+                        rows.append(torch.linalg.solve(A, C[:, h]))
+                        continue
+                    K = torch.zeros(p + 1, p + 1, dtype=DT)
+                    K[:p, :p], K[:p, -1], K[-1, :p] = A, a, a
+                    rows.append(torch.linalg.solve(K, torch.cat([C[:, h], torch.ones(1, dtype=DT)]))[:p])
+                W_ref = torch.stack(rows)
+                err = rel_err(W, W_ref)
+                self.assertLess(err, 1e-10, msg=f"rel err = {err:.2e}")
+                # δ_h khác nhau thật sự đổi nghiệm: so với δ chung bằng δ_1
+                W_c, _ = irls(Xt, Y, float(deltas[0]), torch.zeros(H, p, dtype=DT), lam=lam,
+                              constrained=constrained, tol=1e-12)
+                self.assertGreater(rel_err(W_c, W_ref), 1e-6)
+
+
 if __name__ == "__main__":
     unittest.main()

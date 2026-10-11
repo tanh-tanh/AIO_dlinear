@@ -155,6 +155,9 @@ def irls(Xt, Y, delta, W0, lam=0.0, pen=None, constrained=False, max_iter=1000, 
         patience  chỉ dừng khi J giảm tương đối ít hơn tol trong patience vòng liên tiếp; một vòng
              giảm ≥ tol đặt lại bộ đếm. Cần khi warm start: vòng đầu giảm rất ít dù chưa hội tụ
              (docs/reports/BAO_CAO_TIEU_CHI_DUNG.md). J tăng trong ngưỡng rise_tol vẫn dừng ngay.
+        delta  số thực, hoặc (NHIEM_VU_9 C.3) vectơ [H] δ_h theo từng bước h. Khi đó hàm mục tiêu là
+             F(W) = Σ_h Σ_i ρ_{δ_h}(r_ih)/δ_h + λ Σ_h w_hᵀ Pen w_h (mỗi h một bài toán riêng như trên, với δ_h),
+             và J = Σ_h δ_h·F_h/(n·H). δ vô hướng chạy đúng đường code cũ (trùng từng bit).
         gram_fallback  chỉ có tác dụng khi gram_dtype khác kiểu của Xt: bước h nào làm J_h tăng
              (A_h lập bằng gram_dtype quá xấu điều kiện) thì lập lại A_h đó bằng kiểu của Xt và giải
              lại. Không bao giờ chạy khi các bước đều tốt, nên không đổi kết quả trong trường hợp đó.
@@ -177,6 +180,10 @@ def irls(Xt, Y, delta, W0, lam=0.0, pen=None, constrained=False, max_iter=1000, 
     H, p = W0.shape
     W = W0.clone()
     Xg = Xt if gram_dtype is None else Xt.to(gram_dtype)
+    # δ theo bước h: d [H] nhân vào phạt của từng h (A_h, g_h, J_h); δ vô hướng giữ nguyên mọi phép tính cũ
+    vec = np.ndim(delta) > 0
+    if vec:
+        delta = torch.as_tensor(delta, dtype=Xt.dtype, device=Xt.device).reshape(H)
 
     # Phạt trong hệ của IRLS: trọng số w = δ·(1/max(|r|, δ)) tức hàm mục tiêu đã nhân δ, nên phạt
     # λ·wᵀ Pen w thành 2λδ·Pen trong A_h. Hàng và cột bias bằng 0.
@@ -184,12 +191,20 @@ def irls(Xt, Y, delta, W0, lam=0.0, pen=None, constrained=False, max_iter=1000, 
     if lam:
         Pen[:-1, :-1] = (torch.eye(p - 1, dtype=Xt.dtype, device=Xt.device) if pen is None
                          else torch.as_tensor(pen, dtype=Xt.dtype, device=Xt.device))
-        Pen *= 2 * lam * delta
+        Pen *= 2 * lam * (1 if vec else delta)
+
+    def pen_A(A, idx=slice(None)):
+        """A_h + 2λδ_h·Pen (δ vô hướng: A + Pen như cũ)."""
+        return A + Pen * delta[idx].view(-1, 1, 1) if vec else A + Pen
+
+    def pen_W(W, idx=slice(None)):
+        """2λδ_h·Pen w_h cho từng hàng (δ vô hướng: W @ Pen như cũ)."""
+        return (W @ Pen) * delta[idx].view(-1, 1) if vec else W @ Pen
 
     def objective(W, per_h=False):
         """J (như trước, không đổi cách tính); per_h=True trả thêm J_h [H], Σ_h J_h = J (tới làm tròn)."""
         R = Y - Xt @ W.T
-        WPW = (W @ Pen) * W
+        WPW = pen_W(W) * W
         J = huber_objective(R, delta) + WPW.sum() / (2 * Y.numel())
         if not per_h:
             return J
@@ -197,7 +212,7 @@ def irls(Xt, Y, delta, W0, lam=0.0, pen=None, constrained=False, max_iter=1000, 
         rho = torch.empty(R.shape[1], dtype=R.dtype, device=R.device)
         for c in range(0, R.shape[1], 64):
             a_ = R[:, c:c + 64].abs()
-            q = a_.clamp(max=delta)
+            q = a_.clamp(max=delta[c:c + 64] if vec else delta)
             rho[c:c + 64] = (q * (a_ - q / 2)).sum(0)
         return J, (rho + WPW.sum(-1) / 2) / Y.numel()
 
@@ -233,11 +248,16 @@ def irls(Xt, Y, delta, W0, lam=0.0, pen=None, constrained=False, max_iter=1000, 
     for it in range(max_iter):
         # 1–2. phần dư và trọng số từ W hiện tại
         R = Y - Xt @ W.T
-        w = delta / R.abs().clamp(min=delta)
+        if vec:
+            # torch tính số / tensor bằng reciprocal(tensor) · số; làm y như vậy để vectơ có mọi δ_h bằng nhau
+            # cho đúng trọng số của δ vô hướng (chia tensor / tensor lệch 1 ulp, IRLS của MAE khuếch đại lên)
+            w = R.abs().clamp(min=delta).reciprocal() * delta
+        else:
+            w = delta / R.abs().clamp(min=delta)
 
         # 3. lập H hệ phương trình
-        A = weight_gram(Xg, w.to(Xg.dtype), chunk).to(Xt.dtype) + Pen
-        g = (w * R).T @ Xt - W @ Pen
+        A = pen_A(weight_gram(Xg, w.to(Xg.dtype), chunk).to(Xt.dtype))
+        g = (w * R).T @ Xt - pen_W(W)
 
         # 4. giải (và hiệu chỉnh theo ràng buộc nếu là NLinear)
         W_prev = W
@@ -250,7 +270,7 @@ def irls(Xt, Y, delta, W0, lam=0.0, pen=None, constrained=False, max_iter=1000, 
             if len(bad):
                 # khối nhỏ hơn theo tỷ lệ cỡ kiểu số: tensor trung gian n·chunk·p không lớn hơn
                 # của bước thường (ETTm1 H = 720 với chunk 16 float64 là ~10 GB, tràn VRAM)
-                A_bad = weight_gram(Xt, w[:, bad], fb_chunk) + Pen
+                A_bad = pen_A(weight_gram(Xt, w[:, bad], fb_chunk), bad)
                 W = W.clone()
                 W[bad] = step(A_bad, g[bad], W_prev[bad])
                 J_new, Jh_new = objective(W, per_h=True)
@@ -269,7 +289,7 @@ def irls(Xt, Y, delta, W0, lam=0.0, pen=None, constrained=False, max_iter=1000, 
             break
         J_old = J_new
     else:
-        warnings.warn(f"IRLS chưa hội tụ sau {max_iter} vòng (delta={delta})")
+        warnings.warn(f"IRLS chưa hội tụ sau {max_iter} vòng (delta={delta if not vec else 'theo h'})")
 
     irls.last_fallbacks = n_fallback
     return W, it + 1
