@@ -6,7 +6,9 @@ Không vẽ lại từ đầu: gọi đúng các hàm vẽ đã sinh các hình 
 H1 chép từ notebooks/01_three_predictions.ipynb), với cùng dữ liệu đầu vào đọc từ results/. Chỉ khác:
 - Figure.savefig được chặn để ghi PDF vào report/figures/ thay vì PNG vào results/ (results/ không bị ghi);
 - bỏ tiêu đề chung (suptitle), vì chú thích hình nằm trong LaTeX;
-- cùng phông (DejaVu Sans, có dấu tiếng Việt) và cỡ chữ cho mọi hình.
+- cùng phông (DejaVu Sans, có dấu tiếng Việt) và cỡ chữ cho mọi hình;
+- (NHIEM_VU_9 D.1) số trên trục dùng dấu phẩy thập phân như văn bản: ScalarFormatter được chặn để thay "." bằng ",".
+H6 (NHIEM_VU_9 C.2) là hình mới: ba kênh tải của ETTh2 theo thời gian, tô các đoạn hằng, vạch ranh giới train/val/test.
 """
 import contextlib
 import io
@@ -19,6 +21,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt                                  # noqa: E402
 from matplotlib.figure import Figure                             # noqa: E402
+from matplotlib.ticker import ScalarFormatter                    # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path[:0] = [str(ROOT)] + [str(ROOT / "scripts" / d) for d in ("grid", "sgd", "checks", "report")]
@@ -32,12 +35,20 @@ NAMES = {
     "H3_sgd_vs_optimum.png": "H3_sgd_vs_optimum.pdf",
     "A3_delta_sensitivity.png": "H4_delta_sensitivity.pdf",
     "C_outlier_magnitude.png": "H5_outlier_magnitude.pdf",
+    "H6_etth2_constant.png": "H6_etth2_constant.pdf",
 }
 
 STYLE = {"font.family": "DejaVu Sans", "font.size": 10, "pdf.fonttype": 42, "svg.fonttype": "none"}
 
 _orig_savefig = Figure.savefig
 written = []
+_orig_scalar_fmt = ScalarFormatter._format_maybe_minus_and_locale
+
+
+def _comma_fmt(self, fmt, arg):
+    """Số trên trục với dấu phẩy thập phân (không dùng locale: chạy giống nhau trên mọi máy)."""
+    s = _orig_scalar_fmt(self, fmt, arg)
+    return s.replace(".", "{,}") if self._useMathText else s.replace(".", ",")
 
 
 def _redirect(self, fname, *a, **kw):
@@ -136,6 +147,42 @@ def h2_h4_h5():
     h5()
 
 
+def h6():
+    """ETTh2: MUFL, LUFL, LULL (giá trị gốc) theo thời gian; tô đoạn hằng ≥ 24 giờ (đậm hơn: ≥ 96 giờ, đủ dài để
+    tạo cửa sổ đích hằng); vạch ranh giới train/val/test. Đoạn hằng: report_nv9.constant_runs (results/nv9)."""
+    import numpy as np
+    import pandas as pd
+    import report_nv9 as N
+    runs, (tr, va, te) = N.constant_runs()
+    df = pd.read_csv(ROOT / "data" / "ETTh2.csv", parse_dates=["date"]).iloc[:te]
+    chans = ["MUFL", "LUFL", "LULL"]
+    fig, axes = plt.subplots(len(chans), 1, figsize=(12.5, 6.2), sharex=True)
+    t = df["date"].to_numpy()
+    for ax, c in zip(axes, chans):
+        ax.plot(t, df[c], lw=0.5, color="#4C72B0")
+        for r in runs:
+            if r["channel"] == c:
+                ax.axvspan(t[r["start_idx"]], t[r["end_idx"]], color="#DD8452", lw=0,
+                           alpha=0.55 if r["hours"] >= 96 else 0.25)
+        for b in (tr, va):
+            ax.axvline(t[b], color="0.25", ls="--", lw=1)
+        ax.set_ylabel(c)
+        for sp in ["top", "right"]:
+            ax.spines[sp].set_visible(False)
+    top = axes[0]
+    for x0, x1, lab in ((0, tr, "train"), (tr, va, "val"), (va, te - 1, "test")):
+        top.text(t[(x0 + x1) // 2], 1.02, lab, transform=top.get_xaxis_transform(), ha="center", va="bottom",
+                 fontsize=9, color="0.25")
+    from matplotlib.patches import Patch
+    axes[-1].legend(handles=[Patch(color="#DD8452", alpha=0.55, label="đoạn hằng ≥ 96 giờ"),
+                             Patch(color="#DD8452", alpha=0.25, label="đoạn hằng 24–95 giờ")],
+                    loc="lower left", fontsize=8.5, frameon=False, ncol=2)
+    fig.tight_layout()
+    fig.savefig("H6_etth2_constant.png")
+    plt.close(fig)
+    del np
+
+
 def capture(fn):
     """Gọi một hàm vẽ (h1, h2, h3, h4, h5), giữ lại các Figure thay vì ghi file. Dùng trong notebook 02, 03."""
     figs = []
@@ -177,6 +224,7 @@ def main():
     FIG.mkdir(parents=True, exist_ok=True)
     plt.rcParams.update(STYLE)
     Figure.savefig = _redirect
+    ScalarFormatter._format_maybe_minus_and_locale = _comma_fmt
     try:
         with contextlib.redirect_stdout(io.StringIO()):
             h1()
@@ -186,8 +234,12 @@ def main():
         plt.rcParams.update(STYLE)
         with contextlib.redirect_stdout(io.StringIO()):
             h3()
+        plt.rcParams.update(STYLE)
+        with contextlib.redirect_stdout(io.StringIO()):
+            h6()
     finally:
         Figure.savefig = _orig_savefig
+        ScalarFormatter._format_maybe_minus_and_locale = _orig_scalar_fmt
     for f in written:
         print(f"→ {f.relative_to(ROOT).as_posix()}")
 

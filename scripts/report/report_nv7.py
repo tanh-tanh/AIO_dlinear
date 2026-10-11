@@ -776,15 +776,19 @@ def figure_c(S, vals):
 # Phần D
 # ---------------------------------------------------------------------------
 
-def part_d(summ):
+def part_d(summ, sel=None, find=None, out=None, mult_cols=("0.5", "1", "2", "4", "8")):
+    """Phần D. NHIEM_VU_9 A (scripts/report/report_nv9.py) gọi lại với sel = lựa chọn đã gộp lưới mở rộng, find =
+    sgd_lr_extend.find, out = results/nv9/tables_A.md, mult_cols có thêm các mức mới. Mặc định: như NHIEM_VU_7."""
     from scipy import stats
     from optim_etth2 import label, side
-    sel = json.loads((ROOT / "results" / "sgd_lr" / "selection.json").read_text(encoding="utf-8"))["cells"]
+    if sel is None:
+        sel = json.loads((ROOT / "results" / "sgd_lr" / "selection.json").read_text(encoding="utf-8"))["cells"]
     old = json.loads((ROOT / "results" / "sgd_b1_b4" / "summary.json").read_text(encoding="utf-8"))
     old_b4 = {(r["dataset"], r["H"], r["model"]): r for r in old["B4"]["rows"]}
     old_c3 = {(r["dataset"], r["H"]): r for r in old["C3"]["rows"]}
     sys.path[:0] = [str(ROOT / "scripts" / d) for d in ("grid", "sgd", "checks", "report")]
     import sgd_lr_tune as T
+    find = find or T.find
 
     def ci(x):
         x = np.asarray(x, dtype=float)
@@ -802,7 +806,7 @@ def part_d(summ):
         return f"{num(m)} [{num(m - h)}; {num(m + h)}]"
 
     def runs(ds, m, H, mult, seeds, allow_missing=False):
-        rs = [T.find(ds, m, H, mult, s) for s in seeds]
+        rs = [find(ds, m, H, mult, s) for s in seeds]
         if not allow_missing:
             assert all(r is not None for r in rs), (ds, m, H, mult)
         return [r[1] for r in rs if r is not None]
@@ -811,7 +815,8 @@ def part_d(summ):
           "Chọn lr ∈ {0,5; 1; 2; 4} × lr gốc (thêm ×8 nếu ×4 thắng) theo trung bình val MSE của seed 2021–2025; chạy cuối "
           "seed 2026–2040 (15 seed mới). Dạng đóng: MSE λ* theo val MSE (results/results.csv), như B4.", "",
           "## Bảng lr đã chọn", "",
-          "| Dataset | Mô hình | H | lr gốc | val MSE TB (seed 2021–2025): ×0,5 / ×1 / ×2 / ×4 / ×8 | chọn | lr chọn |",
+          "| Dataset | Mô hình | H | lr gốc | val MSE TB (seed 2021–2025): " + " / ".join(f"×{g(float(k))}" for k in mult_cols)
+          + " | chọn | lr chọn |",
           "|---|---|---|---|---|---|---|"]
     chosen = {}
     for ds in T.DATASETS:
@@ -822,7 +827,7 @@ def part_d(summ):
                 chosen[(ds, m, H)] = c["chosen_mult"]
                 md.append(f"| {ds} | {m} | {H} | {g(c['base_lr'])} | " + " / ".join(
                     (f"**{num(mv[k], 5)}**" if float(k) == c["chosen_mult"] else num(mv[k], 5)) if k in mv else "—"
-                    for k in ("0.5", "1", "2", "4", "8")) + f" | ×{g(c['chosen_mult'])} | {g(c['chosen_lr'])} |")
+                    for k in mult_cols) + f" | ×{g(c['chosen_mult'])} | {g(c['chosen_lr'])} |")
     cnt = {}
     for v in chosen.values():
         cnt[v] = cnt.get(v, 0) + 1
@@ -918,8 +923,9 @@ def part_d(summ):
            + "; ".join(f"H={r['H']}: test {fci(r['d_test'], r['d_test_ci'])} ({'còn' if r['dlinear_better_test'] else 'không còn'} có ý nghĩa)"
                        for r in m4) + ".", ""]
     summ["D_C3"] = {"rows": c3, "n_dlinear_better": n_b, "n_dlinear_better_x1_15seed": n_b1}
-    (OUT / "tables_D.md").write_text("\n".join(md) + "\n", encoding="utf-8")
-    print(f"→ {OUT / 'tables_D.md'}")
+    out = out or OUT / "tables_D.md"
+    out.write_text("\n".join(md) + "\n", encoding="utf-8")
+    print(f"→ {out}")
 
 
 def main():

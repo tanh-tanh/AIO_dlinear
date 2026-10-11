@@ -3,7 +3,7 @@
 
 Danh sách dưới đây gồm 8 hạn chế của kế hoạch 3.5 (mục 2) và hai hạn chế rút ra khi phân tích ETTh2 (mục \ref{lim:etth2}, \ref{lim:pipeline}).
 
-\begin{enumerate}[label=\arabic*.]
+\begin{enumerate}[label=\arabic*., ref=\arabic*]
     \item \label{lim:data}\textbf{Dữ liệu.} Chỉ ba dataset ETT, cùng một nguồn và cùng 7 kênh. Phép kiểm qua module LTSF-Linear và phép quét kernel của RQ1 chỉ chạy ở ETTh1, $H = 96$. Dẫn xuất đại số đúng cho mọi ô, nhưng độ lớn của phần tách theo $k$ chưa đo ở ô khác. \emph{Hướng phát triển:} thêm các dataset khác của LTSF-Linear (Electricity, Traffic, Weather) và quét kernel trên toàn ma trận.
     \item \label{lim:models}\textbf{Mô hình.} Chỉ mô hình tuyến tính, dùng chung trọng số cho mọi kênh, với $L = 336$ cố định và $k = 25$ trong grid. Kết luận không áp dụng trực tiếp cho biến thể \texttt{individual = True} hay cho mô hình phi tuyến.
     \item \label{lim:valtest}\textbf{Val và test của ETT thuộc hai chế độ khác nhau.} Trên ETTh1, MSE val cao hơn hẳn MSE test. Mọi lựa chọn dựa trên val ($\lambda^*$, lr, epoch dừng) chịu giới hạn này: quy tắc ba trường hợp gán nhãn ``khác biệt do val khác test'' cho \nmBFourValTestCount/36 ô với lr gốc và \nmTunedValTestCount/36 ô với lr tinh chỉnh (\tabref{tab:b4}). Ví dụ khác: trên ETTh1 và ETTm1, co ridge về dự báo lặp giá trị cuối thay vì về $0$ làm MSE val thấp hơn nhưng MSE test cao hơn ở gần như mọi tổ hợp đã thử. \emph{Hướng phát triển:} chọn siêu tham số bằng kiểm định chéo theo thời gian (nhiều đoạn val) thay vì một đoạn val duy nhất.
