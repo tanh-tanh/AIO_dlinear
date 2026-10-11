@@ -24,12 +24,12 @@ Cấu trúc theo đúng A.1 (sơ đồ trong [README.md](../../README.md)). Bả
 - Hai chỗ đã chủ động tránh lỗi biên dịch dù kiểm tĩnh không bắt được: mục từ của bảng thuật ngữ (`\newglossaryentry`) đặt trong preamble (`sections/glossary_entries.tex`), vì `\makenoidxglossaries` yêu cầu như vậy; chú thích trong khối code `listings` (Phụ lục D) viết ASCII, vì listings dưới pdfLaTeX thường lỗi với ký tự UTF-8 nhiều byte.
 - Độ dài: khoảng 9 900 từ (âm tiết) cho cả phần chính lẫn phụ lục, chưa kể bảng. Phần chính ước khoảng 20 trang, nhưng chưa đo được.
 - **`\TODO` còn lại (người dùng điền):**
-  1. tên đề tài chính thức (`\ReportTitle`, `report/preamble.tex`);
-  2. tên tác giả (`\ReportAuthor`);
-  3. tên TA hoặc người hướng dẫn (`\ReportReviewer`);
-  4. ngày nộp (`\ReportDate`);
-  5. đoạn Toner & Darlow ở mục II (`sections/02_lien_quan.tex`): chưa có PDF trong `docs/refs/`, nên chỉ có câu giữ chỗ, không mô tả nội dung;
-  6. đầu mục VI (`sections/06_han_che.tex`): đối chiếu danh sách hạn chế với 8 hạn chế của kế hoạch 3.5 mục 2 (repo không có file kế hoạch, mục 6).
+  1. ~~tên đề tài chính thức~~ **đã điền** (2026-10-11) (`\ReportTitle`, `report/preamble.tex`);
+  2. ~~tên tác giả~~ **đã điền** (`\ReportAuthor`);
+  3. ~~tên TA hoặc người hướng dẫn~~ **bỏ** (không có proofreading) (`\ReportReviewer`);
+  4. ~~ngày nộp~~ **đã điền** (14/10/2026) (`\ReportDate`);
+  5. ~~đoạn Toner & Darlow ở mục II~~: **đã xong** (2026-10-11), viết từ `docs/refs/toner2024analysis_2403.14587v2.pdf`;
+  6. ~~đầu mục VI: đối chiếu với 8 hạn chế của kế hoạch 3.5 mục 2~~ **đã xong** (2026-10-11): kế hoạch chép vào `docs/plan/Ke_hoach_4_tuan_v3_5.md`; thêm 3 hạn chế còn thiếu (val/test khác chế độ, metric trên dữ liệu chuẩn hóa, commit `-dirty`), giữ 2 hạn chế riêng về ETTh2. Số của kế hoạch chưa có macro (14/16, 2,5–5 lần, gấp 2–3 lần) được diễn đạt bằng lời.
 
 ## 3. Kết quả `audit_numbers.py`
 
@@ -65,7 +65,7 @@ Bản clone mới (`git clone --recurse-submodules`, commit `b0028b5`) ở thư 
 
 Máy không có PDF nào trong `docs/refs/`, nên mọi mục được viết từ hiểu biết sẵn có, không đối chiếu với bản gốc. Chỉ giữ các mục mà tiêu đề, tác giả, nơi đăng, năm đều chắc chắn; không ghi số trang khi không chắc.
 
-- **`toner2024analysis`** (Toner & Darlow, ICML 2024): đánh dấu `% TODO: kiểm metadata`. Tên bài và danh sách tác giả cần đối chiếu PDF. Báo cáo chỉ trích trong câu `\TODO`.
+- **`toner2024analysis`**: đã đối chiếu PDF arXiv 2403.14587v2 (tên bài, tác giả). PDF ghi "Preprint", không ghi kỷ yếu, nên trích theo arXiv (`@misc`). Nếu cần trích bản ICML 2024, đối chiếu với trang PMLR.
 - **`holland1977robust`** (Holland & Welsch, 1977): đánh dấu `% TODO: kiểm metadata` (số tập, số trang).
 - Nên kiểm lại cả các mục còn lại khi có PDF: `zeng2023transformers`, `zhou2021informer`, `huber1964robust`, `huber2009robust`, `ali2019continuous`, `bishop1995training`, `kingma2015adam`.
 

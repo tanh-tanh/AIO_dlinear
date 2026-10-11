@@ -45,7 +45,7 @@ def bold_min(vals, p=4):
 
 
 def write(name, body):
-    body = re.sub(r"(\d),(\d)", r"{,}", body)       # dấu phẩy thập phân dùng được cả trong công thức
+    body = re.sub(r"(\d),(\d)", r"\1{,}\2", body)       # dấu phẩy thập phân dùng được cả trong công thức
     f = OUT / f"tab_{name}.tex"
     f.write_text(HEAD + body, encoding="utf-8")
     print(f"→ {f.relative_to(D.ROOT).as_posix()}")

@@ -1,7 +1,7 @@
 % Báo cáo cuối của đề tài dlinear-objective-lab (NHIEM_VU_8, Phần B).
 % Preamble chép nguyên từ report/template/template.tex (template AI VIET NAM, AIO2026), phần trước \begin{document};
 % mọi chỗ đổi có chú thích "NV8". Biên dịch: xem report/README.md.
-\documentclass[12pt]{article}
+% documentclass nằm trong main.tex (NV8: để Overleaf không chọn nhầm file này làm file chính)
 \usepackage{makecell}
 \usepackage{hyphenat}
 \usepackage[utf8]{vietnam}
@@ -47,14 +47,16 @@
     maxnames=1,     % chỉ hiển thị 1 tên tác giả, phần còn lại thành ``et al."
     minnames=1,
     uniquelist=false,
-    hyperref=false
+    hyperref=false,
+    language=english  % NV8: chuỗi biblatex tiếng Anh, thay cho \selectlanguage{english} bên dưới
 ]{biblatex}
 \usepackage{forest}
 \addbibresource{refs.bib}  % NV8: đổi tên file .bib
 \DefineBibliographyStrings{english}{
   andothers = {et\addabbrvspace al\adddot}
 }
-\AtBeginBibliography{\selectlanguage{english}}
+% NV8: bỏ \AtBeginBibliography{\selectlanguage{english}}: nó đổi font sang T1, chân trang có chữ Việt ("Hồng Phúc") làm lỗi \ocircumflex unavailable in encoding T1
+
 
 % -----------------------------------------------------------------
 \AtBeginDocument{\renewcommand\refname{}}
@@ -539,6 +541,13 @@
   {0.35em plus 0.1em minus 0.1em}
 
 
+% NV8: macro bìa phải định nghĩa TRƯỚC \title bên dưới (Overleaf báo Undefined control sequence nếu đặt sau)
+\newcommand{\TODO}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
+% Thông tin bìa (NHIEM_VU_8 mục 0.2), người dùng cung cấp; không có người proofreading
+\newcommand{\ReportTitle}{DLinear\\[4pt]{\large Linear, DLinear, NLinear tại nghiệm tối ưu: kiến trúc hay cách huấn luyện?}}
+\newcommand{\ReportAuthor}{Hoàng Đinh Tuấn Anh}
+\newcommand{\ReportDate}{14/10/2026}
+
 % Logo + Title ---------------------------------------------------------------
 
 \setlength{\droptitle}{-7em}
@@ -588,8 +597,7 @@
 \author{%
   \textbf{\ReportAuthor}\\  % NV8
   \vspace{1em}
-  \textbf{Proofreading: }\ReportReviewer\\  % NV8
-  \ReportDate  % NV8
+  \ReportDate  % NV8 (bỏ dòng Proofreading)
 }
 
 \postauthor{%
@@ -637,12 +645,6 @@
 % NV8: phần thêm cho báo cáo (không đổi kiểu của template)
 % ---------------------------------------------------------------------------
 \graphicspath{{template/}{figures/}}
-\newcommand{\TODO}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
-% Thông tin bìa: người dùng điền (NHIEM_VU_8 mục 0.2)
-\newcommand{\ReportTitle}{\TODO{tên đề tài chính thức}\\[4pt]{\large Linear, DLinear, NLinear tại nghiệm tối ưu: kiến trúc hay cách huấn luyện?}}
-\newcommand{\ReportAuthor}{\TODO{tên tác giả}}
-\newcommand{\ReportReviewer}{\TODO{tên TA hoặc người hướng dẫn}}
-\newcommand{\ReportDate}{\TODO{ngày nộp}}
 % Bảng: chú thích kiểu captionbelowboxaivn của template, thêm bộ đếm riêng để \label, \ref dùng được
 \newcounter{bang}
 \newcommand{\captab}[1]{\refstepcounter{bang}Bảng~\thebang:~#1}

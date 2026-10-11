@@ -40,6 +40,6 @@ python scripts/report/check_latex.py      # kiểm tĩnh
 
 Mọi con số đo được trong `sections/*.tex` là macro `\nm...` của `generated/numbers.tex` (quy ước tên ở đầu file đó). Ba script đọc `results/` qua `scripts/report/report_data.py` và không ghi gì vào `results/`.
 
-## Thông tin bìa còn thiếu
+## Thông tin bìa
 
-Điền trong `preamble.tex`: `\ReportTitle`, `\ReportAuthor`, `\ReportReviewer`, `\ReportDate` (hiện là `\TODO`).
+Đã điền trong `preamble.tex`: `\ReportTitle`, `\ReportAuthor`, `\ReportDate`. Bìa không có dòng Proofreading.
