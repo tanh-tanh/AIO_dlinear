@@ -1,0 +1,23 @@
+diff --git a/data_provider/data_factory.py b/data_provider/data_factory.py
+--- a/data_provider/data_factory.py
++++ b/data_provider/data_factory.py
+@@ -17,7 +17,7 @@
+ 
+     if flag == 'test':
+         shuffle_flag = False
+-        drop_last = False
++        drop_last = bool(args.test_drop_last)  # patch: was False (True before commit 6fe4c28)
+         batch_size = args.batch_size
+         freq = args.freq
+     elif flag == 'pred':
+diff --git a/run_longExp.py b/run_longExp.py
+--- a/run_longExp.py
++++ b/run_longExp.py
+@@ -79,6 +79,7 @@
+ parser.add_argument('--devices', type=str, default='0,1,2,3', help='device ids of multile gpus')
+ parser.add_argument('--test_flop', action='store_true', default=False, help='See utils/tools for usage')
+ parser.add_argument('--seed', type=int, default=2021, help='random seed (patch: replaces hard-coded fix_seed)')
++parser.add_argument('--test_drop_last', type=int, default=0, help='patch: drop_last of the test loader (0 = this commit, 1 = before 6fe4c28)')
+ 
+ args = parser.parse_args()
+ 
