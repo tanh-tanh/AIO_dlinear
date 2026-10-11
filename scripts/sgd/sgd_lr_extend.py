@@ -86,17 +86,32 @@ def run(ds, model, H, mult, seeds, threads, dry, log):
             "--H", str(H), "--lr", repr(lr), "--threads", str(threads), "--out", out]
     if call(base + ["--seed", *map(str, missing)], log) == 0:
         return
-    # một seed lỗi (vd. NaN: không epoch nào có val hữu hạn nên không có checkpoint) làm dừng cả tiến trình:
-    # chạy lại từng seed còn thiếu, seed vẫn lỗi ghi thành lần chạy thất bại
+    # một seed lỗi làm dừng cả tiến trình: chạy lại từng seed còn thiếu. Chỉ phân kỳ (val không hữu hạn ở mọi epoch
+    # nên không có checkpoint: torch.load báo FileNotFoundError) mới ghi thành lần chạy thất bại của mức lr. Lỗi khác
+    # (vd. Windows khóa file checkpoint khi torch.save, mã 1224) thử lại tối đa 3 lần, vẫn lỗi thì dừng để xem tay.
     for s in missing:
-        if find(ds, model, H, mult, s) is not None:
-            continue
-        rc = call(base + ["--seed", str(s)], log)
-        if rc != 0 and find(ds, model, H, mult, s) is None:
-            fail_file(ds, model, H, mult, s).write_text(json.dumps(
-                {"dataset": ds, "model": model, "H": H, "seed": s, "lr": lr, "mult": mult, "returncode": rc,
-                 "reason": "sgd_etth2.py lỗi (xem log)", "log": str(log.relative_to(ROOT))},
-                indent=1, ensure_ascii=False), encoding="utf-8")
+        for attempt in range(3):
+            if find(ds, model, H, mult, s) is not None:
+                break
+            ckpt = new_dir(ds, mult) / f"{model}_H{H}_seed{s}.pt"
+            if ckpt.exists():
+                ckpt.unlink()                                    # checkpoint dở của lần lỗi trước
+            pos = log.stat().st_size
+            rc = call(base + ["--seed", str(s)], log)
+            if rc == 0 or find(ds, model, H, mult, s) is not None:
+                break
+            with open(log, encoding="utf-8", errors="replace") as f:
+                f.seek(pos)
+                out = f.read()
+            if "FileNotFoundError" in out and ".pt" in out:
+                fail_file(ds, model, H, mult, s).write_text(json.dumps(
+                    {"dataset": ds, "model": model, "H": H, "seed": s, "lr": lr, "mult": mult, "returncode": rc,
+                     "reason": "phân kỳ: không epoch nào có val hữu hạn (không có checkpoint)",
+                     "log": str(log.relative_to(ROOT))}, indent=1, ensure_ascii=False), encoding="utf-8")
+                break
+            time.sleep(5)
+        else:
+            raise RuntimeError(f"{ds} {model} H={H} ×{mult:g} seed {s}: lỗi khi chạy (không phải phân kỳ), xem {log}")
 
 
 def level(ds, model, H, mult, seeds, ref1):
