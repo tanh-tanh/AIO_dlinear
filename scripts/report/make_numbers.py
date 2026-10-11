@@ -405,7 +405,7 @@ def nv9(M):
     M.put(name("Drop", "PubBelowFalse", "Count"),
           str(sum(r["pub"] < r["dl0_min"] for r in B["rows"] if not r["control"])))
     M.put(name("Drop", "Cell", "Count"), str(B["n_cells"]))
-    M.put(name("Drop", "DiffAbsMax"), fsci(B["max_abs_diff"]))
+    M.put(name("Drop", "DiffAbsMax"), fnum(B["max_abs_diff"], 4))
     main = [r for r in B["rows"] if not r["control"]]
     M.put(name("Drop", "Dropped", "Range"), f"{min(r['n_dropped'] for r in main)}--{max(r['n_dropped'] for r in main)}")
     M.put(name("Drop", "DroppedPctMax"), fnum(100 * max(r["n_dropped"] / r["n_test"] for r in main), 2))
