@@ -14,7 +14,7 @@ Số lấy từ `report/generated/numbers.tex` (sinh tự động từ `results/
 |---|---|
 | RQ1 | DLinear trùng Linear khi λ = 0 và chỉ tách khi có weight decay (ridge trong metric N⁻¹). Ở λ\*, MSE test của DLinear và Linear chênh không quá **0,0006** trên cả 12 cặp (dataset, H). NLinear (ràng buộc tổng hàng bằng 1) tách ở mọi λ, lợi rõ trên ETTh2 (MSE test −0,029 đến −0,348 so với Linear). |
 | RQ2 | Huấn luyện bằng MAE cho MSE test thấp hơn MSE ở **30/36** ô, thấp nhất trong ba mục tiêu ở 24/36. Huber (δ = 1,345·σ̂_MAD) đứng giữa MSE và MAE ở 28/36 ô. Outlier chỉ ở đích: MAE, Huber đổi MSE test không quá 0,003, MSE tăng tới 0,014; outlier trong chuỗi ở 10% và ±10σ: MSE suy giảm ít nhất. |
-| RQ3 | Sau khi tinh chỉnh learning rate, SGD vẫn kém nghiệm dạng đóng trên test ở **27/36** ô (CI 95%). "SGD tốt hơn thật" chỉ ở 5 ô, đều ETTh2 với Linear/DLinear. DLinear tốt hơn Linear khi huấn luyện bằng SGD: 4/12 ô với lr gốc (đều ETTm1), **0/12** khi tinh chỉnh lr cho cả hai. |
+| RQ3 | Sau khi tinh chỉnh learning rate (lưới mở rộng ở mọi ô chọn mức đầu mút), SGD vẫn kém nghiệm dạng đóng trên test ở **27/36** ô (CI 95%). "SGD tốt hơn thật" chỉ ở 5 ô, đều ETTh2 với Linear/DLinear; không giá trị λ nào của ridge, kể cả λ chọn theo test, đạt mức SGD ở đó. DLinear tốt hơn Linear khi huấn luyện bằng SGD: 4/12 ô với lr gốc (đều ETTm1), **0/12** khi tinh chỉnh lr cho cả hai. |
 
 ## Cấu trúc
 
@@ -97,23 +97,23 @@ Grid (dạng đóng, IRLS) tất định, không có seed.
 
 | Bước | Thời gian |
 |---|---|
-| 1. Môi trường (venv mới, torch từ cache pip) | khoảng 3,5 phút (lần đầu tải torch thì lâu hơn) |
-| 2. Test (66) | khoảng 1–1,5 phút |
+| 1. Môi trường | khoảng 3,5 phút với venv mới, torch từ cache pip (lần đầu tải torch thì lâu hơn); 7 giây với venv có sẵn |
+| 2. Test (66) | 30 giây |
 | 3. Chạy lại grid ETTh1 H = 96 (488 dòng, GPU) | khoảng 15 phút (MAE khoảng 13 phút); `SKIP_CELL=1` để bỏ |
-| 4. Sinh số, bảng, hình; audit; kiểm tĩnh | khoảng 0,5 phút |
-| 5. Biên dịch báo cáo (latexmk, 3–4 lượt pdfLaTeX + bibtex) | QUICK_COMPILE |
-| **Tổng** | khoảng 20 phút; khoảng 5 phút với `SKIP_CELL=1` |
+| 4. Sinh số, bảng, hình; audit; kiểm tĩnh | 10–30 giây |
+| 5. Biên dịch báo cáo (latexmk: pdfLaTeX nhiều lượt + bibtex) | 15 giây khi build sạch; khoảng 1 giây nếu không có gì đổi |
+| **Tổng** | khoảng 20 phút với venv mới; dưới 5 phút với `SKIP_CELL=1` (47 giây với venv có sẵn) |
 
 `full` (tổng thời gian các lần chạy; các bước SGD chạy song song nên thời gian thực ngắn hơn):
 
 | Bước | Phần cứng | Thời gian |
 |---|---|---|
-| A. Grid: 3 dataset × 4 H × 3 mô hình × 3 mục tiêu | GPU | FULL_GRID giờ (MAE chiếm gần hết) |
-| B. Huber δ_MAD (grid, độ nhạy) | GPU | FULL_HUBER giờ, cộng khoảng 10 phút CPU |
+| A. Grid: 3 dataset × 4 H × 3 mô hình × 3 mục tiêu | GPU | 14,6 giờ (MAE chiếm gần hết) |
+| B. Huber δ_MAD (grid, độ nhạy) | GPU | 0,6 giờ, cộng khoảng 10 phút CPU |
 | C. Outlier nhân tạo | GPU | khoảng 8 giờ (độ lớn 3σ, 5σ chiếm gần 6 giờ) |
-| D. SGD lr gốc, 20 seed | CPU | FULL_SGD giờ CPU |
-| E. SGD tinh chỉnh lr (5 tiến trình × 2 luồng) | CPU | FULL_LR giờ thời gian thực |
-| F. Mở rộng lưới lr ở 15 ô biên; code gốc với `drop_last`; Huber δ theo bước h | CPU; GPU; GPU | FULL_EXT giờ thực; FULL_DROP giờ; FULL_DH phút |
+| D. SGD lr gốc, 20 seed | CPU | 5,5 giờ CPU |
+| E. SGD tinh chỉnh lr (5 tiến trình × 2 luồng) | CPU | 2,3 giờ thời gian thực |
+| F. Mở rộng lưới lr ở 15 ô biên; code gốc với `drop_last`; Huber δ theo bước h | CPU; GPU; GPU | 0,8 giờ thực; 2,6 giờ (tổng các lần chạy; khoảng 1,3 giờ thực với 5 tiến trình song song); 3 phút |
 | G. Bảng, số, hình | CPU | dưới 5 phút |
 
 ### Kết quả mong đợi của ô kiểm (`quick`, bước 3)
@@ -122,7 +122,15 @@ Grid (dạng đóng, IRLS) tất định, không có seed.
 
 | Mô hình | Mục tiêu | λ = 0: MSE / MAE test | λ\*_MSE: MSE test | λ\*_MAE: MAE test |
 |---|---|---|---|---|
-QUICK_TABLE
+| Linear | MSE | 0,3702 / 0,3915 | 0,3702 (λ = 0) | 0,3915 (λ = 141,254) |
+| Linear | MAE | 0,3653 / 0,3833 | 0,3653 (λ = 0) | 0,3833 (λ = 0) |
+| Linear | Huber | 0,3678 / 0,3880 | 0,3678 (λ = 1) | 0,3879 (λ = 30) |
+| DLinear | MSE | 0,3702 / 0,3915 | 0,3698 (λ = 446,684) | 0,3914 (λ = 446,684) |
+| DLinear | MAE | 0,3653 / 0,3833 | 0,3647 (λ = 300) | 0,3832 (λ = 100) |
+| DLinear | Huber | 0,3678 / 0,3880 | 0,3671 (λ = 300) | 0,3879 (λ = 100) |
+| NLinear | MSE | 0,3702 / 0,3915 | 0,3695 (λ = 1412,54) | 0,3913 (λ = 794,328) |
+| NLinear | MAE | 0,3662 / 0,3841 | 0,3638 (λ = 3000) | 0,3839 (λ = 300) |
+| NLinear | Huber | 0,3685 / 0,3887 | 0,3674 (λ = 1000) | 0,3886 (λ = 300) |
 
 - Chỉ mục mọi bảng, hình, thư mục kết quả và script sinh ra chúng: [results/README.md](results/README.md).
 - Các báo cáo kỹ thuật cũ dùng đường dẫn trước khi dọn repo; tra [docs/DUONG_DAN_CU.md](docs/DUONG_DAN_CU.md).
@@ -130,7 +138,7 @@ QUICK_TABLE
 ## Báo cáo
 
 - Báo cáo cuối (LaTeX): `report/main.tex` → `report/build/main.pdf` (biên dịch theo [report/README.md](report/README.md)).
-- Báo cáo kỹ thuật theo từng nhiệm vụ: [docs/reports/](docs/reports/), mới nhất là [BAO_CAO_NV7.md](docs/reports/BAO_CAO_NV7.md) và [BAO_CAO_NV8.md](docs/reports/BAO_CAO_NV8.md).
+- Báo cáo kỹ thuật theo từng nhiệm vụ: [docs/reports/](docs/reports/), mới nhất là [BAO_CAO_NV8.md](docs/reports/BAO_CAO_NV8.md) và [BAO_CAO_NV9.md](docs/reports/BAO_CAO_NV9.md).
 - Nhật ký thay đổi code: [docs/NHAT_KY_THAY_DOI.md](docs/NHAT_KY_THAY_DOI.md).
 
 ## Quy ước

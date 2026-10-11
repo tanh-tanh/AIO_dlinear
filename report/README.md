@@ -14,7 +14,7 @@ latexmk main.tex          # cấu hình ở latexmkrc: pdflatex, bibtex, thư m�
 
 Không có latexmk: `pdflatex main.tex && bibtex main && pdflatex main.tex && pdflatex main.tex` (đặt `TEXINPUTS=./template//:` trước).
 
-**Trạng thái (11/10/2026):** máy dùng để viết báo cáo không có TeX, nên PDF **chưa được biên dịch**. Thay vào đó đã chạy kiểm tĩnh `python scripts/report/check_latex.py` (macro, nhãn, trích dẫn, ngoặc, môi trường, file, `\TODO`). Lần biên dịch đầu tiên có thể còn lỗi gói hoặc cảnh báo overfull box cần sửa.
+**Trạng thái (11/10/2026, nhiệm vụ 9):** biên dịch được bằng TinyTeX (pdfLaTeX, latexmk, biblatex 3.22a với backend bibtex), không lỗi, không còn cảnh báo tham chiếu chưa xác định; còn hai overfull box nhỏ (dưới 4pt). `build/main.pdf` được commit.
 
 ## Cấu trúc
 
@@ -24,7 +24,7 @@ Không có latexmk: `pdflatex main.tex && bibtex main && pdflatex main.tex && pd
 | `preamble.tex` | preamble của template + vài macro thêm (`\TODO`, `\captab`, `\figref`, thông tin bìa) |
 | `sections/` | nội dung: `00_tom_tat`, `00_thuat_ngu`, `01`–`07`, phụ lục `A`–`D` |
 | `generated/` | **tự sinh, không sửa tay**: `numbers.tex` (macro số), `tab_*.tex` (bảng) |
-| `figures/` | **tự sinh**: H1–H5 dạng PDF vector |
+| `figures/` | **tự sinh**: H1–H6 dạng PDF vector |
 | `refs.bib` | tài liệu tham khảo; mục `% TODO: kiểm metadata` cần đối chiếu |
 | `template/` | template gốc của khóa học, giữ nguyên |
 

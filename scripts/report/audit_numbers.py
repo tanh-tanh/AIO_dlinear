@@ -24,7 +24,7 @@ DESIGN = {
     "0{,}25": "bội lr (lưới mở rộng)", "0{,}125": "bội lr (lưới mở rộng)",
     "0{,}005": "lr gốc ETTh1", "0{,}05": "lr gốc ETTh2", "0{,}0001": "lr gốc ETTm1",
 }
-VERSION = re.compile(r"(Python|numpy|pandas|scipy|matplotlib|PyTorch|driver|CUDA|torch)[^.\n]{0,12}$")
+VERSION = re.compile(r"(Python|numpy|pandas|scipy|matplotlib|scikit-learn|PyTorch|driver|CUDA|torch)[^.\n]{0,12}$")
 
 
 def display_math_spans(text):

@@ -183,12 +183,14 @@ def tab_b4_full():
 
 
 def tab_lr():
+    """NHIEM_VU_9: 9 mức lr; 5 chữ số để không có hai mức trùng nhau khi làm tròn (mức chọn đậm). Bỏ cột lr gốc
+    (đã ghi ở mục III.6) để bảng vừa khổ dọc."""
     lr = D.lr_cells()
     mults = ["0.125", "0.25", "0.5", "1", "2", "4", "8", "16", "32"]
-    rows = [r"{\scriptsize", r"\setlength{\tabcolsep}{4pt}", r"\begin{longtable}{@{}lrlr rrrrrrrrr r@{}}", r"\toprule",
-            r" & & & & \multicolumn{9}{c}{MSE val trung bình (seed 2021--2025), lr $= \times$ lr gốc} & \\",
-            r"\cmidrule(lr){5-13}",
-            r"Dataset & $H$ & Mô hình & lr gốc & " + " & ".join("$\\times " + k.replace(".", "{,}") + "$" for k in mults)
+    rows = [r"{\scriptsize", r"\setlength{\tabcolsep}{3.5pt}", r"\begin{longtable}{@{}lrl rrrrrrrrr r@{}}", r"\toprule",
+            r" & & & \multicolumn{9}{c}{MSE val trung bình (seed 2021--2025), lr $= \times$ lr gốc} & \\",
+            r"\cmidrule(lr){4-12}",
+            r"Dataset & $H$ & Mô hình & " + " & ".join(r"$\times " + k.replace(".", "{,}") + "$" for k in mults)
             + r" & chọn \\",
             r"\midrule", r"\endhead"]
     for ds in ("ETTh2", "ETTh1", "ETTm1"):
@@ -197,9 +199,8 @@ def tab_lr():
                 c = lr[(ds, H, m)]
                 mv = {k: float(v) for k, v in c["mean_val_by_mult"].items()}
                 ch = f"{float(c['chosen_mult']):g}"
-                vals = [("\\textbf{%s}" % n(mv[k], 4) if k == ch else n(mv[k], 4)) if k in mv else "--" for k in mults]
-                rows.append(f"{ds} & {H} & {m} & {n(float(c['base_lr']), 4).rstrip('0').rstrip(',')} & " + " & ".join(vals)
-                            + f" & $\\times${ch.replace('.', ',')} \\\\")
+                vals = [(r"\textbf{%s}" % n(mv[k], 5) if k == ch else n(mv[k], 5)) if k in mv else "--" for k in mults]
+                rows.append(f"{ds} & {H} & {m} & " + " & ".join(vals) + r" & $\times$" + ch.replace(".", ",") + r" \\")
             rows.append(r"\addlinespace[2pt]")
     rows += [r"\bottomrule", r"\end{longtable}", "}"]
     write("lr", "\n".join(rows) + "\n")
