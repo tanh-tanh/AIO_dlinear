@@ -1,7 +1,7 @@
 \section{Dẫn xuất ba dự đoán của RQ1}
 \label{app:derivation}
 
-\paragraph{Ký hiệu.} $X \in \mathbb{R}^{n \times L}$, $Y \in \mathbb{R}^{n \times H}$ là đầu vào và đích train. Bias không bị phạt nên có thể loại bằng cách trừ trung bình: với mọi $\Weff$, bias tối ưu là $b = \bar y - \Weff \bar x$. Vì vậy từ đây giả sử $X$, $Y$ đã được trừ trung bình theo cột, và đặt $A = X^\top X$, $C = X^\top Y$. Giả sử $A \succ 0$ (đúng trên cả ba dataset, vì $n \gg L$). Hàm mục tiêu MSE có phạt của Linear là
+\paragraph{Ký hiệu.} $X \in \mathbb{R}^{n \times L}$, $Y \in \mathbb{R}^{n \times H}$ là đầu vào và đích train. Bias không bị phạt nên có thể loại bằng cách trừ trung bình: với mọi $\Weff$, bias tối ưu là $b = \bar y - \Weff \bar x$. Vì vậy từ đây giả sử $X$, $Y$ đã được trừ trung bình theo cột, và đặt $A = X^\top X$, $C = X^\top Y$. Giả sử $A \succ 0$ (đúng trên ETTh1, ETTh2 và ETTm1, vì $n \gg L$). Hàm mục tiêu MSE có phạt của Linear là
 \begin{equation}
     J(W) = \|Y - X W^\top\|_F^2 + \lambda \operatorname{tr}(W\, \mathrm{Pen}\, W^\top),
 \end{equation}
