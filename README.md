@@ -33,7 +33,7 @@ Số lấy từ `report/generated/numbers.tex` (sinh tự động từ `results/
 │                        03_outliers_and_sgd (RQ3); archive/ (bản cũ, không chạy lại)
 ├── results/             mọi kết quả, xem results/README.md (weights/ và .npy lớn không commit)
 ├── report/              báo cáo LaTeX theo template AIO2026, xem report/README.md
-├── docs/                tasks/ (NHIEM_VU_*), reports/ (BAO_CAO_*: báo cáo kỹ thuật), plan/, NHAT_KY_THAY_DOI.md,
+├── docs/                reports/ (BAO_CAO_*: báo cáo kỹ thuật),
 │                        DUONG_DAN_CU.md (đường dẫn cũ → mới), outline.docx; refs/ (PDF, không commit)
 ├── checkpoints/         checkpoint DLinear SGD của notebook 00
 ├── data/                ETTh1.csv, ETTh2.csv, ETTm1.csv
@@ -139,7 +139,6 @@ Grid (dạng đóng, IRLS) tất định, không có seed.
 
 - Báo cáo cuối (LaTeX): `report/main.tex` → `report/build/main.pdf` (biên dịch theo [report/README.md](report/README.md)).
 - Báo cáo kỹ thuật theo từng nhiệm vụ: [docs/reports/](docs/reports/), mới nhất là [BAO_CAO_NV8.md](docs/reports/BAO_CAO_NV8.md) và [BAO_CAO_NV9.md](docs/reports/BAO_CAO_NV9.md).
-- Nhật ký thay đổi code: [docs/NHAT_KY_THAY_DOI.md](docs/NHAT_KY_THAY_DOI.md).
 
 ## Quy ước
 
