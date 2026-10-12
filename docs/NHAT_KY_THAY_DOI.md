@@ -1,6 +1,6 @@
 # Nhật ký thay đổi code: IRLS (30/09/2026)
 
-Phạm vi: mục 11.2 (IRLS float32 hay float64 trên GPU), rồi thêm phạt λ và đổi `tol` mặc định. Kết quả thí nghiệm ở [BAO_CAO_IRLS_DTYPE.md](BAO_CAO_IRLS_DTYPE.md).
+Phạm vi: mục 11.2 (IRLS float32 hay float64 trên GPU), rồi thêm phạt λ và đổi `tol` mặc định. Kết quả thí nghiệm ở [BAO_CAO_IRLS_DTYPE.md](./reports/BAO_CAO_IRLS_DTYPE.md).
 
 Test: đầu phiên 26 → cuối phiên **32, tất cả đạt** (`python -m unittest discover -s tests -t .`).
 
